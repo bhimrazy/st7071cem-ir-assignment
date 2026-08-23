@@ -138,8 +138,8 @@ export default function ClusteringPage() {
             <button
               type="submit"
               disabled={classifying || !text.trim()}
-              className="cursor-pointer rounded-full bg-accent px-5 py-2 text-sm font-medium
-                text-white transition hover:opacity-90 disabled:cursor-default disabled:opacity-40"
+              className="cursor-pointer rounded-full bg-primary px-5 py-2 text-sm font-medium
+                text-white transition hover:bg-primary-hover disabled:cursor-default disabled:opacity-40"
             >
               {classifying ? "Assigning…" : "Assign to a cluster"}
             </button>
@@ -197,8 +197,15 @@ export default function ClusteringPage() {
               <span className="text-faint">(cluster {result.cluster_id})</span>.
             </p>
 
-            <p className="mt-3 mb-1 text-xs font-medium text-muted">
-              Distance from your text to each cluster centre, nearest wins
+            <p className="mt-3 mb-1 flex items-center text-xs font-medium text-muted">
+              Straight-line distance to each cluster centre, nearest wins
+              <InfoTip label="this distance">
+                Your text becomes a vector with one number per vocabulary term.
+                Each cluster centre is the average vector of its articles.
+                k-means measures the ordinary straight-line (Euclidean)
+                distance between the two and picks the smallest. It is not a
+                cosine similarity and not a probability.
+              </InfoTip>
             </p>
             <dl className="m-0">
               {Object.entries(result.distances)
@@ -244,12 +251,14 @@ export default function ClusteringPage() {
             </dl>
 
             <p className="mt-3 text-xs leading-relaxed text-faint">
-              These are straight-line distances in the 5,000-dimension TF-IDF
-              space, not probabilities, and they do not add up to 1. Almost any
-              document sits close to distance 1 from every centre in a space
-              that large, so the numbers look alike by nature. What decides the
-              answer is the ordering, and here the gap to the runner-up is{" "}
-              {(result.margin * 100).toFixed(1)}% of its distance.
+              The values cluster around 1.0 for a reason, not by accident. Your
+              text uses a few dozen of the 5,000 terms in the vocabulary and a
+              cluster centre spreads its weight over thousands, so the two
+              vectors are nearly at right angles, and the distance between two
+              near-perpendicular unit-length vectors is close to 1. That is
+              normal for text and does not mean the match is weak. Only the
+              ordering carries meaning: here the runner-up is{" "}
+              {(result.margin * 100).toFixed(1)}% further away than the winner.
             </p>
             <p className="mt-1 text-xs leading-relaxed text-faint">
               {result.matched_term_count > 0 ? (
@@ -350,7 +359,7 @@ export default function ClusteringPage() {
             }))}
             xLabel="k"
             yLabel="Adjusted Rand Index"
-            colour="#7c3aed"
+            colour="#0f766e"
             highlightX={overview.k}
             formatY={(value) => value.toFixed(2)}
           />

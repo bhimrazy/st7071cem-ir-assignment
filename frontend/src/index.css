@@ -15,9 +15,14 @@
   --color-muted: #5f6570;
   --color-faint: #8b909a;
   --color-line: #e3e4e8;
-  --color-accent: #7c3aed;
-  --color-accent-soft: #f3ecff;
-  --color-link: #1a5fb4;
+  /* A restrained blue for interactive states, and graphite for solid
+     buttons. Kept clear of the three category colours below so a control is
+     never mistaken for a cluster. */
+  --color-accent: #0b5cad;
+  --color-accent-soft: #e7f0fa;
+  --color-primary: #21262d;
+  --color-primary-hover: #32383f;
+  --color-link: #0b5cad;
 
   --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
 }
