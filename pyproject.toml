@@ -26,6 +26,11 @@ ir-coursework = "api.main:app"
 requires = ["uv_build>=0.11.14,<0.12.0"]
 build-backend = "uv_build"
 
+[tool.uv.build-backend]
+# Four top-level packages rather than one named after the distribution: the
+# two tasks are independent, and neither owns the library they share.
+module-name = ["miniseek", "ir_search_engine", "clustering", "api"]
+
 [dependency-groups]
 dev = [
     "pytest>=9.1.1",

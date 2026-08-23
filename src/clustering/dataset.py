@@ -16,7 +16,7 @@ from pathlib import Path
 
 import httpx
 
-from clustering.paths import BACKEND_ROOT, CORPUS_PATH
+from clustering.paths import PROJECT_ROOT, CORPUS_PATH
 
 CATEGORIES: tuple[str, ...] = ("Economics", "Entertainment", "Politics")
 
@@ -194,7 +194,7 @@ def _balanced_sample(
 
 def _relative(path: Path) -> str:
     try:
-        return str(path.resolve().relative_to(BACKEND_ROOT))
+        return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
         # A cache path outside the project (a temp dir in tests, say) has no
         # meaningful relative form; the file name alone is enough.

@@ -14,16 +14,17 @@ model has never seen to one of those clusters.
 ## Layout
 
 ```
-backend/
-  src/
-    miniseek/          Search library written from scratch: analyzer,
-                       inverted index, scorers, persistence
-    ir_search_engine/  Task 1: the polite crawler and the publication schema
-    clustering/        Task 2: corpus, k-means model, evaluation  (see its README)
-    api/               FastAPI routes for both tasks, and the app itself
-  scripts/             Command line entry points
-  tests/               133 tests, no network access required
-frontend/              React and Tailwind interface for both tasks
+src/
+  miniseek/          Search library written from scratch: analyzer,
+                     inverted index, scorers, persistence
+  ir_search_engine/  Task 1: the polite crawler and the publication schema
+  clustering/        Task 2: corpus, k-means model, evaluation (see its README)
+  api/               FastAPI routes for both tasks, and the app itself
+scripts/             Command line entry points
+tests/               133 tests, no network access required
+frontend/            React and Tailwind interface for both tasks
+data/                Input data
+outputs/             Generated files, all rebuildable
 ```
 
 The two tasks are separate packages. They share exactly one thing, the text
@@ -32,7 +33,6 @@ analyzer, so that a term means the same thing in both.
 ## Running it
 
 ```bash
-cd backend
 uv sync
 
 # Task 2: fit the clustering model (downloads the BBC corpus on first run)
@@ -78,7 +78,7 @@ attribution, which is what its terms allow.
 
 - [`LEARNING.md`](LEARNING.md) is a step by step build log, written as each
   piece was built rather than afterwards.
-- [`backend/src/clustering/README.md`](backend/src/clustering/README.md)
+- [`src/clustering/README.md`](src/clustering/README.md)
   covers Task 2 on its own.
 - [`docs/bm25.md`](docs/bm25.md) is a deep dive on the ranking function, with a
   worked example that a script checks.

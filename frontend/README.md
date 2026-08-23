@@ -14,7 +14,7 @@ src/
   pages/       SearchPage, ClusteringPage
   components/  shared UI, including hand-rolled SVG charts
   api.ts       every call to the backend
-  types.ts     mirrors backend/src/api/models.py
+  types.ts     mirrors ../src/api/models.py
 ```
 
 Routing is done with the History API directly rather than a router library,

@@ -22,7 +22,7 @@ from clustering.service import ClusteringService
 from ir_search_engine.publications import open_publications
 from miniseek.collection import Collection
 
-FRONTEND_DIST = Path(__file__).resolve().parents[3] / "frontend" / "dist"
+FRONTEND_DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
 
 
 def create_app(

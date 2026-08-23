@@ -11,11 +11,11 @@ frontend/dist/
 
 # Generated artefacts. Everything here is rebuilt by:
 #   uv run python scripts/run_clustering.py
-backend/outputs/
+outputs/
 
 # Source data that is downloaded, not authored. 2.7 MB, fetched on first run
 # from http://mlg.ucd.ie/files/datasets/bbc-fulltext.zip
-backend/data/clustering/*.zip
+data/clustering/*.zip
 
 # The crawled publication corpus IS committed: it is the result of a polite,
 # rate-limited crawl that takes 7 minutes and hits a live university server,
