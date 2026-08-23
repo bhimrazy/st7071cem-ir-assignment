@@ -61,8 +61,13 @@ def test_non_indexed_fields_stay_out_of_the_index(collection):
 
 
 def test_stored_fields_filter_what_results_return(tmp_path, schema):
-    schema = Schema(fields=(Field("id", indexed=False), Field("title"),
-                            Field("secret", indexed=True, stored=False)))
+    schema = Schema(
+        fields=(
+            Field("id", indexed=False),
+            Field("title"),
+            Field("secret", indexed=True, stored=False),
+        )
+    )
     coll = Collection.open(tmp_path / "c", schema=schema)
     doc = coll.add({"id": "x", "title": "Visible", "secret": "hidden text"})
     assert coll.stored_fields(doc) == {"id": "x", "title": "Visible"}
@@ -79,7 +84,11 @@ def test_list_and_numeric_fields_are_coerced(tmp_path, schema):
 def test_update_keeps_internal_id_stable(collection):
     before = collection.get("p1").internal_id
     collection.add(
-        {**PUBLICATIONS[0], "title": "Nutrition and diet", "abstract": "Dietary intake."}
+        {
+            **PUBLICATIONS[0],
+            "title": "Nutrition and diet",
+            "abstract": "Dietary intake.",
+        }
     )
     assert collection.get("p1").internal_id == before
     assert len(collection) == 2
@@ -104,7 +113,9 @@ def test_reopening_restores_documents_and_index(tmp_path, schema):
 
     reopened = Collection.open(path)
     assert len(reopened) == 2
-    assert reopened.get("p1").fields["title"].startswith("Machine")
+    restored = reopened.get("p1")
+    assert restored is not None
+    assert restored.fields["title"].startswith("Machine")
     assert reopened.index.document_frequency("diabet") == 1
     assert reopened.schema.field("title").weight == 3.0
 
@@ -155,7 +166,10 @@ def test_writes_are_appends_not_rewrites(tmp_path, schema):
     lines = (path / LOG_FILE).read_text(encoding="utf-8").strip().splitlines()
     assert len(lines) == 4
     assert [json.loads(line)["op"] for line in lines] == [
-        "put", "put", "put", "delete",
+        "put",
+        "put",
+        "put",
+        "delete",
     ]
 
 
@@ -178,7 +192,9 @@ def test_compaction_drops_superseded_entries(tmp_path, schema):
 
     reopened = Collection.open(path)
     assert len(reopened) == 1
-    assert reopened.get("p1").fields["title"] == "Revision 4"
+    restored = reopened.get("p1")
+    assert restored is not None
+    assert restored.fields["title"] == "Revision 4"
 
 
 def test_opening_a_new_directory_without_schema_fails(tmp_path):
@@ -272,7 +288,9 @@ def test_auto_compaction_triggers_once_the_log_is_wasteful(tmp_path, schema):
         coll.sync()
         assert coll.log_entries == 1
         assert coll.should_compact() is False
-        assert coll.get("p1").fields["title"] == "Revision 29"
+        latest = coll.get("p1")
+        assert latest is not None
+        assert latest.fields["title"] == "Revision 29"
 
 
 def test_compaction_is_disableable(tmp_path, schema):

@@ -97,9 +97,9 @@ class RobotsPolicy:
             return False
 
         if response.status_code == 404:
-            # No robots.txt at all means no restrictions were published.
+            # No robots.txt at all means no restrictions were published. An
+            # empty ruleset is exactly that: can_fetch then permits every URL.
             self._parser.parse([])
-            self._parser.allow_all = True
             self._reachable = True
         elif response.is_success:
             self._parser.parse(response.text.splitlines())

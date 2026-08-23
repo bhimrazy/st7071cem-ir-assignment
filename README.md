@@ -99,6 +99,8 @@ is what its terms allow.
 
 ```bash
 uv run pytest
+uv run ruff check src tests
+uv run ty check src tests
 ```
 
 133 tests. The crawler tests use a stand-in fetcher and the clustering tests

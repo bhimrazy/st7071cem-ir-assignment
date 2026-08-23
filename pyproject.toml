@@ -24,7 +24,7 @@ ir-cluster = "clustering.cli:main"
 ir-bm25 = "miniseek.worked_example:main"
 
 [dependency-groups]
-dev = ["pytest>=9.1.1", "ruff>=0.14.0"]
+dev = ["pytest>=9.1.1", "ruff>=0.14.0", "ty>=0.0.1a20"]
 
 [build-system]
 requires = ["uv_build>=0.11.14,<0.12.0"]

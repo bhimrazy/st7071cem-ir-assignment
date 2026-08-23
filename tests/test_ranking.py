@@ -1,27 +1,41 @@
+from collections import Counter
+
 import pytest
 
 from miniseek.collection import Collection
+from miniseek.index import InvertedIndex
 from miniseek.ranking import Bm25Scorer, TfIdfScorer
 from miniseek.schema import Field, Schema
 
 CORPUS = [
-    {"id": "a", "title": "Diabetes prevention in adults",
-     "abstract": "A trial of diabetes prevention."},
-    {"id": "b", "title": "Community health outcomes",
-     "abstract": "Diabetes is mentioned once here among many other topics "
-                 "including nutrition, exercise, housing and social care."},
-    {"id": "c", "title": "Machine learning methods",
-     "abstract": "Neural networks and deep learning."},
+    {
+        "id": "a",
+        "title": "Diabetes prevention in adults",
+        "abstract": "A trial of diabetes prevention.",
+    },
+    {
+        "id": "b",
+        "title": "Community health outcomes",
+        "abstract": "Diabetes is mentioned once here among many other topics "
+        "including nutrition, exercise, housing and social care.",
+    },
+    {
+        "id": "c",
+        "title": "Machine learning methods",
+        "abstract": "Neural networks and deep learning.",
+    },
 ]
 
 
 @pytest.fixture
 def collection() -> Collection:
-    schema = Schema(fields=(
-        Field("id", indexed=False),
-        Field("title", weight=3.0),
-        Field("abstract", weight=1.0),
-    ))
+    schema = Schema(
+        fields=(
+            Field("id", indexed=False),
+            Field("title", weight=3.0),
+            Field("abstract", weight=1.0),
+        )
+    )
     coll = Collection("test", schema=schema)
     coll.add_many(CORPUS)
     return coll
@@ -44,7 +58,7 @@ def test_title_matches_outrank_abstract_matches(collection, scorer):
 
 @pytest.mark.parametrize("scorer", ["tf-idf", "bm25"])
 def test_rare_terms_outweigh_common_ones(collection, scorer):
-    """IDF: 'diabetes' (df=2) should pull harder than 'health' (df=1)... """
+    """IDF: 'diabetes' (df=2) should pull harder than 'health' (df=1)..."""
     results = collection.search("machine learning", scorer=scorer)
     assert results.hits[0].id == "c"
 
@@ -92,9 +106,7 @@ def test_pagination_windows_the_ranking(collection):
 
     second = collection.search("diabetes health learning", limit=2, offset=2)
     assert len(second.hits) == 1
-    assert [h.id for h in page] + [h.id for h in second] == [
-        h.id for h in everything
-    ]
+    assert [h.id for h in page] + [h.id for h in second] == [h.id for h in everything]
 
 
 def test_scorer_choice_is_reported(collection):
@@ -116,10 +128,12 @@ def test_term_in_every_document_contributes_nothing_to_tfidf():
     """log10(N/N) = 0, so a universal term cannot separate documents."""
     schema = Schema(fields=(Field("id", indexed=False), Field("title")))
     coll = Collection("t", schema=schema)
-    coll.add_many([
-        {"id": "1", "title": "health study"},
-        {"id": "2", "title": "health study"},
-    ])
+    coll.add_many(
+        [
+            {"id": "1", "title": "health study"},
+            {"id": "2", "title": "health study"},
+        ]
+    )
     assert coll.search("health", scorer="tf-idf").total == 2
     assert all(h.score == 0.0 for h in coll.search("health", scorer="tf-idf"))
 
@@ -128,16 +142,23 @@ def test_bm25_keeps_universal_terms_positive():
     """BM25's +1 keeps IDF positive where raw tf-idf would zero out."""
     schema = Schema(fields=(Field("id", indexed=False), Field("title")))
     coll = Collection("t", schema=schema)
-    coll.add_many([
-        {"id": "1", "title": "health study"},
-        {"id": "2", "title": "health study"},
-    ])
+    coll.add_many(
+        [
+            {"id": "1", "title": "health study"},
+            {"id": "2", "title": "health study"},
+        ]
+    )
     assert all(h.score > 0 for h in coll.search("health", scorer="bm25"))
 
 
 def test_bm25_saturates_term_frequency():
     """Ten mentions must not score ten times one mention."""
-    schema = Schema(fields=(Field("id", indexed=False), Field("body"),))
+    schema = Schema(
+        fields=(
+            Field("id", indexed=False),
+            Field("body"),
+        )
+    )
     coll = Collection("t", schema=schema)
     coll.add({"id": "once", "body": "diabetes " + "filler " * 30})
     coll.add({"id": "many", "body": "diabetes " * 10 + "filler " * 21})
@@ -153,7 +174,9 @@ def test_bm25_length_normalisation_is_tunable():
     coll.add({"id": "short", "body": "diabetes"})
     coll.add({"id": "long", "body": "diabetes " + "unrelated " * 50})
 
-    with_penalty = {h.id: h.score for h in coll.search("diabetes", scorer=Bm25Scorer(b=1.0))}
+    with_penalty = {
+        h.id: h.score for h in coll.search("diabetes", scorer=Bm25Scorer(b=1.0))
+    }
     without = {h.id: h.score for h in coll.search("diabetes", scorer=Bm25Scorer(b=0.0))}
 
     assert with_penalty["short"] > with_penalty["long"]
@@ -162,8 +185,7 @@ def test_bm25_length_normalisation_is_tunable():
 
 def test_empty_index_scores_nothing():
     for scorer in (TfIdfScorer(), Bm25Scorer()):
-        assert scorer.score(__import__("miniseek.index", fromlist=["InvertedIndex"])
-                            .InvertedIndex(), {"x": 1}, {"title": 1.0}) == {}
+        assert scorer.score(InvertedIndex(), Counter({"x": 1}), {"title": 1.0}) == {}
 
 
 def test_deleted_documents_leave_the_ranking(collection):

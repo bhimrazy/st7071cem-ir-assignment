@@ -6,6 +6,7 @@ from math import log
 
 from miniseek.collection import Collection
 from miniseek.schema import Field, Schema
+from miniseek.store import Document
 
 log_ = logging.getLogger("bm25")
 
@@ -24,6 +25,14 @@ def idf(total_documents: int, document_frequency: int) -> float:
     return log(
         1.0 + (total_documents - document_frequency + 0.5) / (document_frequency + 0.5)
     )
+
+
+def _require(collection: Collection, doc_id: str) -> Document:
+    """Every document here was just added, so a miss is a bug, not a state."""
+    document = collection.get(doc_id)
+    if document is None:
+        raise LookupError(f"{doc_id} is missing from the collection")
+    return document
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -54,7 +63,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     by_hand: dict[str, float] = {}
     for doc_id in DOCUMENTS:
-        document = collection.get(doc_id)
+        document = _require(collection, doc_id)
         posting = index.postings("diabet").get(document.internal_id)
         tf = posting.frequency_in("body") if posting else 0
         length = index.field_length(document.internal_id, "body")
@@ -84,7 +93,7 @@ def main(argv: list[str] | None = None) -> int:
         log_.info(f"  tf={tf:>5}  {tf * (K1 + 1) / (tf + K1):.4f}")
 
     log_.info("\nlength normalisation sweep for D3 (the long document):")
-    d3 = collection.get("D3")
+    d3 = _require(collection, "D3")
     length = index.field_length(d3.internal_id, "body")
     for b in (0.0, 0.25, 0.5, 0.75, 1.0):
         denominator = 1 + K1 * (1.0 - b + b * length / avgdl)

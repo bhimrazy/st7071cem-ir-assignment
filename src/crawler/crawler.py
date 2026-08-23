@@ -19,7 +19,7 @@ from .extract import (
     extract_publication,
     extract_publication_links,
 )
-from .fetcher import DisallowedByRobots, PoliteFetcher
+from .fetcher import DisallowedByRobots, Fetcher, PoliteFetcher
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +64,7 @@ class ChctCrawler:
         self,
         collection: Collection,
         *,
-        fetcher: PoliteFetcher | None = None,
+        fetcher: Fetcher | None = None,
         organisation_url: str = CHCT_ORGANISATION_URL,
         max_publications: int | None = None,
         require_chct: bool = False,

@@ -6,7 +6,7 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass
-from typing import Any, Self
+from typing import Any, Protocol, Self
 
 import httpx
 
@@ -43,6 +43,18 @@ class FetchResult:
     def unchanged(self) -> bool:
         """304 Not Modified -- the server confirmed our copy is current."""
         return self.status_code == 304
+
+
+class Fetcher(Protocol):
+    """What the crawl logic needs from a fetcher.
+
+    Deliberately narrower than PoliteFetcher, so the crawl can be exercised
+    against a stand-in that never opens a socket.
+    """
+
+    requests_made: int
+
+    def fetch(self, url: str, *, conditional: bool = True) -> FetchResult: ...
 
 
 class PoliteFetcher:

@@ -56,6 +56,13 @@ class EvaluationReport:
     extrinsic: ExtrinsicMetrics | None = None
 
 
+def _fitted_inertia(model: KMeans) -> float:
+    """`inertia_` is typed optional because it only exists after fitting."""
+    if model.inertia_ is None:
+        raise RuntimeError("KMeans has not been fitted")
+    return float(model.inertia_)
+
+
 def elbow_sweep(
     matrix: spmatrix,
     *,
@@ -82,7 +89,7 @@ def elbow_sweep(
         points.append(
             ElbowPoint(
                 k=k,
-                inertia=float(model.inertia_),
+                inertia=_fitted_inertia(model),
                 silhouette=float(score),
                 adjusted_rand_index=(
                     float(adjusted_rand_score(true_labels, cluster_ids))
@@ -131,7 +138,7 @@ def evaluate(
 ) -> EvaluationReport:
     return EvaluationReport(
         chosen_k=kmeans.n_clusters,
-        inertia=float(kmeans.inertia_),
+        inertia=_fitted_inertia(kmeans),
         silhouette=float(silhouette_score(matrix, cluster_ids)),
         elbow_sweep=elbow_sweep(
             matrix,

@@ -7,7 +7,9 @@ from miniseek.index import InvertedIndex
 def index() -> InvertedIndex:
     """A tiny pre-analyzed corpus; terms are already stemmed."""
     idx = InvertedIndex()
-    idx.add(1, {"title": ["machin", "learn", "diabet"], "abstract": ["machin", "learn"]})
+    idx.add(
+        1, {"title": ["machin", "learn", "diabet"], "abstract": ["machin", "learn"]}
+    )
     idx.add(2, {"title": ["commun", "health"], "abstract": ["health", "outcom"]})
     idx.add(3, {"title": ["deep", "learn"], "abstract": ["machin", "learn", "deep"]})
     return idx
@@ -61,7 +63,9 @@ def test_average_field_length_of_empty_index():
 
 def test_readding_a_document_replaces_rather_than_duplicates(index):
     """This is what makes the weekly re-crawl an update, not a duplication."""
-    index.add(1, {"title": ["machin", "learn", "diabet"], "abstract": ["machin", "learn"]})
+    index.add(
+        1, {"title": ["machin", "learn", "diabet"], "abstract": ["machin", "learn"]}
+    )
     assert index.document_count == 3
     assert index.document_frequency("machin") == 2
     assert index.postings("machin")[1].term_frequency == 2

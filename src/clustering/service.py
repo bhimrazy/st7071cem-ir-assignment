@@ -5,7 +5,7 @@ import threading
 from pathlib import Path
 
 from clustering.model import DEFAULT_MODEL_PATH, ClusterAssignment, ClusteringModel
-from clustering.pipeline import DEFAULT_REPORT_PATH, build
+from clustering.pipeline import DEFAULT_REPORT_PATH, Report, build
 
 
 class ClusteringService:
@@ -28,7 +28,7 @@ class ClusteringService:
         self._model_path = model_path
         self._report_path = report_path
         self._model: ClusteringModel | None = None
-        self._report: dict[str, object] | None = None
+        self._report: Report | None = None
         self._lock = threading.Lock()
 
     @property
@@ -38,7 +38,7 @@ class ClusteringService:
         return self._model
 
     @property
-    def report(self) -> dict[str, object]:
+    def report(self) -> Report:
         self._ensure_loaded()
         assert self._report is not None
         return self._report

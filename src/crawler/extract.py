@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 # The department this vertical search engine is restricted to. Matched
 # case-insensitively as a substring because the portal writes it with a
@@ -73,11 +73,23 @@ def slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", lowered).strip("-")
 
 
+def _attr(tag: Tag, name: str) -> str:
+    """One attribute as text.
+
+    BeautifulSoup returns a list for attributes HTML defines as multi-valued,
+    such as `class`, so a bare `tag[name]` is not always a string.
+    """
+    value = tag.get(name)
+    if isinstance(value, list):
+        return " ".join(value).strip()
+    return (value or "").strip()
+
+
 def _meta_values(soup: BeautifulSoup, name: str) -> list[str]:
     return [
-        tag["content"].strip()
+        content
         for tag in soup.find_all("meta", attrs={"name": name})
-        if tag.get("content")
+        if isinstance(tag, Tag) and (content := _attr(tag, "content"))
     ]
 
 
@@ -110,7 +122,8 @@ def extract_publication(html: str, url: str) -> Publication | None:
             match.group(1)
         ): f"https://pureportal.coventry.ac.uk/en/persons/{match.group(1)}/"
         for anchor in soup.find_all("a", href=True)
-        if (match := re.search(r"/en/persons/([^/\"?#]+)", anchor["href"]))
+        if isinstance(anchor, Tag)
+        and (match := re.search(r"/en/persons/([^/\"?#]+)", _attr(anchor, "href")))
     }
     author_profiles = [profile_links.get(slugify(author), "") for author in authors]
 
@@ -159,7 +172,8 @@ def extract_person_links(html: str) -> list[str]:
     slugs = {
         match.group(1)
         for anchor in soup.find_all("a", href=True)
-        if (match := re.search(r"/en/persons/([^/\"?#]+)", anchor["href"]))
+        if isinstance(anchor, Tag)
+        and (match := re.search(r"/en/persons/([^/\"?#]+)", _attr(anchor, "href")))
     }
     return sorted(
         f"https://pureportal.coventry.ac.uk/en/persons/{slug}/" for slug in slugs
@@ -172,7 +186,8 @@ def extract_publication_links(html: str) -> list[str]:
     slugs = {
         match.group(1)
         for anchor in soup.find_all("a", href=True)
-        if (match := re.search(r"/en/publications/([^/\"?#]+)", anchor["href"]))
+        if isinstance(anchor, Tag)
+        and (match := re.search(r"/en/publications/([^/\"?#]+)", _attr(anchor, "href")))
     }
     return sorted(
         f"https://pureportal.coventry.ac.uk/en/publications/{slug}/" for slug in slugs

@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends
 
 from api.dependencies import get_clustering_service
 from api.models import ClassifyRequest, ClassifyResponse, ClusteringOverview
+from clustering.pipeline import Report
 from clustering.service import ClusteringService
 
 router = APIRouter(prefix="/api/clustering", tags=["clustering"])
@@ -14,7 +15,7 @@ router = APIRouter(prefix="/api/clustering", tags=["clustering"])
 @router.get("/overview", response_model=ClusteringOverview)
 def overview(
     service: Annotated[ClusteringService, Depends(get_clustering_service)],
-) -> dict[str, object]:
+) -> Report:
     """The corpus, the clusters, the metrics and the 2D projection."""
     return service.report
 

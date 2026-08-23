@@ -7,6 +7,7 @@ matplotlib.use("Agg")  # headless: nothing here opens a window
 import matplotlib.pyplot as plt
 
 from clustering.paths import FIGURES_DIR
+from clustering.pipeline import Report
 
 CATEGORY_COLOURS = {
     "Economics": "#1f6feb",
@@ -15,7 +16,7 @@ CATEGORY_COLOURS = {
 }
 
 
-def write_all(report: dict) -> None:
+def write_all(report: Report) -> None:
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     ks = [point["k"] for point in report["elbow"]]
 
@@ -35,14 +36,17 @@ def write_all(report: dict) -> None:
         "#da3633",
         "silhouette.png",
     )
-    _line(
-        ks,
-        [p["adjusted_rand_index"] for p in report["elbow"]],
-        "Adjusted Rand Index",
-        "Agreement with true categories vs k",
-        "#7c3aed",
-        "ari.png",
-    )
+    # ARI is only recorded when the sweep was given the true labels.
+    ari = [point["adjusted_rand_index"] for point in report["elbow"]]
+    if None not in ari:
+        _line(
+            ks,
+            [float(value) for value in ari if value is not None],
+            "Adjusted Rand Index",
+            "Agreement with true categories vs k",
+            "#0f766e",
+            "ari.png",
+        )
     _scatter(report)
 
 
@@ -66,7 +70,7 @@ def _line(
     plt.close(fig)
 
 
-def _scatter(report: dict) -> None:
+def _scatter(report: Report) -> None:
     fig, ax = plt.subplots(figsize=(6.5, 5), dpi=150)
     for cluster in report["clusters"]:
         points = [

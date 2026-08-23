@@ -7,6 +7,7 @@ import json
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import TypedDict
 
 from sklearn.decomposition import PCA
 
@@ -42,10 +43,74 @@ EXAMPLE_DOCUMENTS: tuple[str, ...] = (
 )
 
 
+class CorpusInfo(TypedDict):
+    total: int
+    categories: list[str]
+    counts: dict[str, int]
+    source: str
+    original_source: str
+    citation: str
+    licence_note: str
+
+
+class ClusterInfo(TypedDict):
+    cluster_id: int
+    category: str
+    size: int
+    top_terms: list[str]
+
+
+class ElbowEntry(TypedDict):
+    k: int
+    inertia: float
+    silhouette: float
+    adjusted_rand_index: float | None
+
+
+class MetricsInfo(TypedDict):
+    adjusted_rand_index: float
+    normalized_mutual_info: float
+    homogeneity: float
+    completeness: float
+    v_measure: float
+    accuracy: float
+
+
+class ConfusionInfo(TypedDict):
+    rows: list[str]
+    cols: list[str]
+    matrix: list[list[int]]
+
+
+class ProjectedPoint(TypedDict):
+    x: float
+    y: float
+    cluster_id: int
+    category: str
+    true_category: str
+
+
+class Report(TypedDict):
+    """The JSON artefact. `frontend/src/types.ts` mirrors this shape."""
+
+    generated_at: str
+    corpus: CorpusInfo
+    vocabulary_size: int
+    k: int
+    inertia: float
+    silhouette: float
+    clusters: list[ClusterInfo]
+    elbow: list[ElbowEntry]
+    metrics: MetricsInfo
+    confusion: ConfusionInfo
+    projection: list[ProjectedPoint]
+    examples: list[str]
+
+
 @dataclass(slots=True)
 class Artifacts:
     model: ClusteringModel
-    report: dict[str, object]
+    report: Report
 
 
 def build(
@@ -86,7 +151,7 @@ def _build_report(
     cluster_ids: list[int],
     evaluation: EvaluationReport,
     matrix,
-) -> dict[str, object]:
+) -> Report:
     extrinsic = evaluation.extrinsic
     assert extrinsic is not None
 
@@ -146,7 +211,7 @@ def _build_report(
 
 def _project(
     matrix, cluster_ids: list[int], true_labels: list[str], model: ClusteringModel
-) -> list[dict[str, object]]:
+) -> list[ProjectedPoint]:
     """2D PCA of the TF-IDF vectors, for the scatter plot.
 
     PCA rather than t-SNE: deterministic, so the figure in the report and the

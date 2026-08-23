@@ -5,6 +5,7 @@ time. Otherwise a search for "Retrieving" never matches an indexed
 from __future__ import annotations
 
 import re
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from functools import lru_cache
 
@@ -65,8 +66,14 @@ class Analyzer:
         }
 
     @classmethod
-    def from_config(cls, config: dict[str, bool | int]) -> Analyzer:
-        return cls(**config)  # type: ignore[arg-type]
+    def from_config(cls, config: Mapping[str, bool | int]) -> Analyzer:
+        return cls(
+            lowercase=bool(config.get("lowercase", True)),
+            remove_stopwords=bool(config.get("remove_stopwords", True)),
+            stem=bool(config.get("stem", True)),
+            min_token_length=int(config.get("min_token_length", 2)),
+            split_compounds=bool(config.get("split_compounds", True)),
+        )
 
     def analyze(self, text: str) -> list[str]:
         """Return the ordered list of terms for `text`.

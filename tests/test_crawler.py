@@ -16,8 +16,8 @@ from crawler.extract import (
 from crawler.fetcher import FetchResult
 from crawler.politeness import RateLimiter
 from crawler.scheduler import CrawlState
-from publications import PUBLICATION_SCHEMA
 from miniseek.collection import Collection
+from publications import PUBLICATION_SCHEMA
 
 PUBLICATION_HTML = """
 <html><head>
@@ -71,6 +71,7 @@ def test_extracts_citation_metadata():
 def test_author_profiles_stay_index_aligned_with_authors():
     """External co-authors have no profile, but must not shift the pairing."""
     pub = extract_publication(PUBLICATION_HTML, "https://example.org/pub/")
+    assert pub is not None
     assert len(pub.author_profiles) == len(pub.authors)
     assert pub.author_profiles[0].endswith("/en/persons/gemma-pearce/")
     assert pub.author_profiles[1] == ""
@@ -78,6 +79,7 @@ def test_author_profiles_stay_index_aligned_with_authors():
 
 def test_chct_membership_detected_from_institution_metadata():
     pub = extract_publication(PUBLICATION_HTML, "https://example.org/pub/")
+    assert pub is not None
     assert pub.is_chct is True
 
 
@@ -86,7 +88,9 @@ def test_non_chct_publication_is_flagged():
         "Centre for Healthcare and Community Transformation (HCT)",
         "Faculty of Engineering",
     )
-    assert extract_publication(html, "https://example.org/p/").is_chct is False
+    pub = extract_publication(html, "https://example.org/p/")
+    assert pub is not None
+    assert pub.is_chct is False
 
 
 def test_page_without_citation_metadata_is_not_a_publication():
@@ -96,6 +100,7 @@ def test_page_without_citation_metadata_is_not_a_publication():
 def test_missing_optional_fields_do_not_crash():
     minimal = '<html><head><meta name="citation_title" content="Bare"></head></html>'
     pub = extract_publication(minimal, "https://example.org/p/")
+    assert pub is not None
     assert pub.title == "Bare"
     assert pub.authors == []
     assert pub.year == ""
@@ -119,7 +124,9 @@ def test_slugify_matches_portal_url_style(name, expected):
 def test_link_extraction_deduplicates():
     people = extract_person_links(ORGANISATION_HTML)
     assert len(people) == 2
-    assert all(u.startswith("https://pureportal.coventry.ac.uk/en/persons/") for u in people)
+    assert all(
+        u.startswith("https://pureportal.coventry.ac.uk/en/persons/") for u in people
+    )
 
     pubs = extract_publication_links(PERSON_HTML)
     assert len(pubs) == 2
@@ -179,8 +186,9 @@ def pages() -> dict[str, str]:
         ORG_URL: '<a href="/en/persons/gemma-pearce/">P</a>',
         PERSON_URL: PERSON_HTML,
         PUB_URL: PUBLICATION_HTML,
-        PUB2_URL: PUBLICATION_HTML.replace("Diabetes prevention in community settings",
-                                           "Another paper"),
+        PUB2_URL: PUBLICATION_HTML.replace(
+            "Diabetes prevention in community settings", "Another paper"
+        ),
     }
 
 
@@ -203,23 +211,28 @@ def test_crawl_walks_org_then_people_then_publications(pages, collection):
 
 
 def test_crawled_publications_are_searchable(pages, collection):
-    ChctCrawler(collection, fetcher=FakeFetcher(pages),
-                organisation_url=ORG_URL).crawl()
+    ChctCrawler(
+        collection, fetcher=FakeFetcher(pages), organisation_url=ORG_URL
+    ).crawl()
     results = collection.search("diabetes prevention")
     assert results.total >= 1
-    assert results.hits[0].fields["title"] == "Diabetes prevention in community settings"
+    assert (
+        results.hits[0].fields["title"] == "Diabetes prevention in community settings"
+    )
 
 
 def test_author_names_are_searchable(pages, collection):
-    ChctCrawler(collection, fetcher=FakeFetcher(pages),
-                organisation_url=ORG_URL).crawl()
+    ChctCrawler(
+        collection, fetcher=FakeFetcher(pages), organisation_url=ORG_URL
+    ).crawl()
     assert collection.search("Gemma Pearce").total == 2
 
 
 def test_recrawl_updates_rather_than_duplicates(pages, collection):
     for _ in range(3):
-        ChctCrawler(collection, fetcher=FakeFetcher(pages),
-                    organisation_url=ORG_URL).crawl()
+        ChctCrawler(
+            collection, fetcher=FakeFetcher(pages), organisation_url=ORG_URL
+        ).crawl()
     assert len(collection) == 2
 
 
@@ -236,8 +249,12 @@ def test_require_chct_filters_on_institution_metadata(pages, collection):
         "Faculty of Engineering",
     ).replace("Diabetes prevention in community settings", "Engineering paper")
 
-    stats = ChctCrawler(collection, fetcher=FakeFetcher(pages),
-                        organisation_url=ORG_URL, require_chct=True).crawl()
+    stats = ChctCrawler(
+        collection,
+        fetcher=FakeFetcher(pages),
+        organisation_url=ORG_URL,
+        require_chct=True,
+    ).crawl()
     assert stats.publications_indexed == 1
     assert stats.chct_verified == 1
 
@@ -248,10 +265,11 @@ def test_verification_is_counted_without_being_required(pages, collection):
         "Faculty of Engineering",
     ).replace("Diabetes prevention in community settings", "Engineering paper")
 
-    stats = ChctCrawler(collection, fetcher=FakeFetcher(pages),
-                        organisation_url=ORG_URL).crawl()
+    stats = ChctCrawler(
+        collection, fetcher=FakeFetcher(pages), organisation_url=ORG_URL
+    ).crawl()
     assert stats.publications_indexed == 2  # member-sourced, so kept
-    assert stats.chct_verified == 1         # but only one independently confirmed
+    assert stats.chct_verified == 1  # but only one independently confirmed
 
 
 def test_unreachable_pages_are_recorded_not_fatal(collection):
@@ -263,8 +281,12 @@ def test_unreachable_pages_are_recorded_not_fatal(collection):
 
 
 def test_max_publications_limits_the_crawl(pages, collection):
-    stats = ChctCrawler(collection, fetcher=FakeFetcher(pages),
-                        organisation_url=ORG_URL, max_publications=1).crawl()
+    stats = ChctCrawler(
+        collection,
+        fetcher=FakeFetcher(pages),
+        organisation_url=ORG_URL,
+        max_publications=1,
+    ).crawl()
     assert stats.publications_indexed == 1
 
 

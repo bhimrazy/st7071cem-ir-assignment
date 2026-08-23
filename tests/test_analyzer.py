@@ -25,8 +25,8 @@ def test_hyphenated_compounds_are_findable_by_their_parts():
     """A paper on 'yoga-based' work must be findable by searching 'yoga'."""
     analyzer = Analyzer()
     terms = analyzer.analyze("A digital yoga-based intervention")
-    assert "yoga" in terms          # the part
-    assert "yoga-bas" in terms      # and the compound
+    assert "yoga" in terms  # the part
+    assert "yoga-bas" in terms  # and the compound
 
 
 def test_possessives_are_not_split():

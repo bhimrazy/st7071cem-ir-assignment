@@ -13,8 +13,8 @@ import pytest
 from fastapi.testclient import TestClient
 
 from api.main import create_app
-from publications import PUBLICATION_SCHEMA
 from miniseek.collection import Collection
+from publications import PUBLICATION_SCHEMA
 
 PUBLICATIONS = [
     {
@@ -145,26 +145,24 @@ def test_search_hit_includes_display_fields(client: TestClient) -> None:
 
 
 def test_search_tf_idf_scorer(client: TestClient) -> None:
-    response = client.get(
-        "/api/search", params={"q": "diabetes", "scorer": "tf-idf"}
-    )
+    response = client.get("/api/search", params={"q": "diabetes", "scorer": "tf-idf"})
     assert response.status_code == 200
     assert response.json()["scorer"] == "tf-idf"
 
 
 def test_search_unknown_scorer_is_rejected(client: TestClient) -> None:
-    response = client.get(
-        "/api/search", params={"q": "diabetes", "scorer": "nonsense"}
-    )
+    response = client.get("/api/search", params={"q": "diabetes", "scorer": "nonsense"})
     assert response.status_code == 422
 
 
 def test_search_pagination(client: TestClient) -> None:
     first_page = client.get(
-        "/api/search", params={"q": "diabetes health community", "limit": 1, "offset": 0}
+        "/api/search",
+        params={"q": "diabetes health community", "limit": 1, "offset": 0},
     ).json()
     second_page = client.get(
-        "/api/search", params={"q": "diabetes health community", "limit": 1, "offset": 1}
+        "/api/search",
+        params={"q": "diabetes health community", "limit": 1, "offset": 1},
     ).json()
 
     assert len(first_page["hits"]) == 1
@@ -175,7 +173,9 @@ def test_search_pagination(client: TestClient) -> None:
 
 def test_search_invalid_limit_is_rejected(client: TestClient) -> None:
     assert client.get("/api/search", params={"q": "x", "limit": 0}).status_code == 422
-    assert client.get("/api/search", params={"q": "x", "limit": 1000}).status_code == 422
+    assert (
+        client.get("/api/search", params={"q": "x", "limit": 1000}).status_code == 422
+    )
 
 
 def test_search_invalid_offset_is_rejected(client: TestClient) -> None:
@@ -237,7 +237,7 @@ def test_author_lists_their_publications(client: TestClient) -> None:
     assert body["name"] == "Alice Smith"
     assert body["publication_count"] == 2  # pub/1 and pub/3
     assert body["publication_count"] == len(body["publications"])
-    assert body["co_author_count"] == 1    # Bob Jones
+    assert body["co_author_count"] == 1  # Bob Jones
     assert body["first_year"] == "2023"
     assert body["last_year"] == "2024"
 

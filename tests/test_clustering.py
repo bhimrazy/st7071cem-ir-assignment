@@ -182,9 +182,7 @@ class TestPrediction:
 
 
 class TestPersistence:
-    def test_save_and_load_roundtrip_predicts_identically(
-        self, fitted_model, tmp_path
-    ):
+    def test_save_and_load_roundtrip_predicts_identically(self, fitted_model, tmp_path):
         path = tmp_path / "model.pkl"
         fitted_model.save(path)
         reloaded = ClusteringModel.load(path)
@@ -253,7 +251,10 @@ class TestDatasetLoading:
         except ConnectionError:
             pytest.skip("no cached corpus and no network access")
 
-        if corpus.provenance.source == "synthetic-fallback" and not DEFAULT_CACHE_PATH.exists():
+        if (
+            corpus.provenance.source == "synthetic-fallback"
+            and not DEFAULT_CACHE_PATH.exists()
+        ):
             pytest.skip("only the synthetic fallback corpus is available")
 
         assert len(corpus) >= 100
