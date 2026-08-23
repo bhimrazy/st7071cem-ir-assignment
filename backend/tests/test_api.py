@@ -12,7 +12,7 @@ from collections.abc import Iterator
 import pytest
 from fastapi.testclient import TestClient
 
-from ir_search_engine.main import create_app
+from api.main import create_app
 from ir_search_engine.publications import PUBLICATION_SCHEMA
 from miniseek.collection import Collection
 

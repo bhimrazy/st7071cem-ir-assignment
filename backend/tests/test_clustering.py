@@ -11,9 +11,9 @@ from __future__ import annotations
 
 import pytest
 
-from ir_search_engine.clustering.dataset import DEFAULT_CACHE_PATH, load_corpus
-from ir_search_engine.clustering.evaluate import elbow_sweep, evaluate
-from ir_search_engine.clustering.model import ClusteringModel
+from clustering.dataset import DEFAULT_CACHE_PATH, load_corpus
+from clustering.evaluate import elbow_sweep, evaluate
+from clustering.model import ClusteringModel
 
 # Three clearly separated topics with enough within-topic vocabulary overlap
 # that K-means has something real to cluster on, and enough documents per

@@ -1,7 +1,7 @@
 [project]
-name = "ir-search-engine"
+name = "st7071cem-ir-assignment"
 version = "0.1.0"
-description = "Add your description here"
+description = "Vertical search engine and document clustering system (ST7071CEM)"
 readme = "README.md"
 authors = [
     { name = "bhimrazy", email = "bhimrajyadav977@gmail.com" }
