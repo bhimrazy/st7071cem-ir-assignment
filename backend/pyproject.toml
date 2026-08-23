@@ -1,0 +1,32 @@
+[project]
+name = "ir-search-engine"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "bhimrazy", email = "bhimrajyadav977@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "fastapi[standard]>=0.141.1",
+    "httpx>=0.28.1",
+    "joblib>=1.5.3",
+    "lxml>=6.1.2",
+    "matplotlib>=3.11.1",
+    "nltk>=3.10.3",
+    "pandas>=3.0.5",
+    "scikit-learn>=1.9.0",
+]
+
+[project.scripts]
+ir-coursework = "api.main:app"
+
+[build-system]
+requires = ["uv_build>=0.11.14,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
