@@ -1,24 +1,7 @@
-"""Scheduling the weekly re-crawl.
-
-The brief asks for the crawler to "be scheduled to look for new information,
-say, once per week ... ideally automatically, as a scheduled task", and to
-"update the index with the new data" on each run.
-
-Two ways to run it, deliberately:
-
-**In-process** (`run_forever`) -- a supervised loop that sleeps between runs.
-Self-contained, nothing external to configure, and convenient for a
-demonstration. The cost is that scheduling only survives as long as the
-process does.
-
-**Operating-system scheduler** (cron / launchd / systemd timer) -- the correct
-choice for real deployment, because the OS restarts it after a reboot and
-keeps its own logs. `scripts/crawl.py --once` exists precisely so a cron entry
-can call it.
-
-State is written to disk after every run so the next one -- in either mode --
-knows when the last successful crawl happened.
-"""
+"""`run_forever` is a supervised in-process loop, convenient for a demonstration
+but only alive as long as the process. For real deployment prefer the OS
+scheduler calling `ir-crawl --once`, which survives reboots and keeps its own
+logs. Either way the last run time is written to disk."""
 
 from __future__ import annotations
 

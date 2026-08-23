@@ -1,8 +1,5 @@
-"""Pydantic response models for both tasks' APIs.
-
-Declared explicitly rather than returned as raw dicts so FastAPI can generate
-a typed OpenAPI schema at /docs.
-"""
+"""Declared explicitly rather than returned as raw dicts, so FastAPI can generate
+a typed OpenAPI schema at /docs."""
 
 from __future__ import annotations
 

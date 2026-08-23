@@ -1,5 +1,3 @@
-"""TF-IDF + K-means clustering, with assignment of new documents."""
-
 from __future__ import annotations
 
 import pickle

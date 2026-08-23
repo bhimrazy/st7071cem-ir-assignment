@@ -1,27 +1,11 @@
-"""A collection: schema + analyzer + document store + inverted index, persisted.
+"""Schema, analyzer, document store and inverted index, persisted together.
 
-Storage design
---------------
-Documents are the source of truth and the index is rebuilt from them on load.
-That makes drift between the two impossible by construction.
-
-The documents themselves live in an **append-only log**. Writing a change means
-appending one line; it never rewrites existing data. The alternative -- keeping
-one JSON file and rewriting it on every change -- costs O(N) per write, so
-updating 5 publications in a corpus of 800 would rewrite all 800.
-
-The cost of an append-only log is that superseded entries accumulate, so
-replaying it gets slower over time. `compact()` rewrites the log keeping only
-the live version of each document. This log-plus-compaction shape is what
-RocksDB (and therefore Typesense) does underneath.
-
-Durability
-----------
-Appends land in a buffer, not on the platter. Calling fsync on every write is
-safe but slow; never calling it risks losing recent writes to a crash. A
-background thread therefore syncs on an interval -- the same compromise Redis
-offers as `appendfsync everysec`. That thread also triggers compaction once
-the log has accumulated enough dead entries to be worth rewriting.
+Documents are the source of truth and the index is rebuilt from them on load,
+so the two cannot drift apart. Documents live in an append-only log: a write
+appends one line rather than rewriting a whole file, and `compact()` later
+rewrites the log keeping only the live version of each document. A background
+thread fsyncs on an interval, trading a small window of recent writes against
+paying for durability on every append.
 
 On disk:
 

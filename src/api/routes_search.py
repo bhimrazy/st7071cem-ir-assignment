@@ -1,8 +1,5 @@
-"""Task 1 routes: search, browse, author listings and corpus stats.
-
-Read-only throughout: the crawler owns writing to the collection, so the API
-can run safely against a corpus a separate crawl process is updating.
-"""
+"""Read-only throughout: the crawler owns writing to the collection, so the API
+can run safely against a corpus a separate crawl process is updating."""
 
 from __future__ import annotations
 

@@ -1,8 +1,5 @@
-"""A polite HTTP fetcher: rate limited, robots-aware, cache-aware.
-
-Separated from the crawl logic so the "how do we ask for a page" concern and
-the "which pages do we want" concern can be tested independently.
-"""
+"""Separated from the crawl logic so "how do we ask for a page" and "which pages
+do we want" can be tested apart."""
 
 from __future__ import annotations
 

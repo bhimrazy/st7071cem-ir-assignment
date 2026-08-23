@@ -1,13 +1,9 @@
-"""The inverted index: the core data structure of every search engine.
+"""A forward index maps document to terms, which makes "which documents contain
+this word" a full scan. Inverting it to term to documents makes the same
+question one dictionary lookup, whatever the corpus size.
 
-A *forward* index maps document -> terms, which is the obvious layout and the
-useless one: answering "which documents contain 'diabetes'?" would mean
-scanning every document. An *inverted* index flips it to term -> documents, so
-the same question is a single dictionary lookup regardless of corpus size.
-
-Each posting records not just that a term occurs in a document but how often
-(needed for ranking) and at which positions (needed for phrase queries).
-"""
+Postings carry frequency, which ranking needs, and positions, which phrase
+queries would need."""
 
 from __future__ import annotations
 

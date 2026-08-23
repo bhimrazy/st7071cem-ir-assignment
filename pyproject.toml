@@ -3,6 +3,7 @@ name = "st7071cem-ir-assignment"
 version = "0.1.0"
 description = "Vertical search engine and document clustering system"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.14"
 authors = [{ name = "bhimrazy", email = "bhimrajyadav977@gmail.com" }]
 
@@ -16,6 +17,11 @@ dependencies = [
     "scipy>=1.16.0",           # sparse matrix types
     "matplotlib>=3.11.1",      # figures written by scripts/
 ]
+
+[project.scripts]
+ir-crawl = "crawler.cli:main"
+ir-cluster = "clustering.cli:main"
+ir-bm25 = "miniseek.worked_example:main"
 
 [dependency-groups]
 dev = ["pytest>=9.1.1", "ruff>=0.14.0"]

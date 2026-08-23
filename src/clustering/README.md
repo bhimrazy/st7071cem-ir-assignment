@@ -41,18 +41,19 @@ centroids are already fixed.
 | `evaluate.py` | Silhouette, inertia, ARI, NMI, homogeneity, completeness, V-measure, confusion matrix. |
 | `pipeline.py` | Runs everything once and writes the model plus a JSON report. |
 | `service.py` | Loads those artefacts for the API, building them on first use if missing. |
+| `figures.py` | The plots, drawn from a report. |
+| `cli.py` | The `ir-cluster` command. |
 
 ## Running it
 
 ```bash
-uv run python scripts/run_clustering.py              # 200 per category
-uv run python scripts/run_clustering.py --all        # every article
-uv run python scripts/run_clustering.py --per-category 100
+uv run ir-cluster                      # 200 per category
+uv run ir-cluster --all                # every article
+uv run ir-cluster --per-category 100
 ```
 
-That writes `outputs/clustering/kmeans_model.pkl`,
-`outputs/clustering/clustering_report.json` and the figures. The API reads
-those files, so the server never has to refit.
+The first run downloads the corpus. Everything it writes is described under
+[Where the data and the model live](#where-the-data-and-the-model-live).
 
 ## Results
 
@@ -71,6 +72,68 @@ cluster swallowed another. Of the 19 documents placed in the wrong cluster,
 10 were Politics and Economics landing in each other, which is the boundary
 you would expect to be fuzziest. Entertainment is barely confused with
 anything.
+
+## Where the data and the model live
+
+Nothing is committed. The corpus downloads on first use and the model is built
+from it, so a fresh checkout only needs one command.
+
+```
+data/clustering/
+  bbc-fulltext.zip                 2.7 MB, downloaded from mlg.ucd.ie
+  bbc-fulltext.provenance.json     where it came from and what was sampled
+
+outputs/clustering/
+  kmeans_model.pkl                 the fitted vectoriser and clusterer
+  clustering_report.json           metrics, top terms, elbow sweep, 2D projection
+  figures/                         elbow.png, silhouette.png, ari.png, pca_scatter.png
+```
+
+Inputs sit in `data/` and generated files in `outputs/`, so it is always clear
+what can be deleted and rebuilt. Both roots move with `IR_DATA_DIR` and
+`IR_OUTPUT_DIR`. All the paths are defined once, in `paths.py`.
+
+### What happens on a run
+
+```mermaid
+sequenceDiagram
+    participant U as ir-cluster
+    participant D as dataset.py
+    participant P as pipeline.py
+    participant O as outputs/
+
+    U->>D: load_corpus(per_category=200)
+    alt zip not cached
+        D->>D: download from mlg.ucd.ie
+        D->>D: save to data/clustering/
+    end
+    D->>D: read bbc/<folder>/*.txt from the zip
+    D->>D: keep 3 folders, shuffle, take 200 each
+    D->>D: write the provenance sidecar
+    D-->>U: Corpus (600 documents plus labels)
+    U->>P: build(corpus)
+    P->>P: fit TF-IDF, then k-means
+    P->>P: evaluate, sweep k, project to 2D
+    P->>O: kmeans_model.pkl and clustering_report.json
+```
+
+The zip is read straight out of the archive each time rather than unpacked.
+The sample is drawn with a fixed seed, so the same 600 documents are chosen on
+every machine.
+
+### How the API uses it
+
+`service.py` holds one `ClusteringService` for the whole process. It loads the
+pickle and the JSON report on first request, behind a lock so two simultaneous
+first requests do not both pay for it. If the artefacts are missing it builds
+them there and then, which means the server works on a fresh checkout without
+anyone having run `ir-cluster` first, at the cost of a slow first request.
+
+Classifying reuses the fitted vectoriser rather than fitting anything new. The
+text goes through the same analyzer, is projected into the vocabulary learned
+at fit time, and is handed to the nearest centroid. Words the model never saw
+carry no weight at all, which is why the interface reports how many known terms
+your text actually matched.
 
 ## Two things worth knowing
 

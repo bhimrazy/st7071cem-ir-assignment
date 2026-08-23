@@ -1,9 +1,5 @@
-"""Request-scoped access to the objects the app owns.
-
-Both are created once in `main.py`'s lifespan and hung off `app.state`, so
-routes reach them through a dependency rather than a module-level global and
-tests can inject their own.
-"""
+"""Both objects are built once in `main.py`'s lifespan and hung off `app.state`,
+so routes reach them through a dependency and tests can inject their own."""
 
 from __future__ import annotations
 

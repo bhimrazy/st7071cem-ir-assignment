@@ -1,8 +1,5 @@
-"""Fit the clustering model once and write the artefacts the API and report read.
-
-Everything expensive -- the k sweep, the silhouette scores, the PCA projection
--- happens here, not per request. The API only loads the results.
-"""
+"""Everything expensive happens here rather than per request: the k sweep, the
+silhouette scores, the PCA projection."""
 
 from __future__ import annotations
 

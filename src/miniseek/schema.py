@@ -1,10 +1,5 @@
-"""Collection schema: which fields exist and how each one is treated.
-
-A publication is not a flat blob of text -- a term in the title is a much
-stronger signal of relevance than the same term buried in an abstract. The
-schema is what lets the index keep fields apart so ranking can weight them
-differently later.
-"""
+"""A term in the title is a stronger signal than the same term in an abstract, so
+fields are kept apart in the index and weighted separately at ranking time."""
 
 from __future__ import annotations
 

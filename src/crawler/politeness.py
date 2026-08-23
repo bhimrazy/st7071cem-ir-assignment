@@ -1,17 +1,6 @@
-"""Politeness: obeying robots.txt and not hammering the server.
-
-The brief is explicit that the crawler "preserves the robots.txt rules and does
-not hit the servers unnecessarily or too fast". Politeness is not a nicety
-here -- an impolite crawler gets the university's IP range blocked, and a
-crawler that ignores robots.txt is simply misbehaving.
-
-Three mechanisms, in increasing order of importance:
-
-1. Identify honestly in the User-Agent, so an administrator who sees the
-   traffic knows what it is and can contact whoever runs it.
-2. Obey robots.txt, including the Crawl-delay directive.
-3. Rate limit, so bursts cannot happen even if the code above is wrong.
-"""
+"""Three mechanisms: identify honestly in the User-Agent, obey robots.txt
+including Crawl-delay, and rate limit so a burst cannot happen even if the
+rest is wrong."""
 
 from __future__ import annotations
 

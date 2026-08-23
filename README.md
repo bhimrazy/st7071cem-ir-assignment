@@ -10,7 +10,6 @@ src/
   publications/   The schema both sides agree on, and where it is stored
   clustering/     Task 2: corpus, k-means model, evaluation
   api/            FastAPI routes for both tasks, and the app itself
-scripts/          Command line entry points
 tests/            133 tests, none of which touch the network
 frontend/         React and Tailwind interface for both tasks
 data/             Input data
@@ -23,9 +22,12 @@ in `miniseek`, so that a term means the same in both.
 
 ## Getting started
 
+Needs Python 3.14 and [uv](https://docs.astral.sh/uv/getting-started/installation/),
+plus Node 20 or later for the frontend.
+
 ```bash
 uv sync
-uv run python scripts/run_clustering.py   # fit Task 2, about 30 seconds
+uv run ir-cluster                 # fit Task 2, about 30 seconds
 uv run uvicorn api.main:app --reload
 ```
 
@@ -55,10 +57,10 @@ The index, the ranking and the persistence layer are written from scratch in
 they can be compared on the same data: BM25 and TF-IDF with cosine similarity.
 
 ```bash
-uv run python scripts/crawl.py --once       # about 7 minutes, polite pacing
-uv run python scripts/crawl.py --schedule   # weekly, as the brief asks
-uv run python scripts/crawl.py --status     # when it last ran
-uv run python scripts/bm25_worked_example.py
+uv run ir-crawl --once       # about 7 minutes, polite pacing
+uv run ir-crawl --schedule   # weekly, as the brief asks
+uv run ir-crawl --status     # when it last ran
+uv run ir-bm25               # checks BM25 against the formula worked by hand
 ```
 
 [`src/crawler/README.md`](src/crawler/README.md) covers the collection side on
@@ -78,14 +80,15 @@ the interface.
 articles land in the cluster matching their true category.
 
 ```bash
-uv run python scripts/run_clustering.py                  # 200 per category
-uv run python scripts/run_clustering.py --all            # every article
-uv run python scripts/run_clustering.py --per-category 100
+uv run ir-cluster                     # 200 per category
+uv run ir-cluster --all               # every article
+uv run ir-cluster --per-category 100
 ```
 
 [`src/clustering/README.md`](src/clustering/README.md) covers this task on its
-own, including how k was chosen and why one preprocessing setting mattered
-more than the algorithm.
+own: where the corpus is downloaded to, how the model is built and loaded, how
+k was chosen, and why one preprocessing setting mattered more than the
+algorithm did.
 
 The BBC corpus is not committed. It downloads on first run from
 <http://mlg.ucd.ie/files/datasets/bbc-fulltext.zip> and is cached. It remains
@@ -100,3 +103,9 @@ uv run pytest
 
 133 tests. The crawler tests use a stand-in fetcher and the clustering tests
 use a fixture, so the suite runs offline and never hits a real server.
+
+## Licence
+
+MIT, see [LICENSE](LICENSE). That covers the code only. The crawled
+publication metadata belongs to its publishers, and the BBC corpus keeps its
+own terms, described under Task 2.

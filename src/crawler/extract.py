@@ -1,14 +1,7 @@
-"""Parsing a pureportal page into a structured publication record.
-
-The portal embeds Highwire Press ``citation_*`` meta tags -- the same
-machine-readable metadata Google Scholar itself consumes. Preferring those
-over scraping the rendered markup is the single most important decision in
-this module: meta tags are a documented contract intended for machines, while
-CSS class names are an implementation detail that changes whenever the site is
-restyled.
-
-The rendered HTML is used only for the abstract, which has no meta tag.
-"""
+"""The portal embeds Highwire Press `citation_*` meta tags, the same metadata
+Google Scholar consumes. Those are a documented contract for machines, whereas
+CSS class names change whenever the site is restyled. Only the abstract is
+taken from the rendered markup, because it has no meta tag."""
 
 from __future__ import annotations
 

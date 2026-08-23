@@ -1,8 +1,5 @@
-"""BBC News corpus for the clustering task: Economics, Entertainment, Politics.
-
-Downloaded from the dataset's own home page rather than a third-party copy, so
-the data we cluster is provably the data we cite.
-"""
+"""Downloaded from the dataset's own home page rather than a third-party copy, so
+the data we cluster is provably the data we cite."""
 
 from __future__ import annotations
 

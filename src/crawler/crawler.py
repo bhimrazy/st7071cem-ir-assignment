@@ -1,27 +1,8 @@
-"""The CHCT crawler.
-
-Crawl strategy
---------------
-The obvious route -- paginating the department's publication listing -- is not
-available: those listing URLs sit behind a bot-protection challenge and return
-403 to any HTTP client. Entity pages (the organisation, each person, each
-publication) are served normally.
-
-So the crawl is **member-seeded**, which happens to match the brief's
-definition of the corpus more directly anyway:
-
-    organisation page  ->  member profile pages  ->  publication pages
-
-The brief asks for publications where "at least one of the co-authors is a
-member of this department". Starting from the member list expresses exactly
-that, and each publication page is then verified independently through its
-``citation_author_institution`` metadata rather than trusted because of how we
-reached it.
-
-Every run updates the existing index in place: unchanged publications are
-re-indexed harmlessly, changed ones replace their previous version, and
-nothing is duplicated.
-"""
+"""Member-seeded: organisation page, then member profiles, then publications.
+The department's publication listing sits behind a bot check and returns 403,
+while entity pages are served normally. Starting from members also matches the
+brief's criterion directly, since it asks for publications with at least one
+member as co-author."""
 
 from __future__ import annotations
 

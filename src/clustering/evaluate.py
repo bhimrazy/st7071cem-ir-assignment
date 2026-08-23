@@ -1,5 +1,3 @@
-"""Cluster quality: intrinsic metrics (no labels) and extrinsic ones (against labels)."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field

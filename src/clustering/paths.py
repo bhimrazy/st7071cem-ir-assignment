@@ -1,9 +1,5 @@
-"""Where the clustering task reads its input and writes its output.
-
-Separated so the `parents[...]` walk to the project root lives in one place,
-and so inputs (the corpus we downloaded) stay distinct from outputs (the
-model and figures we produced, which are regenerable).
-"""
+"""Inputs live in `data/` and generated files in `outputs/`, and the walk to the
+project root happens here rather than in five places."""
 
 from __future__ import annotations
 

@@ -1,5 +1,3 @@
-"""Loads the fitted model for the API, building it on first use if absent."""
-
 from __future__ import annotations
 
 import json

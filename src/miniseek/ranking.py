@@ -1,18 +1,7 @@
-"""Ranking: turning a set of matching documents into an ordered list.
-
-Boolean retrieval answers "does this document match?". That is not enough --
-a query for "diabetes" might match 200 publications, and the user reads three.
-Ranking answers the harder question: **which matches are most relevant?**
-
-Two scoring models are implemented so they can be compared directly:
-
-- `TfIdfScorer`  -- the classical vector space model (SMART lnc.ltc)
-- `Bm25Scorer`   -- the probabilistic model modern engines actually use
-
-Both share the same intuition, which is worth stating plainly before the
-formulas: a term matters more when it appears **often in this document** (term
-frequency) and **rarely across the corpus** (inverse document frequency).
-"""
+"""Two models behind one protocol so they can be compared on identical data:
+TF-IDF with cosine similarity (SMART lnc.ltc), and BM25. Both rest on the same
+idea, that a term matters more when it is frequent in this document and rare
+across the corpus."""
 
 from __future__ import annotations
 

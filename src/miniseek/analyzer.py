@@ -1,10 +1,6 @@
-"""Text analysis: turning raw text into the terms that go into the index.
-
-The same analyzer must be applied to documents at index time and to queries at
-search time -- otherwise a query for "Retrieving" would never match a document
-containing "retrieval", because the index only ever stores the stemmed form.
-Keeping this in one place is what guarantees that symmetry.
-"""
+"""The same analyzer must run over documents at index time and queries at search
+time. Otherwise a search for "Retrieving" never matches an indexed
+"retrieval", because the index only ever holds the stemmed form."""
 
 from __future__ import annotations
 

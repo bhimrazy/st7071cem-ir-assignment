@@ -1,16 +1,3 @@
-"""Run the CHCT crawler.
-
-    uv run python scripts/crawl.py --once            # one crawl, then exit
-    uv run python scripts/crawl.py --once --limit 10 # small run, for testing
-    uv run python scripts/crawl.py --schedule        # weekly loop
-    uv run python scripts/crawl.py --status          # when did it last run?
-
-For real deployment prefer the OS scheduler over --schedule, e.g. a weekly
-cron entry:
-
-    0 3 * * 1  cd /path/to/backend && uv run python scripts/crawl.py --once
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -18,10 +5,12 @@ import json
 import logging
 import sys
 
-from crawler import ChctCrawler, PoliteFetcher
-from crawler.crawler import BASE_URL
+from crawler.crawler import BASE_URL, ChctCrawler
+from crawler.fetcher import PoliteFetcher
 from crawler.scheduler import WEEKLY_SECONDS, CrawlState, run_forever
 from publications import DEFAULT_DATA_DIR, open_publications
+
+log = logging.getLogger("crawl")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -31,19 +20,13 @@ def build_parser() -> argparse.ArgumentParser:
     mode.add_argument("--schedule", action="store_true", help="run weekly, forever")
     mode.add_argument("--status", action="store_true", help="show last-run info")
     parser.add_argument(
-        "--limit",
-        type=int,
-        default=None,
-        help="maximum publications to index (for testing)",
+        "--limit", type=int, help="maximum publications to index (for testing)"
     )
     parser.add_argument(
-        "--interval-hours",
-        type=float,
-        default=None,
-        help="override the weekly interval (for testing)",
+        "--interval-hours", type=float, help="override the weekly schedule"
     )
-    parser.add_argument("--data-dir", default=None, help="collection directory")
-    parser.add_argument("--verbose", "-v", action="store_true")
+    parser.add_argument("--data-dir", help="where the collection is stored")
+    parser.add_argument("-v", "--verbose", action="store_true")
     return parser
 
 
@@ -59,20 +42,13 @@ def main(argv: list[str] | None = None) -> int:
     interval = args.interval_hours * 3600 if args.interval_hours else WEEKLY_SECONDS
 
     if args.status:
-        last = state.last_run()
-        print(f"data directory : {data_dir}")
-        print(f"last run       : {last.isoformat() if last else 'never'}")
-        print(f"due in         : {state.seconds_until_due(interval) / 3600:.1f} hours")
-        stats = state.read().get("last_stats")
-        if stats:
-            print("last stats     :")
-            print(json.dumps(stats, indent=2))
+        _report_status(state, data_dir, interval)
         return 0
 
     def crawl_once() -> dict:
         collection = open_publications(data_dir)
         fetcher = PoliteFetcher(BASE_URL)
-        print(f"crawl delay from robots.txt: {fetcher.crawl_delay:.1f}s")
+        log.info("crawl delay from robots.txt: %.1fs", fetcher.crawl_delay)
         try:
             crawler = ChctCrawler(
                 collection, fetcher=fetcher, max_publications=args.limit
@@ -83,16 +59,24 @@ def main(argv: list[str] | None = None) -> int:
             collection.close()
 
         payload = stats.as_dict() | {"fetcher": fetcher.stats()}
-        print(json.dumps(payload, indent=2))
+        log.info("crawl finished: %s", json.dumps(payload))
         return payload
 
     if args.once:
-        stats = crawl_once()
-        state.write(stats)
+        state.write(crawl_once())
         return 0
 
     run_forever(crawl_once, state, interval_seconds=interval)
     return 0
+
+
+def _report_status(state: CrawlState, data_dir: object, interval: float) -> None:
+    last = state.last_run()
+    log.info("data directory: %s", data_dir)
+    log.info("last run:       %s", last.isoformat() if last else "never")
+    log.info("due in:         %.1f hours", state.seconds_until_due(interval) / 3600)
+    if stats := state.read().get("last_stats"):
+        log.info("last stats:     %s", json.dumps(stats))
 
 
 if __name__ == "__main__":

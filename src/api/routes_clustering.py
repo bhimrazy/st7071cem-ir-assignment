@@ -1,5 +1,3 @@
-"""Task 2 routes: inspect the fitted clustering, and assign a new document to it."""
-
 from __future__ import annotations
 
 from typing import Annotated

@@ -55,14 +55,15 @@ itself, with the crawler's real user agent, and feeds the text to the parser.
 | `extract.py` | Turns a publication page into a `Publication` record |
 | `crawler.py` | Walks organisation to members to publications |
 | `scheduler.py` | Weekly runs, and remembering when the last one was |
+| `cli.py` | The `ir-crawl` command |
 
 ## Running it
 
 ```bash
-uv run python scripts/crawl.py --once       # one pass, about 7 minutes
-uv run python scripts/crawl.py --schedule   # weekly, as the brief asks
-uv run python scripts/crawl.py --status     # when it last ran, and what it found
-uv run python scripts/crawl.py --once --limit 5   # a quick sample
+uv run ir-crawl --once             # one pass, about 7 minutes
+uv run ir-crawl --schedule         # weekly, as the brief asks
+uv run ir-crawl --status           # when it last ran, and what it found
+uv run ir-crawl --once --limit 5   # a quick sample
 ```
 
 A full run fetches 91 pages and stores 71 publications from 19 members.

@@ -1,8 +1,4 @@
-"""The publication collection: schema and how to open it.
-
-Shared by the crawler (which writes), the API (which reads) and the scheduler,
-so all three agree on field names and weights.
-"""
+"""Shared by the crawler, which writes it, and the API, which reads it."""
 
 from __future__ import annotations
 

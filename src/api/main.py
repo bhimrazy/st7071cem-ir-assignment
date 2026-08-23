@@ -1,12 +1,8 @@
-"""FastAPI app serving both coursework tasks and the React frontend.
-
-Task 1 (search) and Task 2 (clustering) are independent packages; this module
-is the only place that knows about both, mounting their routers behind one
+"""The only module that knows about both tasks. It mounts their routers behind one
 origin so the UI can switch between them without a second deployment.
 
-In development Vite serves the frontend on :5173 and proxies /api here. After
-`npm run build` this app serves frontend/dist itself.
-"""
+Vite serves the frontend in development and proxies /api here. After
+`npm run build` this app serves frontend/dist itself."""
 
 from __future__ import annotations
 
