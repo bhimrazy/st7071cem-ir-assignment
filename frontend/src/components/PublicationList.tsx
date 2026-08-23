@@ -5,13 +5,7 @@ interface PublicationListProps {
   onSelectAuthor: (name: string) => void
 }
 
-/**
- * A plain listing of publications, with no relevance score.
- *
- * Shared by the landing page's default listing and the author page: in both
- * cases there is no query, so there is nothing for a score to measure and the
- * ordering is by year rather than by rank.
- */
+// No score: there is no query here, so ordering is by year rather than rank.
 function PublicationList({ publications, onSelectAuthor }: PublicationListProps) {
   return (
     <ul className="m-0 list-none p-0">

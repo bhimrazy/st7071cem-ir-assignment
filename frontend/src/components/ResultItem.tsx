@@ -13,13 +13,8 @@ interface AuthorLinkProps {
   onSelectAuthor: (name: string) => void
 }
 
-/**
- * An author's name, opening their page inside this engine.
- *
- * A button rather than an anchor: this navigates within the application, and
- * using an <a> would mislead assistive technology and break middle-click.
- * The outward link to pureportal lives on the author page itself.
- */
+// A button, not an anchor: this navigates in-app, so an <a> would mislead
+// assistive technology and break middle-click.
 function AuthorLink({ name, onSelectAuthor }: AuthorLinkProps) {
   return (
     <button

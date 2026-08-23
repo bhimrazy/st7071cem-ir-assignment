@@ -1,12 +1,6 @@
 import { useId, useState } from "react"
 
-/**
- * A small "i" that explains a term on hover or focus.
- *
- * Opens on focus as well as hover so it is reachable from the keyboard, and
- * the panel is positioned from the right edge so it cannot push the page
- * sideways when the icon sits near the end of a row.
- */
+// Opens on focus as well as hover so it is reachable from the keyboard.
 export default function InfoTip({ label, children }: {
   label: string
   children: React.ReactNode

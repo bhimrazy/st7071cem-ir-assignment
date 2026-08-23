@@ -196,15 +196,19 @@ export default function ClusteringPage() {
               cluster{" "}
               <span className="text-faint">(cluster {result.cluster_id})</span>.
             </p>
+            <p className="mt-1 text-sm text-muted">{verdict(result)}</p>
 
-            <p className="mt-3 mb-1 flex items-center text-xs font-medium text-muted">
-              Straight-line distance to each cluster centre, nearest wins
+            <p className="mt-4 mb-2 flex items-center text-xs font-medium text-muted">
+              Distance to each cluster centre &mdash; lower is closer, and the
+              lowest wins
               <InfoTip label="this distance">
-                Your text becomes a vector with one number per vocabulary term.
-                Each cluster centre is the average vector of its articles.
-                k-means measures the ordinary straight-line (Euclidean)
-                distance between the two and picks the smallest. It is not a
-                cosine similarity and not a probability.
+                k-means does not produce a score or a probability. The only
+                number it computes is a distance. Your text becomes a vector
+                with one entry per vocabulary term, each cluster centre is the
+                average vector of its articles, and k-means measures the
+                ordinary straight-line (Euclidean) distance between the two,
+                then picks the smallest. Lower is better, and there is no upper
+                bound to compare against.
               </InfoTip>
             </p>
             <dl className="m-0">
@@ -216,10 +220,11 @@ export default function ClusteringPage() {
                   return (
                     <div key={category} className="flex items-center gap-3 py-1">
                       <dt
-                        className={`w-28 shrink-0 text-sm ${
+                        className={`flex w-36 shrink-0 items-baseline gap-1.5 text-sm ${
                           isWinner ? "font-medium text-ink" : "text-muted"
                         }`}
                       >
+                        <span className="w-3 text-xs text-faint">{index + 1}</span>
                         {category}
                       </dt>
                       <dd className="m-0 flex flex-1 items-center gap-3">
@@ -241,8 +246,14 @@ export default function ClusteringPage() {
                         <span className="w-14 text-right text-xs tabular-nums text-faint">
                           {distance.toFixed(4)}
                         </span>
-                        <span className="w-24 text-right text-xs tabular-nums text-faint">
-                          {index === 0 ? "nearest" : `+${gap.toFixed(4)} further`}
+                        <span
+                          className={`w-32 text-right text-xs tabular-nums ${
+                            isWinner ? "font-medium text-ink" : "text-faint"
+                          }`}
+                        >
+                          {index === 0
+                            ? "closest"
+                            : `${gap.toFixed(4)} further away`}
                         </span>
                       </dd>
                     </div>
@@ -571,6 +582,27 @@ function mistakeSummary(confusion: ClusteringOverview["confusion"]): string {
   const total = confusion.matrix.flat().reduce((a, b) => a + b, 0)
   if (wrong === 0) return "Every article landed in the right cluster."
   return `${wrong} of ${total} articles went to the wrong cluster: ${mistakes.join(", ")}.`
+}
+
+/** How decisive the assignment was, in words. */
+function verdict(result: ClassifyResponse): string {
+  const ordered = Object.entries(result.distances).sort((a, b) => a[1] - b[1])
+  const runnerUp = ordered[1]?.[0] ?? ""
+  const percent = result.margin * 100
+
+  if (result.matched_term_count === 0) {
+    return "Nothing here matched the training vocabulary, so this assignment is arbitrary."
+  }
+  // Margins are small in absolute terms even for an obvious document, so these
+  // thresholds come from what this model produces, not from what would read
+  // like a confident probability.
+  if (percent < 1) {
+    return `It sits almost exactly on the boundary with ${runnerUp}, only ${percent.toFixed(1)}% further away. Treat this one as genuinely ambiguous.`
+  }
+  if (percent < 4) {
+    return `A close call: ${runnerUp} is the runner-up, ${percent.toFixed(1)}% further away.`
+  }
+  return `A clear match. The nearest rival, ${runnerUp}, is ${percent.toFixed(1)}% further away.`
 }
 
 function nearest(all: Record<string, number>): number {

@@ -10,13 +10,6 @@ const OPTIONS: { id: ScorerName; label: string }[] = [
   { id: "tf-idf", label: "TF-IDF" },
 ]
 
-/**
- * Switches the ranking model and re-runs the query.
- *
- * Exposed in the interface rather than hidden in configuration because the
- * difference between the two models is a finding this project reports, and a
- * live toggle lets it be demonstrated on real data.
- */
 function ScorerToggle({ value, onChange }: ScorerToggleProps) {
   return (
     <div

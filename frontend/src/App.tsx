@@ -3,19 +3,8 @@ import NavHeader, { type TaskView } from "./components/NavHeader"
 import ClusteringPage from "./pages/ClusteringPage"
 import SearchPage from "./pages/SearchPage"
 
-/**
- * Routing over the History API, without a router library.
- *
- * Three shapes: `/` (with an optional `?q=`), `/author/<name>` and
- * `/clustering`. Real URLs matter here even at this size: an author page and
- * the clustering page should both be bookmarkable and reachable with the back
- * button, which a view toggled by component state is not.
- *
- * App owns the current path so both pages read the same value, and passes
- * `navigate` down instead of letting pages call pushState themselves. FastAPI
- * serves index.html for unmatched HTML routes, so deep links load on a cold
- * request rather than 404ing.
- */
+// Routing over the History API. App owns the path so both pages read the same
+// value, rather than each calling pushState itself.
 function currentPath(): string {
   return window.location.pathname + window.location.search
 }

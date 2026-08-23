@@ -1,8 +1,5 @@
-/**
- * Thin wrapper around the search API. Always relative `/api/...` URLs: Vite
- * proxies them to FastAPI in dev, and FastAPI serves this same origin in
- * production, so the frontend never needs to know a host or port.
- */
+// Relative /api URLs throughout: Vite proxies them in development and FastAPI
+// serves the same origin in production, so no host is ever hard-coded.
 
 import type {
   AuthorResponse,

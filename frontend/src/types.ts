@@ -1,4 +1,4 @@
-/** Shapes returned by the FastAPI backend (see backend/src/ir_search_engine/api/models.py). */
+// Mirrors src/api/models.py.
 
 export type ScorerName = "bm25" | "tf-idf"
 

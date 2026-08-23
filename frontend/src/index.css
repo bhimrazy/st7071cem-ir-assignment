@@ -1,13 +1,5 @@
 @import "tailwindcss";
 
-/*
- * Semantic colour tokens.
- *
- * Components name a role (`bg-surface`, `text-ink`) rather than a colour, so
- * the palette can change in one place. Light is the only theme: the interface
- * is presented and screenshotted for a printed report, where a light ground
- * is what reproduces correctly.
- */
 @theme {
   --color-surface: #ffffff;
   --color-surface-soft: #f7f7f9;
@@ -15,9 +7,6 @@
   --color-muted: #5f6570;
   --color-faint: #8b909a;
   --color-line: #e3e4e8;
-  /* A restrained blue for interactive states, and graphite for solid
-     buttons. Kept clear of the three category colours below so a control is
-     never mistaken for a cluster. */
   --color-accent: #0b5cad;
   --color-accent-soft: #e7f0fa;
   --color-primary: #21262d;
