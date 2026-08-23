@@ -25,8 +25,7 @@ DOCUMENTS = {
 
 def idf(total_documents: int, document_frequency: int) -> float:
     return log(
-        1.0
-        + (total_documents - document_frequency + 0.5) / (document_frequency + 0.5)
+        1.0 + (total_documents - document_frequency + 0.5) / (document_frequency + 0.5)
     )
 
 
@@ -51,8 +50,10 @@ def main() -> None:
     for possible_df in range(1, total + 1):
         print(f"  df={possible_df}  IDF={idf(total, possible_df):.6f}")
 
-    print(f"\n{'doc':4} {'tf':>3} {'|d|':>4} {'|d|/avgdl':>10} "
-          f"{'denom':>8} {'sat':>7} {'score':>10}")
+    print(
+        f"\n{'doc':4} {'tf':>3} {'|d|':>4} {'|d|/avgdl':>10} "
+        f"{'denom':>8} {'sat':>7} {'score':>10}"
+    )
     by_hand: dict[str, float] = {}
     for doc_id in DOCUMENTS:
         document = collection.get(doc_id)
@@ -60,15 +61,19 @@ def main() -> None:
         tf = posting.frequency_in("body") if posting else 0
         length = index.field_length(document.internal_id, "body")
         if tf == 0:
-            print(f"{doc_id:4} {tf:>3} {length:>4} {'-':>10} {'-':>8} "
-                  f"{'-':>7} {0.0:>10.6f}")
+            print(
+                f"{doc_id:4} {tf:>3} {length:>4} {'-':>10} {'-':>8} "
+                f"{'-':>7} {0.0:>10.6f}"
+            )
             continue
         ratio = length / avgdl
         denominator = tf + K1 * (1.0 - B + B * ratio)
         saturated = tf * (K1 + 1.0) / denominator
         by_hand[doc_id] = term_idf * saturated
-        print(f"{doc_id:4} {tf:>3} {length:>4} {ratio:>10.4f} "
-              f"{denominator:>8.4f} {saturated:>7.4f} {by_hand[doc_id]:>10.6f}")
+        print(
+            f"{doc_id:4} {tf:>3} {length:>4} {ratio:>10.4f} "
+            f"{denominator:>8.4f} {saturated:>7.4f} {by_hand[doc_id]:>10.6f}"
+        )
 
     print("\nengine output vs hand calculation:")
     for hit in collection.search("diabetes", scorer="bm25"):

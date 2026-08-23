@@ -2,7 +2,7 @@
 
 Each test seeds its own in-memory collection rather than depending on the
 real crawled corpus, since the crawl may not have run yet -- see
-`ir_search_engine.main.create_app`, which accepts a collection to inject.
+`search.main.create_app`, which accepts a collection to inject.
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from api.main import create_app
-from ir_search_engine.publications import PUBLICATION_SCHEMA
+from publications import PUBLICATION_SCHEMA
 from miniseek.collection import Collection
 
 PUBLICATIONS = [

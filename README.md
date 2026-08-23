@@ -1,84 +1,102 @@
 # ST7071CEM Information Retrieval Assignment
 
-Two tasks, one application.
-
-**Task 1** is a vertical search engine over publications by members of Coventry
-University's Centre for Healthcare and Community Transformation. It crawls the
-university's research portal politely, builds an inverted index from scratch,
-and ranks results with BM25 or TF-IDF.
-
-**Task 2** is a document clustering system. It groups BBC News articles into
-Economics, Entertainment and Politics with k-means, and assigns new text the
-model has never seen to one of those clusters.
-
-## Layout
+Two tasks, served by one application.
 
 ```
 src/
-  miniseek/          Search library written from scratch: analyzer,
-                     inverted index, scorers, persistence
-  ir_search_engine/  Task 1: the polite crawler and the publication schema
-  clustering/        Task 2: corpus, k-means model, evaluation (see its README)
-  api/               FastAPI routes for both tasks, and the app itself
-scripts/             Command line entry points
-tests/               133 tests, no network access required
-frontend/            React and Tailwind interface for both tasks
-data/                Input data
-outputs/             Generated files, all rebuildable
+  miniseek/       Search library written from scratch: analyzer, inverted
+                  index, scorers, persistence
+  crawler/        Task 1: collects publications from the research portal
+  publications/   The schema both sides agree on, and where it is stored
+  clustering/     Task 2: corpus, k-means model, evaluation
+  api/            FastAPI routes for both tasks, and the app itself
+scripts/          Command line entry points
+tests/            133 tests, none of which touch the network
+frontend/         React and Tailwind interface for both tasks
+data/             Input data
+outputs/          Generated files, all rebuildable
 ```
 
-The two tasks are separate packages. They share exactly one thing, the text
-analyzer, so that a term means the same thing in both.
+Each package stands on its own. Collecting, indexing and clustering are
+separate concerns, and the only thing the two tasks share is the text analyzer
+in `miniseek`, so that a term means the same in both.
 
-## Running it
+## Getting started
 
 ```bash
 uv sync
-
-# Task 2: fit the clustering model (downloads the BBC corpus on first run)
-uv run python scripts/run_clustering.py
-
-# Task 1: crawl the portal (about 7 minutes, obeys a 5 second crawl delay)
-uv run python scripts/crawl.py --once
-# or run it on the weekly schedule the brief asks for
-uv run python scripts/crawl.py --schedule
-
-# serve both tasks
+uv run python scripts/run_clustering.py   # fit Task 2, about 30 seconds
 uv run uvicorn api.main:app --reload
 ```
 
-Then open <http://localhost:8000>. The frontend is built separately:
+Open <http://localhost:8000>. The nav bar switches between the two tasks.
+
+The frontend is built separately, and FastAPI serves the result:
 
 ```bash
 cd frontend
 npm install
-npm run dev     # development, proxies /api to the backend
-npm run build   # production, served by FastAPI from frontend/dist
+npm run dev     # development on :5173, proxies /api to :8000
+npm run build   # production, written to frontend/dist
 ```
 
-## Other commands
+## Task 1: Vertical search engine
+
+A search engine over publications by members of Coventry University's Centre
+for Healthcare and Community Transformation. Results are ranked, and every
+author links to a page listing everything they wrote.
+
+The crawler obeys `robots.txt` and the 5 second crawl delay the portal asks
+for, uses conditional requests so a repeat crawl is cheap, and can run on the
+weekly schedule the brief describes.
+
+The index, the ranking and the persistence layer are written from scratch in
+`miniseek` rather than taken from a library. Two scorers are implemented so
+they can be compared on the same data: BM25 and TF-IDF with cosine similarity.
 
 ```bash
-uv run pytest                                  # the test suite
-uv run python scripts/crawl.py --status        # when the crawler last ran
-uv run python scripts/bm25_worked_example.py   # checks the BM25 numbers in the docs by hand
+uv run python scripts/crawl.py --once       # about 7 minutes, polite pacing
+uv run python scripts/crawl.py --schedule   # weekly, as the brief asks
+uv run python scripts/crawl.py --status     # when it last ran
+uv run python scripts/bm25_worked_example.py
 ```
 
-## Notes on the data
+[`src/crawler/README.md`](src/crawler/README.md) covers the collection side on
+its own, including how it stays polite and one bug that made it silently
+believe it was banned from the whole site.
 
-The crawled publication corpus is committed, because crawling it again means
-seven minutes of requests to a live university server for no new information.
+The crawled corpus is committed, so the search engine works on a fresh
+checkout without crawling a live university server again.
 
-The BBC corpus is not committed. It is downloaded from
-<http://mlg.ucd.ie/files/datasets/bbc-fulltext.zip> on first run and cached.
-It remains BBC copyright and is used here for non-commercial coursework with
-attribution, which is what its terms allow.
+## Task 2: Document clustering
 
-## Reading further
+BBC News articles grouped into Economics, Entertainment and Politics by
+k-means over TF-IDF vectors, with new unseen text assigned to a cluster from
+the interface.
 
-- [`LEARNING.md`](LEARNING.md) is a step by step build log, written as each
-  piece was built rather than afterwards.
-- [`src/clustering/README.md`](src/clustering/README.md)
-  covers Task 2 on its own.
-- [`docs/bm25.md`](docs/bm25.md) is a deep dive on the ranking function, with a
-  worked example that a script checks.
+600 articles, 200 per category, k=3. Adjusted Rand Index 0.907, and 96.8% of
+articles land in the cluster matching their true category.
+
+```bash
+uv run python scripts/run_clustering.py                  # 200 per category
+uv run python scripts/run_clustering.py --all            # every article
+uv run python scripts/run_clustering.py --per-category 100
+```
+
+[`src/clustering/README.md`](src/clustering/README.md) covers this task on its
+own, including how k was chosen and why one preprocessing setting mattered
+more than the algorithm.
+
+The BBC corpus is not committed. It downloads on first run from
+<http://mlg.ucd.ie/files/datasets/bbc-fulltext.zip> and is cached. It remains
+BBC copyright, used here for non-commercial coursework with attribution, which
+is what its terms allow.
+
+## Tests
+
+```bash
+uv run pytest
+```
+
+133 tests. The crawler tests use a stand-in fetcher and the clustering tests
+use a fixture, so the suite runs offline and never hits a real server.

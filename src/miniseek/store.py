@@ -31,7 +31,7 @@ class Document:
 class DocumentStore:
     """In-memory documents plus the external-id to internal-id mapping."""
 
-    __slots__ = ("_by_internal", "_by_external", "_next_id")
+    __slots__ = ("_by_external", "_by_internal", "_next_id")
 
     def __init__(self) -> None:
         self._by_internal: dict[int, Document] = {}

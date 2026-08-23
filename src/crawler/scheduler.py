@@ -26,7 +26,6 @@ import json
 import logging
 import os
 import threading
-import time
 from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -52,13 +51,15 @@ class CrawlState:
     def read(self) -> dict[str, Any]:
         try:
             return json.loads(self.path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+        except OSError, json.JSONDecodeError:
             return {}
 
     def write(self, stats: dict[str, Any]) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        payload = {"last_run": datetime.now(UTC).isoformat(timespec="seconds"),
-                   "last_stats": stats}
+        payload = {
+            "last_run": datetime.now(UTC).isoformat(timespec="seconds"),
+            "last_stats": stats,
+        }
         self.path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
     def last_run(self) -> datetime | None:
@@ -110,12 +111,20 @@ def run_forever(
             # A scheduler that dies on one failed crawl stops updating the
             # index silently. Log it and wait for the next window instead.
             logger.exception("crawl failed; will retry at the next interval")
-            state.write({"error": "crawl failed", "when":
-                         datetime.now(UTC).isoformat(timespec="seconds")})
+            state.write(
+                {
+                    "error": "crawl failed",
+                    "when": datetime.now(UTC).isoformat(timespec="seconds"),
+                }
+            )
 
         if stop.wait(interval_seconds):
             break
 
 
-def next_run_time(state: CrawlState, interval_seconds: float = WEEKLY_SECONDS) -> datetime:
-    return datetime.now(UTC) + timedelta(seconds=state.seconds_until_due(interval_seconds))
+def next_run_time(
+    state: CrawlState, interval_seconds: float = WEEKLY_SECONDS
+) -> datetime:
+    return datetime.now(UTC) + timedelta(
+        seconds=state.seconds_until_due(interval_seconds)
+    )

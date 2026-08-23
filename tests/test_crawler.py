@@ -6,17 +6,17 @@ import time
 
 import pytest
 
-from ir_search_engine.crawler.crawler import ChctCrawler
-from ir_search_engine.crawler.extract import (
+from crawler.crawler import ChctCrawler
+from crawler.extract import (
     extract_person_links,
     extract_publication,
     extract_publication_links,
     slugify,
 )
-from ir_search_engine.crawler.fetcher import FetchResult
-from ir_search_engine.crawler.politeness import RateLimiter
-from ir_search_engine.crawler.scheduler import CrawlState
-from ir_search_engine.publications import PUBLICATION_SCHEMA
+from crawler.fetcher import FetchResult
+from crawler.politeness import RateLimiter
+from crawler.scheduler import CrawlState
+from publications import PUBLICATION_SCHEMA
 from miniseek.collection import Collection
 
 PUBLICATION_HTML = """

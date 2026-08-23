@@ -19,8 +19,8 @@ from fastapi import FastAPI
 from api.routes_clustering import router as clustering_router
 from api.routes_search import router as search_router
 from clustering.service import ClusteringService
-from ir_search_engine.publications import open_publications
 from miniseek.collection import Collection
+from publications import open_publications
 
 FRONTEND_DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
 

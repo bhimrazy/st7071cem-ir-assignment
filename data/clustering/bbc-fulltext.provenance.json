@@ -1,6 +1,6 @@
 {
   "source": "http://mlg.ucd.ie/files/datasets/bbc-fulltext.zip",
-  "fetched_at": "2026-08-23T15:01:24.061805+00:00",
+  "fetched_at": "2026-08-23T15:07:04.832627+00:00",
   "cache_file": "data/clustering/bbc-fulltext.zip",
   "original_source": "http://mlg.ucd.ie/datasets/bbc.html",
   "citation": "D. Greene and P. Cunningham, \"Practical Solutions to the Problem of Diagonal Dominance in Kernel Document Clustering\", Proc. 23rd International Conference on Machine Learning (ICML 2006).",

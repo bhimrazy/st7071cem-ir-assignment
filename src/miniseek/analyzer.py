@@ -127,7 +127,5 @@ class Analyzer:
         for term in terms:
             expanded.append(term)
             if COMPOUND_SPLIT_RE.search(term):
-                expanded.extend(
-                    part for part in COMPOUND_SPLIT_RE.split(term) if part
-                )
+                expanded.extend(part for part in COMPOUND_SPLIT_RE.split(term) if part)
         return expanded

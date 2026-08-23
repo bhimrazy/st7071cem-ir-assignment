@@ -53,8 +53,11 @@ class InvertedIndex:
     """
 
     __slots__ = (
-        "_postings", "_field_lengths", "_terms_by_doc",
-        "_total_field_length", "_field_norms",
+        "_field_lengths",
+        "_field_norms",
+        "_postings",
+        "_terms_by_doc",
+        "_total_field_length",
     )
 
     def __init__(self) -> None:

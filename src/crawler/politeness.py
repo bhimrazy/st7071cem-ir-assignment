@@ -42,7 +42,7 @@ class RateLimiter:
     produce two requests at the same instant.
     """
 
-    __slots__ = ("_min_interval", "_lock", "_last_request")
+    __slots__ = ("_last_request", "_lock", "_min_interval")
 
     def __init__(self, min_interval: float) -> None:
         self._min_interval = max(min_interval, 0.0)

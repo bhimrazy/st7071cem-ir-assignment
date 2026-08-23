@@ -113,7 +113,9 @@ def extract_publication(html: str, url: str) -> Publication | None:
     # profiles, so external co-authors correctly get an empty string rather
     # than a wrong link -- the lists stay index-aligned for the UI.
     profile_links = {
-        slugify(match.group(1)): f"https://pureportal.coventry.ac.uk/en/persons/{match.group(1)}/"
+        slugify(
+            match.group(1)
+        ): f"https://pureportal.coventry.ac.uk/en/persons/{match.group(1)}/"
         for anchor in soup.find_all("a", href=True)
         if (match := re.search(r"/en/persons/([^/\"?#]+)", anchor["href"]))
     }

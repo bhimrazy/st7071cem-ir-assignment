@@ -44,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 BASE_URL = "https://pureportal.coventry.ac.uk"
 CHCT_ORGANISATION_URL = (
-    f"{BASE_URL}/en/organisations/"
-    "centre-for-healthcare-and-community-transformation/"
+    f"{BASE_URL}/en/organisations/centre-for-healthcare-and-community-transformation/"
 )
 
 
@@ -146,9 +145,7 @@ class ChctCrawler:
             stats.errors.append(f"organisation page: {error}")
             return []
         if not result.ok:
-            stats.errors.append(
-                f"organisation page returned {result.status_code}"
-            )
+            stats.errors.append(f"organisation page returned {result.status_code}")
             return []
         return extract_person_links(result.text)
 

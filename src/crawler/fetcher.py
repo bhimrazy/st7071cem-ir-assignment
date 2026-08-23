@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import logging
 import time
-from dataclasses import dataclass, field
-from typing import Any
+from dataclasses import dataclass
+from typing import Any, Self
 
 import httpx
 
@@ -130,7 +130,11 @@ class PoliteFetcher:
                     wait = max(wait, float(retry_after))
                 logger.warning(
                     "%s returned %s; backing off %.1fs (attempt %d/%d)",
-                    url, response.status_code, wait, attempt + 1, self.max_retries,
+                    url,
+                    response.status_code,
+                    wait,
+                    attempt + 1,
+                    self.max_retries,
                 )
                 time.sleep(wait)
                 continue
@@ -163,7 +167,7 @@ class PoliteFetcher:
     def close(self) -> None:
         self._client.close()
 
-    def __enter__(self) -> PoliteFetcher:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *exc: object) -> None:

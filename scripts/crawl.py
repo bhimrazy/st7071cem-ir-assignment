@@ -18,10 +18,10 @@ import json
 import logging
 import sys
 
-from ir_search_engine.crawler import ChctCrawler, PoliteFetcher
-from ir_search_engine.crawler.crawler import BASE_URL
-from ir_search_engine.crawler.scheduler import WEEKLY_SECONDS, CrawlState, run_forever
-from ir_search_engine.publications import DEFAULT_DATA_DIR, open_publications
+from crawler import ChctCrawler, PoliteFetcher
+from crawler.crawler import BASE_URL
+from crawler.scheduler import WEEKLY_SECONDS, CrawlState, run_forever
+from publications import DEFAULT_DATA_DIR, open_publications
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -30,10 +30,18 @@ def build_parser() -> argparse.ArgumentParser:
     mode.add_argument("--once", action="store_true", help="run a single crawl")
     mode.add_argument("--schedule", action="store_true", help="run weekly, forever")
     mode.add_argument("--status", action="store_true", help="show last-run info")
-    parser.add_argument("--limit", type=int, default=None,
-                        help="maximum publications to index (for testing)")
-    parser.add_argument("--interval-hours", type=float, default=None,
-                        help="override the weekly interval (for testing)")
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="maximum publications to index (for testing)",
+    )
+    parser.add_argument(
+        "--interval-hours",
+        type=float,
+        default=None,
+        help="override the weekly interval (for testing)",
+    )
     parser.add_argument("--data-dir", default=None, help="collection directory")
     parser.add_argument("--verbose", "-v", action="store_true")
     return parser
@@ -48,9 +56,7 @@ def main(argv: list[str] | None = None) -> int:
 
     data_dir = args.data_dir or DEFAULT_DATA_DIR
     state = CrawlState(data_dir)
-    interval = (
-        args.interval_hours * 3600 if args.interval_hours else WEEKLY_SECONDS
-    )
+    interval = args.interval_hours * 3600 if args.interval_hours else WEEKLY_SECONDS
 
     if args.status:
         last = state.last_run()

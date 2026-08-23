@@ -16,7 +16,7 @@ from pathlib import Path
 
 import httpx
 
-from clustering.paths import PROJECT_ROOT, CORPUS_PATH
+from clustering.paths import CORPUS_PATH, PROJECT_ROOT
 
 CATEGORIES: tuple[str, ...] = ("Economics", "Entertainment", "Politics")
 

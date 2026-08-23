@@ -38,7 +38,8 @@ import tempfile
 import threading
 from collections import Counter
 from collections.abc import Iterable, Iterator, Mapping
-from dataclasses import dataclass, field as dataclass_field
+from dataclasses import dataclass
+from dataclasses import field as dataclass_field
 from pathlib import Path
 from types import TracebackType
 from typing import Any, Self
@@ -78,6 +79,7 @@ class SearchResults:
     def __iter__(self) -> Iterator[SearchHit]:
         return iter(self.hits)
 
+
 FORMAT_VERSION = 1
 META_FILE = "meta.json"
 LOG_FILE = "documents.log"
@@ -95,9 +97,20 @@ class Collection:
     """
 
     __slots__ = (
-        "name", "schema", "analyzer", "index", "store",
-        "sync_interval", "compact_ratio", "compact_min_entries",
-        "_path", "_log", "_log_entries", "_lock", "_syncer", "_stop",
+        "_lock",
+        "_log",
+        "_log_entries",
+        "_path",
+        "_stop",
+        "_syncer",
+        "analyzer",
+        "compact_min_entries",
+        "compact_ratio",
+        "index",
+        "name",
+        "schema",
+        "store",
+        "sync_interval",
     )
 
     def __init__(
@@ -440,9 +453,7 @@ class Collection:
             ]
             dropped = max(self._log_entries - len(live), 0)
 
-            payload = "".join(
-                json.dumps(op, ensure_ascii=False) + "\n" for op in live
-            )
+            payload = "".join(json.dumps(op, ensure_ascii=False) + "\n" for op in live)
             if self._log is not None:
                 self._log.close()
             _atomic_write(self._path / LOG_FILE, payload)
@@ -470,7 +481,7 @@ class Collection:
         while not self._stop.wait(self.sync_interval):
             try:
                 self.sync()
-            except (OSError, ValueError):
+            except OSError, ValueError:
                 # A background thread that dies on a transient IO error would
                 # silently stop persisting. Keep looping; close() still syncs.
                 continue
