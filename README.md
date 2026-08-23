@@ -1,4 +1,4 @@
-# ST7071CEM Information Retrieval Coursework
+# ST7071CEM Information Retrieval Assignment
 
 Two tasks, one application.
 
