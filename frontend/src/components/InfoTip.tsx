@@ -1,0 +1,49 @@
+import { useId, useState } from "react"
+
+/**
+ * A small "i" that explains a term on hover or focus.
+ *
+ * Opens on focus as well as hover so it is reachable from the keyboard, and
+ * the panel is positioned from the right edge so it cannot push the page
+ * sideways when the icon sits near the end of a row.
+ */
+export default function InfoTip({ label, children }: {
+  label: string
+  children: React.ReactNode
+}) {
+  const [open, setOpen] = useState(false)
+  const id = useId()
+
+  return (
+    <span className="relative inline-flex align-middle">
+      <button
+        type="button"
+        aria-label={`What is ${label}?`}
+        aria-expanded={open}
+        aria-describedby={open ? id : undefined}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        onFocus={() => setOpen(true)}
+        onBlur={() => setOpen(false)}
+        onClick={() => setOpen((was) => !was)}
+        className="ml-1 flex size-4 cursor-help items-center justify-center rounded-full
+          border border-line text-[10px] leading-none font-medium text-faint
+          transition hover:border-accent hover:text-accent"
+      >
+        i
+      </button>
+
+      {open && (
+        <span
+          id={id}
+          role="tooltip"
+          className="absolute top-6 right-0 z-20 w-64 rounded-lg border border-line
+            bg-surface p-3 text-left text-xs leading-relaxed font-normal text-muted
+            shadow-lg"
+        >
+          {children}
+        </span>
+      )}
+    </span>
+  )
+}

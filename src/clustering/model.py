@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -130,16 +131,30 @@ class ClusteringModel:
     def predict_many(self, texts: list[str]) -> list[ClusterAssignment]:
         return [self.predict(text) for text in texts]
 
-    def top_terms_per_cluster(self, top_n: int = 10) -> dict[int, list[str]]:
-        """The highest-weighted terms at each centroid: what the cluster is about."""
+    def top_terms_per_cluster(
+        self, top_n: int = 10, *, distinctive: bool = True
+    ) -> dict[int, list[str]]:
+        """The terms that characterise each cluster.
+
+        The heaviest terms at a centroid are not the useful ones. "said" sits
+        near the top of all three centroids here, because it appears in 87% of
+        BBC articles, and a word every cluster shares explains none of them.
+
+        So by default each centroid is compared against the average of the
+        others and the terms that stand out are returned: what this cluster has
+        that the rest do not. Pass `distinctive=False` for raw centroid weights.
+        """
         terms = self.vectorizer.get_feature_names_out()
         centroids = self.kmeans.cluster_centers_
-        return {
-            cluster_id: [
-                terms[i] for i in centroids[cluster_id].argsort()[::-1][:top_n]
-            ]
-            for cluster_id in range(self.n_clusters)
-        }
+        result: dict[int, list[str]] = {}
+        for cluster_id in range(self.n_clusters):
+            weights = centroids[cluster_id]
+            if distinctive and self.n_clusters > 1:
+                weights = weights - np.delete(centroids, cluster_id, axis=0).mean(
+                    axis=0
+                )
+            result[cluster_id] = [terms[i] for i in weights.argsort()[::-1][:top_n]]
+        return result
 
     def category_for_cluster(self, cluster_id: int) -> str:
         return self.cluster_to_category.get(cluster_id, f"cluster-{cluster_id}")

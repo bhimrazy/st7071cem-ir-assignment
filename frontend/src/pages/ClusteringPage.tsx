@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { classifyDocument, fetchClusteringOverview } from "../api"
+import InfoTip from "../components/InfoTip"
 import LineChart from "../components/charts/LineChart"
 import ScatterChart from "../components/charts/ScatterChart"
 import type { ClassifyResponse, ClusteringOverview } from "../types"
@@ -10,13 +11,31 @@ const CATEGORY_COLOURS: Record<string, string> = {
   Politics: "#2ea043",
 }
 
-const METRIC_LABELS: Record<string, string> = {
-  adjusted_rand_index: "Adjusted Rand Index",
-  normalized_mutual_info: "Normalised Mutual Information",
-  homogeneity: "Homogeneity",
-  completeness: "Completeness",
-  v_measure: "V-measure",
-  accuracy: "Agreement with true labels",
+const METRICS: Record<string, { label: string; help: string }> = {
+  adjusted_rand_index: {
+    label: "Adjusted Rand Index",
+    help: "Takes every pair of documents and asks whether the clustering agrees with the true categories about keeping them together or apart. 1 is perfect agreement, 0 is what random guessing would score.",
+  },
+  normalized_mutual_info: {
+    label: "Normalised Mutual Information",
+    help: "How much knowing a document's cluster tells you about its true category, on a 0 to 1 scale. Unlike accuracy it does not need the clusters to be named.",
+  },
+  homogeneity: {
+    label: "Homogeneity",
+    help: "Whether each cluster contains only one category. Splitting Politics across two clean clusters still scores 1 here.",
+  },
+  completeness: {
+    label: "Completeness",
+    help: "Whether each category ends up in a single cluster. The mirror image of homogeneity: putting everything in one big cluster scores 1 here.",
+  },
+  v_measure: {
+    label: "V-measure",
+    help: "Homogeneity and completeness combined into one number, so neither can be gamed on its own.",
+  },
+  accuracy: {
+    label: "Agreement with true labels",
+    help: "The share of documents whose cluster carries the same name as their true category. Readable, but it depends on the majority-vote naming step, which the other scores do not.",
+  },
 }
 
 export default function ClusteringPage() {
@@ -178,24 +197,29 @@ export default function ClusteringPage() {
               <span className="text-faint">(cluster {result.cluster_id})</span>.
             </p>
 
-            <dl className="mt-3 space-y-1.5">
+            <p className="mt-3 mb-1 text-xs font-medium text-muted">
+              Distance from your text to each cluster centre, nearest wins
+            </p>
+            <dl className="m-0">
               {Object.entries(result.distances)
                 .sort((a, b) => a[1] - b[1])
-                .map(([category, distance]) => {
+                .map(([category, distance], index) => {
                   const isWinner = category === result.category
+                  const gap = distance - nearest(result.distances)
                   return (
-                    <div key={category} className="flex items-center gap-3">
+                    <div key={category} className="flex items-center gap-3 py-1">
                       <dt
-                        className={`w-32 shrink-0 text-sm ${
+                        className={`w-28 shrink-0 text-sm ${
                           isWinner ? "font-medium text-ink" : "text-muted"
                         }`}
                       >
                         {category}
                       </dt>
-                      <dd className="m-0 flex flex-1 items-center gap-2">
-                        {/* Distances all sit near 1 in a sparse high-dimension
-                            space, so the bar is scaled to the visible range
-                            rather than to zero, which would look identical. */}
+                      <dd className="m-0 flex flex-1 items-center gap-3">
+                        {/* Every distance sits near 1 in a sparse
+                            high-dimension space, so a bar drawn from zero would
+                            make all three look identical. It is scaled to the
+                            spread instead, and the raw number is printed too. */}
                         <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-soft">
                           <div
                             className="h-full rounded-full"
@@ -207,21 +231,44 @@ export default function ClusteringPage() {
                             }}
                           />
                         </div>
-                        <span className="w-16 text-right text-xs tabular-nums text-faint">
+                        <span className="w-14 text-right text-xs tabular-nums text-faint">
                           {distance.toFixed(4)}
+                        </span>
+                        <span className="w-24 text-right text-xs tabular-nums text-faint">
+                          {index === 0 ? "nearest" : `+${gap.toFixed(4)} further`}
                         </span>
                       </dd>
                     </div>
                   )
                 })}
             </dl>
-            <p className="mt-2 text-xs text-faint">
-              Distance to each cluster centre, nearest wins. Matched{" "}
-              {result.matched_term_count} known term
-              {result.matched_term_count === 1 ? "" : "s"}
-              {result.matched_terms.length > 0
-                ? `: ${result.matched_terms.join(", ")}`
-                : ". Nothing in this text appeared in the training vocabulary, so the assignment is arbitrary."}
+
+            <p className="mt-3 text-xs leading-relaxed text-faint">
+              These are straight-line distances in the 5,000-dimension TF-IDF
+              space, not probabilities, and they do not add up to 1. Almost any
+              document sits close to distance 1 from every centre in a space
+              that large, so the numbers look alike by nature. What decides the
+              answer is the ordering, and here the gap to the runner-up is{" "}
+              {(result.margin * 100).toFixed(1)}% of its distance.
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-faint">
+              {result.matched_term_count > 0 ? (
+                <>
+                  Your text matched {result.matched_term_count} term
+                  {result.matched_term_count === 1 ? "" : "s"} the model knows
+                  {result.matched_terms.length > 0 && (
+                    <>
+                      , the heaviest being{" "}
+                      <span className="text-muted">
+                        {result.matched_terms.join(", ")}
+                      </span>
+                    </>
+                  )}
+                  . Anything outside the training vocabulary is ignored.
+                </>
+              ) : (
+                "None of these words appear in the training vocabulary, so there was nothing to measure and this assignment is arbitrary."
+              )}
             </p>
           </div>
         )}
@@ -229,7 +276,14 @@ export default function ClusteringPage() {
 
       {/* --- What the clusters are made of --- */}
       <section className="pt-10">
-        <h2 className="m-0 text-base font-semibold text-ink">The clusters</h2>
+        <h2 className="m-0 flex items-center text-base font-semibold text-ink">
+          The clusters
+          <InfoTip label="the clusters">
+            K-means put every article in one of three groups without being told
+            the categories. Each card lists the words that group uses far more
+            than the other two, which is how you tell what it is about.
+          </InfoTip>
+        </h2>
         <div className="mt-3 grid gap-4 sm:grid-cols-3">
           {clusters.map((cluster) => (
             <article
@@ -253,16 +307,25 @@ export default function ClusteringPage() {
             </article>
           ))}
         </div>
-        <p className="mt-2 text-xs text-faint">
-          Highest-weighted stemmed terms at each cluster centre. These are what
-          the cluster is about; the category name above them was assigned
-          afterwards by majority vote.
+        <p className="mt-2 max-w-3xl text-xs text-faint">
+          Words are shown stemmed, so &ldquo;elect&rdquo; covers election and
+          elected. These are the terms each cluster weights most heavily
+          <em> compared with the other two</em>, rather than its heaviest terms
+          outright: &ldquo;said&rdquo; is in 87% of BBC articles and tops all
+          three centres, so it describes none of them. The category names were
+          attached afterwards by majority vote.
         </p>
       </section>
 
       {/* --- Charts --- */}
       <section className="pt-10">
-        <h2 className="m-0 text-base font-semibold text-ink">Choosing k</h2>
+        <h2 className="m-0 flex items-center text-base font-semibold text-ink">
+          Choosing k
+          <InfoTip label="choosing k">
+            k is how many clusters k-means is told to find. It cannot work this
+            out itself, so these three curves are the evidence for picking 3.
+          </InfoTip>
+        </h2>
         <div className="mt-3 grid gap-6 sm:grid-cols-3">
           <LineChart
             points={elbow.map((p) => ({ x: p.k, y: p.inertia }))}
@@ -303,8 +366,14 @@ export default function ClusteringPage() {
 
       <section className="pt-10">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="m-0 text-base font-semibold text-ink">
+          <h2 className="m-0 flex items-center text-base font-semibold text-ink">
             Documents in two dimensions
+            <InfoTip label="this chart">
+              Every article is a point in 5,000 dimensions, one per vocabulary
+              term, which cannot be drawn. PCA flattens that to the two
+              directions carrying the most variation so it fits on a page. Each
+              point is one article, coloured by the cluster it was put in.
+            </InfoTip>
           </h2>
           <label className="flex cursor-pointer items-center gap-2 text-sm text-muted">
             <input
@@ -347,13 +416,25 @@ export default function ClusteringPage() {
 
       {/* --- Evaluation --- */}
       <section className="pt-10">
-        <h2 className="m-0 text-base font-semibold text-ink">How well it did</h2>
+        <h2 className="m-0 flex items-center text-base font-semibold text-ink">
+          How well it did
+          <InfoTip label="these scores">
+            The clustering ran blind, but we do know each article&rsquo;s real
+            category, so we can check the result against it afterwards. Every
+            score below is 0 to 1, higher is better.
+          </InfoTip>
+        </h2>
         <div className="mt-3 grid gap-6 sm:grid-cols-2">
           <dl className="m-0 divide-y divide-line">
             {Object.entries(metrics).map(([key, value]) => (
               <div key={key} className="flex items-baseline justify-between py-2">
-                <dt className="text-sm text-muted">
-                  {METRIC_LABELS[key] ?? key}
+                <dt className="flex items-center text-sm text-muted">
+                  {METRICS[key]?.label ?? key}
+                  {METRICS[key] && (
+                    <InfoTip label={METRICS[key].label}>
+                      {METRICS[key].help}
+                    </InfoTip>
+                  )}
                 </dt>
                 <dd className="m-0 text-sm font-medium tabular-nums text-ink">
                   {key === "accuracy"
@@ -364,11 +445,22 @@ export default function ClusteringPage() {
             ))}
           </dl>
 
-          <div className="overflow-x-auto">
+          <div>
+            <p className="mb-2 flex items-center text-sm font-medium text-ink">
+              Where every article ended up
+              <InfoTip label="this table">
+                Read a row as &ldquo;of the 200 real Economics articles, this
+                many went to each cluster&rdquo;. The diagonal is the ones that
+                went where they should. Anything off the diagonal is a mistake,
+                and its position tells you which two categories the model
+                confused.
+              </InfoTip>
+            </p>
+            <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <caption className="pb-2 text-left text-xs text-faint">
-                Rows are the true category, columns are the cluster a document
-                landed in.
+                Rows are the true category. Columns are the cluster the article
+                was put in. Bold is correct.
               </caption>
               <thead>
                 <tr>
@@ -405,6 +497,10 @@ export default function ClusteringPage() {
                 ))}
               </tbody>
             </table>
+            </div>
+            <p className="mt-2 text-xs leading-relaxed text-faint">
+              {mistakeSummary(confusion)}
+            </p>
           </div>
         </div>
       </section>
@@ -450,6 +546,28 @@ export default function ClusteringPage() {
  * cost of the bar no longer being proportional to the raw value, which is why
  * the number is printed next to it.
  */
+/** A plain-English reading of the off-diagonal cells, counts only. */
+function mistakeSummary(confusion: ClusteringOverview["confusion"]): string {
+  const mistakes: string[] = []
+  let wrong = 0
+  confusion.rows.forEach((row, r) =>
+    confusion.cols.forEach((col, c) => {
+      const count = confusion.matrix[r][c]
+      if (row !== col && count > 0) {
+        wrong += count
+        mistakes.push(`${count} ${row} into ${col}`)
+      }
+    }),
+  )
+  const total = confusion.matrix.flat().reduce((a, b) => a + b, 0)
+  if (wrong === 0) return "Every article landed in the right cluster."
+  return `${wrong} of ${total} articles went to the wrong cluster: ${mistakes.join(", ")}.`
+}
+
+function nearest(all: Record<string, number>): number {
+  return Math.min(...Object.values(all))
+}
+
 function barWidth(distance: number, all: Record<string, number>): number {
   const values = Object.values(all)
   const min = Math.min(...values)

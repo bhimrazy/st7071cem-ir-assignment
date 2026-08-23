@@ -68,10 +68,11 @@ The first run downloads the corpus. Everything it writes is described under
 | Silhouette | 0.017 |
 
 Cluster sizes come out at 203, 206 and 191 against a true 200 each, so no
-cluster swallowed another. Of the 19 documents placed in the wrong cluster,
-10 were Politics and Economics landing in each other, which is the boundary
-you would expect to be fuzziest. Entertainment is barely confused with
-anything.
+cluster swallowed another. 19 documents landed in the wrong cluster: 6
+Entertainment into Politics, 5 Economics into Politics, 5 Politics into
+Economics, 3 Entertainment into Economics. No pair dominates, and at these
+counts the differences between them are noise rather than a pattern worth
+reading into.
 
 ## Where the data and the model live
 
