@@ -24,11 +24,14 @@ def build_parser() -> argparse.ArgumentParser:
         epilog=(
             "examples:\n"
             "  ir-crawl --once\n"
-            "  ir-crawl --schedule            # weekly, the default interval\n"
+            "  ir-crawl --once --limit 4                 # quick test crawl\n"
+            "  ir-crawl --schedule                        # weekly, the default\n"
             "  ir-crawl --schedule 100h\n"
             "  ir-crawl --schedule 2weeks\n"
             "  ir-crawl --schedule 1month\n"
             "  ir-crawl --schedule 3months\n"
+            "  ir-crawl --schedule 1min --limit 4         # exercise the loop fast\n"
+            "  ir-crawl --status\n"
         ),
     )
     mode = parser.add_mutually_exclusive_group(required=True)
@@ -40,14 +43,17 @@ def build_parser() -> argparse.ArgumentParser:
         metavar="INTERVAL",
         help=(
             "run repeatedly, forever, waiting INTERVAL between crawls -- a "
-            "number plus a unit: hours (h), days (d), weeks (w), or months "
-            "(mo). E.g. 100h, 2weeks, 1month. Defaults to 1week if you just "
-            "pass the bare flag. See the examples below."
+            "number plus a unit: minutes (min), hours (h), days (d), weeks "
+            "(w), or months (mo). E.g. 1min, 100h, 2weeks, 1month. Defaults "
+            "to 1week if you just pass the bare flag. See the examples below."
         ),
     )
     mode.add_argument("--status", action="store_true", help="show past crawls")
     parser.add_argument(
-        "--limit", type=int, help="maximum publications to keep (for testing)"
+        "--limit",
+        type=int,
+        metavar="N",
+        help="stop after keeping N publications, for a quick test crawl",
     )
     parser.add_argument("--crawls-dir", help="where crawl output is written")
     parser.add_argument(

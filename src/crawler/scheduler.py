@@ -31,6 +31,13 @@ KATHMANDU = ZoneInfo("Asia/Kathmandu")
 # A month is approximated as 30 days -- there is no calendar-exact "month" of
 # seconds, and the coursework brief only needs "roughly monthly".
 _INTERVAL_UNITS: dict[str, float] = {
+    # "m" is deliberately not mapped here -- it would be read as minutes by
+    # anyone testing and as months by anyone deploying, so both stay spelled
+    # out ("min"/"mo") rather than guessing which one a bare "m" meant.
+    "min": 60.0,
+    "mins": 60.0,
+    "minute": 60.0,
+    "minutes": 60.0,
     "h": HOUR_SECONDS,
     "hr": HOUR_SECONDS,
     "hrs": HOUR_SECONDS,
