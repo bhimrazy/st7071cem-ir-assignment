@@ -10,7 +10,7 @@ src/
   publications/   The schema both sides agree on, and where it is stored
   clustering/     Task 2: corpus, k-means model, evaluation
   api/            FastAPI routes for both tasks, and the app itself
-tests/            133 tests, none of which touch the network
+tests/            141 tests, none of which touch the network
 frontend/         React and Tailwind interface for both tasks
 data/             Input data
 outputs/          Generated files, all rebuildable
@@ -23,7 +23,7 @@ in `miniseek`, so that a term means the same in both.
 ## Getting started
 
 Needs Python 3.14 and [uv](https://docs.astral.sh/uv/getting-started/installation/),
-plus Node 20 or later for the frontend.
+plus Node 22 or later for the frontend.
 
 ```bash
 uv sync
@@ -57,10 +57,12 @@ The index, the ranking and the persistence layer are written from scratch in
 they can be compared on the same data: BM25 and TF-IDF with cosine similarity.
 
 ```bash
-uv run ir-crawl --once       # about 7 minutes, polite pacing
-uv run ir-crawl --schedule   # weekly, as the brief asks
-uv run ir-crawl --status     # when it last ran
-uv run ir-bm25               # checks BM25 against the formula worked by hand
+uv run ir-crawl --once                       # ~35-40 minutes, polite pacing
+uv run ir-crawl --once --limit 5             # a quick sample instead
+uv run ir-crawl --schedule                   # weekly, as the brief asks
+uv run ir-crawl --schedule 1min --limit 5    # exercise the schedule loop fast
+uv run ir-crawl --status                     # when it last ran
+uv run ir-bm25                               # checks BM25 against the formula worked by hand
 ```
 
 [`src/crawler/README.md`](src/crawler/README.md) covers the collection side on
@@ -103,7 +105,7 @@ uv run ruff check src tests
 uv run ty check src tests
 ```
 
-133 tests. The crawler tests use a stand-in fetcher and the clustering tests
+141 tests. The crawler tests use a stand-in fetcher and the clustering tests
 use a fixture, so the suite runs offline and never hits a real server.
 
 ## Licence
