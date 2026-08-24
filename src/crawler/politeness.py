@@ -12,10 +12,7 @@ from urllib.parse import urljoin, urlparse
 
 import httpx
 
-DEFAULT_USER_AGENT = (
-    "MiniseekAcademicCrawler/0.1 "
-    "(Coventry University ST7071CEM coursework; polite; respects robots.txt)"
-)
+DEFAULT_USER_AGENT = "IRCourseworkBot/1.0 (+coursework crawler; polite)"
 
 # Used only if robots.txt specifies no Crawl-delay. Deliberately conservative:
 # for a corpus of a few hundred publications the extra time is irrelevant, and

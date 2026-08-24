@@ -6,7 +6,7 @@ import time
 
 import pytest
 
-from crawler.crawler import ChctCrawler
+from crawler.crawler import PortalCrawler
 from crawler.extract import (
     extract_person_links,
     extract_publication,
@@ -16,8 +16,6 @@ from crawler.extract import (
 from crawler.fetcher import FetchResult
 from crawler.politeness import RateLimiter
 from crawler.scheduler import CrawlState
-from miniseek.collection import Collection
-from publications import PUBLICATION_SCHEMA
 
 PUBLICATION_HTML = """
 <html><head>
@@ -44,8 +42,10 @@ ORGANISATION_HTML = """
 </body></html>
 """
 
+# A member profile: it links the organisation, which is what qualifies it.
 PERSON_HTML = """
 <html><body>
+<a href="/en/organisations/centre-for-healthcare-and-community-transformation/">HCT</a>
 <a href="/en/publications/diabetes-prevention/">Diabetes prevention</a>
 <a href="/en/publications/another-paper/">Another paper</a>
 </body></html>
@@ -77,20 +77,46 @@ def test_author_profiles_stay_index_aligned_with_authors():
     assert pub.author_profiles[1] == ""
 
 
-def test_chct_membership_detected_from_institution_metadata():
+def test_abbreviated_citation_names_still_find_their_profile():
+    """Citations abbreviate the given name; profile slugs spell it out."""
+    html = PUBLICATION_HTML.replace(
+        '<meta name="citation_author" content="Gemma Pearce">',
+        '<meta name="citation_author" content="G Pearce">',
+    )
+    pub = extract_publication(html, "https://example.org/p/")
+    assert pub is not None
+    assert pub.author_profiles[0].endswith("/en/persons/gemma-pearce/")
+
+
+def test_ambiguous_names_are_left_unpaired():
+    """Two J Smiths and one profile each must not be guessed at."""
+    html = PUBLICATION_HTML.replace(
+        '<meta name="citation_author" content="Gemma Pearce">',
+        '<meta name="citation_author" content="J Smith">',
+    ).replace(
+        '<a href="/en/persons/gemma-pearce/">Gemma Pearce</a>',
+        '<a href="/en/persons/john-smith/">John Smith</a>'
+        '<a href="/en/persons/jack-smith/">Jack Smith</a>',
+    )
+    pub = extract_publication(html, "https://example.org/p/")
+    assert pub is not None
+    assert pub.author_profiles[0] == ""  # fits john-smith and jack-smith
+
+
+def test_affiliation_detected_from_institution_metadata():
     pub = extract_publication(PUBLICATION_HTML, "https://example.org/pub/")
     assert pub is not None
-    assert pub.is_chct is True
+    assert pub.is_affiliated is True
 
 
-def test_non_chct_publication_is_flagged():
+def test_unaffiliated_publication_is_flagged():
     html = PUBLICATION_HTML.replace(
         "Centre for Healthcare and Community Transformation (HCT)",
         "Faculty of Engineering",
     )
     pub = extract_publication(html, "https://example.org/p/")
     assert pub is not None
-    assert pub.is_chct is False
+    assert pub.is_affiliated is False
 
 
 def test_page_without_citation_metadata_is_not_a_publication():
@@ -105,7 +131,7 @@ def test_missing_optional_fields_do_not_crash():
     assert pub.authors == []
     assert pub.year == ""
     assert pub.abstract == ""
-    assert pub.is_chct is False
+    assert pub.is_affiliated is False
 
 
 @pytest.mark.parametrize(
@@ -192,102 +218,83 @@ def pages() -> dict[str, str]:
     }
 
 
-@pytest.fixture
-def collection(tmp_path) -> Collection:
-    return Collection.open(
-        tmp_path / "pubs", schema=PUBLICATION_SCHEMA, sync_interval=None
-    )
+def _urls(result) -> set[str]:
+    return {publication.url for publication in result.publications}
 
 
-def test_crawl_walks_org_then_people_then_publications(pages, collection):
+def test_crawl_walks_org_then_people_then_publications(pages):
     fetcher = FakeFetcher(pages)
-    stats = ChctCrawler(collection, fetcher=fetcher, organisation_url=ORG_URL).crawl()
+    result = PortalCrawler(fetcher=fetcher, organisation_url=ORG_URL).crawl()
 
-    assert stats.members_found == 1
-    assert stats.publication_urls_seen == 2
-    assert stats.publications_indexed == 2
-    assert len(collection) == 2
-    assert collection.get(PUB_URL).fields["journal"] == "Health Science Reports"
-
-
-def test_crawled_publications_are_searchable(pages, collection):
-    ChctCrawler(
-        collection, fetcher=FakeFetcher(pages), organisation_url=ORG_URL
-    ).crawl()
-    results = collection.search("diabetes prevention")
-    assert results.total >= 1
-    assert (
-        results.hits[0].fields["title"] == "Diabetes prevention in community settings"
-    )
+    assert result.stats.members_found == 1
+    assert result.stats.publication_urls_seen == 2
+    assert result.stats.publications_kept == 2
+    assert PUB_URL in _urls(result)
+    kept = next(p for p in result.publications if p.url == PUB_URL)
+    assert kept.journal == "Health Science Reports"
 
 
-def test_author_names_are_searchable(pages, collection):
-    ChctCrawler(
-        collection, fetcher=FakeFetcher(pages), organisation_url=ORG_URL
-    ).crawl()
-    assert collection.search("Gemma Pearce").total == 2
-
-
-def test_recrawl_updates_rather_than_duplicates(pages, collection):
+def test_recrawl_finds_the_same_publications(pages):
+    urls = None
     for _ in range(3):
-        ChctCrawler(
-            collection, fetcher=FakeFetcher(pages), organisation_url=ORG_URL
+        result = PortalCrawler(
+            fetcher=FakeFetcher(pages), organisation_url=ORG_URL
         ).crawl()
-    assert len(collection) == 2
+        urls = _urls(result)
+    assert urls == {PUB_URL, PUB2_URL}
 
 
-def test_unchanged_pages_are_not_reindexed(pages, collection):
+def test_unchanged_pages_are_skipped(pages):
     """A 304 means our copy is current, so there is nothing to parse."""
     fetcher = FakeFetcher(pages, unchanged={PUB_URL})
-    stats = ChctCrawler(collection, fetcher=fetcher, organisation_url=ORG_URL).crawl()
-    assert stats.publications_indexed == 1  # only the changed one
+    result = PortalCrawler(fetcher=fetcher, organisation_url=ORG_URL).crawl()
+    assert result.stats.publications_kept == 1  # only the changed one
 
 
-def test_require_chct_filters_on_institution_metadata(pages, collection):
+def test_require_affiliation_filters_on_institution_metadata(pages):
     pages[PUB2_URL] = PUBLICATION_HTML.replace(
         "Centre for Healthcare and Community Transformation (HCT)",
         "Faculty of Engineering",
     ).replace("Diabetes prevention in community settings", "Engineering paper")
 
-    stats = ChctCrawler(
-        collection,
+    result = PortalCrawler(
         fetcher=FakeFetcher(pages),
         organisation_url=ORG_URL,
-        require_chct=True,
+        require_affiliation=True,
     ).crawl()
-    assert stats.publications_indexed == 1
-    assert stats.chct_verified == 1
+    assert result.stats.publications_kept == 1
+    assert result.stats.affiliation_verified == 1
 
 
-def test_verification_is_counted_without_being_required(pages, collection):
+def test_verification_is_counted_without_being_required(pages):
     pages[PUB2_URL] = PUBLICATION_HTML.replace(
         "Centre for Healthcare and Community Transformation (HCT)",
         "Faculty of Engineering",
     ).replace("Diabetes prevention in community settings", "Engineering paper")
 
-    stats = ChctCrawler(
-        collection, fetcher=FakeFetcher(pages), organisation_url=ORG_URL
-    ).crawl()
-    assert stats.publications_indexed == 2  # member-sourced, so kept
-    assert stats.chct_verified == 1  # but only one independently confirmed
+    result = PortalCrawler(fetcher=FakeFetcher(pages), organisation_url=ORG_URL).crawl()
+    assert result.stats.publications_kept == 2  # member-sourced, so kept
+    assert (
+        result.stats.affiliation_verified == 1
+    )  # but only one independently confirmed
 
 
-def test_unreachable_pages_are_recorded_not_fatal(collection):
+def test_unreachable_pages_are_recorded_not_fatal():
     fetcher = FakeFetcher({ORG_URL: '<a href="/en/persons/ghost/">G</a>'})
-    stats = ChctCrawler(collection, fetcher=fetcher, organisation_url=ORG_URL).crawl()
-    assert stats.members_found == 1
-    assert stats.errors  # the 404 was recorded
-    assert stats.publications_indexed == 0
+    result = PortalCrawler(fetcher=fetcher, organisation_url=ORG_URL).crawl()
+    assert result.stats.members_seeded == 1
+    assert result.stats.members_found == 0  # the profile could not be read
+    assert result.stats.errors  # the 404 was recorded
+    assert result.stats.publications_kept == 0
 
 
-def test_max_publications_limits_the_crawl(pages, collection):
-    stats = ChctCrawler(
-        collection,
+def test_max_publications_limits_the_crawl(pages):
+    result = PortalCrawler(
         fetcher=FakeFetcher(pages),
         organisation_url=ORG_URL,
         max_publications=1,
     ).crawl()
-    assert stats.publications_indexed == 1
+    assert result.stats.publications_kept == 1
 
 
 # ---- scheduling --------------------------------------------------------
@@ -312,3 +319,114 @@ def test_state_survives_a_corrupt_file(tmp_path):
     state.path.write_text("not json")
     assert state.read() == {}
     assert state.is_due() is True
+
+
+# ---- co-author expansion ------------------------------------------------
+
+COAUTHOR_SLUG = "/en/persons/sally-abbott/"
+COAUTHOR_URL = f"https://pureportal.coventry.ac.uk{COAUTHOR_SLUG}"
+OUTSIDER_URL = "https://pureportal.coventry.ac.uk/en/persons/other-centre/"
+PUB3_URL = "https://pureportal.coventry.ac.uk/en/publications/third-paper/"
+
+MEMBER_PROFILE_HTML = """
+<html><body>
+<a href="/en/organisations/centre-for-healthcare-and-community-transformation/">HCT</a>
+<a href="/en/publications/third-paper/">Third paper</a>
+</body></html>
+"""
+
+OUTSIDER_PROFILE_HTML = """
+<html><body>
+<a href="/en/organisations/centre-for-arts-memory-and-communities/">Other centre</a>
+<a href="/en/publications/unrelated-paper/">Unrelated</a>
+</body></html>
+"""
+
+
+@pytest.fixture
+def expansion_pages() -> dict[str, str]:
+    """A publication naming two Coventry co-authors the org page never linked."""
+    linked = PUBLICATION_HTML.replace(
+        '<a href="/en/persons/gemma-pearce/">Gemma Pearce</a>',
+        '<a href="/en/persons/gemma-pearce/">Gemma Pearce</a>'
+        f'<a href="{COAUTHOR_SLUG}">Sally Abbott</a>'
+        '<a href="/en/persons/other-centre/">Other Centre</a>',
+    ).replace(
+        '<meta name="citation_author" content="External Collaborator">',
+        '<meta name="citation_author" content="Sally Abbott">'
+        '<meta name="citation_author" content="Other Centre">',
+    )
+    return {
+        ORG_URL: '<a href="/en/persons/gemma-pearce/">P</a>',
+        PERSON_URL: PERSON_HTML,
+        PUB_URL: linked,
+        PUB2_URL: linked.replace(
+            "Diabetes prevention in community settings", "Another paper"
+        ),
+        COAUTHOR_URL: MEMBER_PROFILE_HTML,
+        OUTSIDER_URL: OUTSIDER_PROFILE_HTML,
+        PUB3_URL: PUBLICATION_HTML.replace(
+            "Diabetes prevention in community settings", "Third paper"
+        ),
+    }
+
+
+def test_coauthors_extend_the_frontier(expansion_pages):
+    result = PortalCrawler(
+        fetcher=FakeFetcher(expansion_pages), organisation_url=ORG_URL
+    ).crawl()
+
+    assert result.stats.members_seeded == 1
+    assert (
+        result.stats.members_found == 2
+    )  # Gemma plus Sally, not the other-centre author
+    assert result.stats.profiles_rejected == 1
+    assert PUB3_URL in _urls(result)  # reached only through Sally
+
+
+def test_a_url_is_never_fetched_twice(expansion_pages):
+    """Two members sharing a publication must not re-fetch it."""
+    fetcher = FakeFetcher(expansion_pages)
+    PortalCrawler(fetcher=fetcher, organisation_url=ORG_URL).crawl()
+
+    assert len(fetcher.requested) == len(set(fetcher.requested))
+
+
+# ---- the listing route -------------------------------------------------
+
+
+def test_listings_are_used_when_the_portal_serves_them():
+    """A portal without a bot check is paged through, not just sampled."""
+    listing = ORG_URL.rstrip("/")
+    pages = {
+        ORG_URL: '<a href="/en/persons/gemma-pearce/">P</a>',
+        f"{listing}/publications/?page=0": (
+            '<a href="/en/publications/diabetes-prevention/">1</a>'
+        ),
+        f"{listing}/publications/?page=1": (
+            '<a href="/en/publications/another-paper/">2</a>'
+        ),
+        f"{listing}/persons/?page=0": '<a href="/en/persons/gemma-pearce/">P</a>',
+        PERSON_URL: PERSON_HTML,
+        PUB_URL: PUBLICATION_HTML,
+        PUB2_URL: PUBLICATION_HTML.replace(
+            "Diabetes prevention in community settings", "Another paper"
+        ),
+    }
+    fetcher = FakeFetcher(pages)
+    result = PortalCrawler(fetcher=fetcher, organisation_url=ORG_URL).crawl()
+
+    # Page 2 is requested and comes back empty, which is how paging stops.
+    assert f"{listing}/publications/?page=2" in fetcher.requested
+    assert result.stats.publications_kept == 2
+    assert not result.stats.errors  # a missing listing page is not an error
+
+
+def test_falls_back_when_listings_are_blocked(pages):
+    """This portal's listings are 403, so the organisation page is the seed."""
+    fetcher = FakeFetcher(pages)
+    result = PortalCrawler(fetcher=fetcher, organisation_url=ORG_URL).crawl()
+
+    assert any("/publications/?page=0" in url for url in fetcher.requested)
+    assert result.stats.members_seeded == 1  # read off the organisation page
+    assert not result.stats.errors

@@ -20,6 +20,7 @@ dependencies = [
 
 [project.scripts]
 ir-crawl = "crawler.cli:main"
+ir-index = "publications.cli:main"
 ir-cluster = "clustering.cli:main"
 ir-bm25 = "miniseek.worked_example:main"
 

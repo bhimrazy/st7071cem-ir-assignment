@@ -10,7 +10,7 @@ node_modules/
 frontend/dist/
 
 # Generated artefacts. Everything here is rebuilt by:
-#   uv run python scripts/run_clustering.py
+#   uv run ir-cluster
 outputs/
 
 # Source data that is downloaded, not authored. 2.7 MB, fetched on first run
@@ -20,5 +20,8 @@ data/clustering/*.zip
 # The crawled publication corpus IS committed: it is the result of a polite,
 # rate-limited crawl that takes 7 minutes and hits a live university server,
 # so a checkout should not have to repeat it just to run the search engine.
+
+# Working notes and the build log. Kept out of the repo deliberately.
+.idea/
 
 .DS_Store
