@@ -56,7 +56,7 @@ def build_parser() -> argparse.ArgumentParser:
         help=(
             "folder of hand-saved listing pages (<section>-page<N>.html), read "
             "instead of fetching a listing the portal blocks for us "
-            f"(default: {DEFAULT_LISTINGS_DIR})"
+            "(default: <project root>/data/listings)"
         ),
     )
     parser.add_argument(
