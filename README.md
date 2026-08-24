@@ -71,7 +71,7 @@ uv run ir-bm25                               # checks BM25 against the formula w
 
 ```bash
 uv run ir-crawl --once 2>&1 | tee logs/full-crawl.log
-uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-5min-2limit.log
+uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5min-limit-2.log
 ```
 
 [`src/crawler/README.md`](src/crawler/README.md) covers the collection side on
