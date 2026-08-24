@@ -32,4 +32,10 @@ data/crawls/crawl_state.json
 # Working notes and the build log. Kept out of the repo deliberately.
 .idea/
 
+# Ad hoc `... | tee logs/xxx.log` output from manual runs. The folder itself
+# is tracked (via logs/.gitkeep) so it's there to redirect into; its contents
+# are not the corpus and aren't worth committing.
+logs/*
+!logs/.gitkeep
+
 .DS_Store
