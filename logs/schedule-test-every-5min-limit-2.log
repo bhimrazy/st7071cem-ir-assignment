@@ -2,19 +2,19 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 
 2026-08-24 14:57:07,667  INFO    crawler.scheduler  next crawl due in 0s
 2026-08-24 14:57:07,667  INFO    crawler.scheduler  running scheduled crawl
-2026-08-24 14:57:07,667  INFO    crawl  logging to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-14-57-07-NPT.log
+2026-08-24 14:57:07,667  INFO    crawl  logging to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-14-57-07-NPT.log
 2026-08-24 14:57:10,888  INFO    crawl  crawl delay: 5.0s (from robots.txt)
 2026-08-24 14:57:10,888  INFO    crawler.crawler  Visiting the organisation page: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/
 2026-08-24 14:57:11,439  INFO    crawler.crawler    read successfully
 2026-08-24 14:57:11,439  INFO    crawler.crawler  Visiting publications listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=0
 2026-08-24 14:57:11,439  INFO    crawler.politeness  waiting 4.4s (politeness delay)
 2026-08-24 14:57:15,902  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 14:57:15,902  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page0.html
+2026-08-24 14:57:15,902  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/publications-page0.html
 2026-08-24 14:57:15,947  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 14:57:15,947  INFO    crawler.crawler  Visiting publications listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=1
 2026-08-24 14:57:15,947  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 14:57:20,931  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 14:57:20,932  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page1.html
+2026-08-24 14:57:20,932  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/publications-page1.html
 2026-08-24 14:57:20,963  INFO    crawler.crawler    found 38 link(s) on this page, 38 of them new
 2026-08-24 14:57:20,963  INFO    crawler.crawler  Visiting publications listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=2
 2026-08-24 14:57:20,963  INFO    crawler.politeness  waiting 4.9s (politeness delay)
@@ -23,17 +23,17 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 2026-08-24 14:57:25,949  INFO    crawler.crawler  Visiting persons listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=0
 2026-08-24 14:57:25,949  INFO    crawler.politeness  waiting 5.0s (politeness delay)
 2026-08-24 14:57:30,948  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 14:57:30,948  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page0.html
+2026-08-24 14:57:30,948  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page0.html
 2026-08-24 14:57:30,962  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 14:57:30,962  INFO    crawler.crawler  Visiting persons listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=1
 2026-08-24 14:57:30,962  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 14:57:35,964  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 14:57:35,965  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page1.html
+2026-08-24 14:57:35,965  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page1.html
 2026-08-24 14:57:35,993  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 14:57:35,993  INFO    crawler.crawler  Visiting persons listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=2
 2026-08-24 14:57:35,994  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 14:57:40,954  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 14:57:40,954  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page2.html
+2026-08-24 14:57:40,954  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page2.html
 2026-08-24 14:57:40,972  INFO    crawler.crawler    found 17 link(s) on this page, 17 of them new
 2026-08-24 14:57:40,972  INFO    crawler.crawler  Visiting persons listing, page 3: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=3
 2026-08-24 14:57:40,972  INFO    crawler.politeness  waiting 4.9s (politeness delay)
@@ -73,22 +73,22 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 2026-08-24 14:58:16,828  INFO    crawler.politeness  waiting 4.1s (politeness delay)
 2026-08-24 14:58:21,883  INFO    crawler.crawler    found 'Nikki Holliday', with a 3369-character biography
 2026-08-24 14:58:21,900  INFO    crawler.crawler    lists 5 publication link(s)
-2026-08-24 14:58:21,902  INFO    crawl  wrote 2 publications and 5 profiles to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-14-57-07-NPT
+2026-08-24 14:58:21,902  INFO    crawl  wrote 2 publications and 5 profiles to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-14-57-07-NPT
 2026-08-24 14:58:21,902  INFO    crawl  index it with: uv run ir-index
 2026-08-24 14:58:21,903  INFO    crawler.scheduler  crawl finished: {'started_at': '2026-08-24T14:57:10+05:45', 'finished_at': '2026-08-24T14:58:21+05:45', 'members_seeded': 117, 'members_found': 5, 'profiles_rejected': 0, 'queue_remaining': 198, 'publication_urls_seen': 2, 'pages_fetched': 15, 'publications_kept': 2, 'affiliation_verified': 2, 'skipped_unparseable': 0, 'errors': [], 'organisation_url': 'https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/', 'fetcher': {2026-08-24 15:03:22,140  INFO    crawler.scheduler  running scheduled crawl
-2026-08-24 15:03:22,143  INFO    crawl  logging to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-15-03-22-NPT.log
+2026-08-24 15:03:22,143  INFO    crawl  logging to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-15-03-22-NPT.log
 2026-08-24 15:03:24,864  INFO    crawl  crawl delay: 5.0s (from robots.txt)
 2026-08-24 15:03:24,864  INFO    crawler.crawler  Visiting the organisation page: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/
 2026-08-24 15:03:25,968  INFO    crawler.crawler    read successfully
 2026-08-24 15:03:25,968  INFO    crawler.crawler  Visiting publications listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=0
 2026-08-24 15:03:25,968  INFO    crawler.politeness  waiting 3.9s (politeness delay)
 2026-08-24 15:03:29,884  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:03:29,884  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page0.html
+2026-08-24 15:03:29,884  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/publications-page0.html
 2026-08-24 15:03:29,957  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:03:29,957  INFO    crawler.crawler  Visiting publications listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=1
 2026-08-24 15:03:29,957  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:03:34,913  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:03:34,913  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page1.html
+2026-08-24 15:03:34,913  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/publications-page1.html
 2026-08-24 15:03:34,955  INFO    crawler.crawler    found 38 link(s) on this page, 38 of them new
 2026-08-24 15:03:34,955  INFO    crawler.crawler  Visiting publications listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=2
 2026-08-24 15:03:34,955  INFO    crawler.politeness  waiting 4.9s (politeness delay)
@@ -97,17 +97,17 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 2026-08-24 15:03:39,921  INFO    crawler.crawler  Visiting persons listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=0
 2026-08-24 15:03:39,921  INFO    crawler.politeness  waiting 5.0s (politeness delay)
 2026-08-24 15:03:44,922  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:03:44,922  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page0.html
+2026-08-24 15:03:44,922  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page0.html
 2026-08-24 15:03:44,947  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:03:44,947  INFO    crawler.crawler  Visiting persons listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=1
 2026-08-24 15:03:44,947  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:03:49,934  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:03:49,934  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page1.html
+2026-08-24 15:03:49,934  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page1.html
 2026-08-24 15:03:49,957  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:03:49,957  INFO    crawler.crawler  Visiting persons listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=2
 2026-08-24 15:03:49,957  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:03:54,931  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:03:54,932  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page2.html
+2026-08-24 15:03:54,932  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page2.html
 2026-08-24 15:03:54,938  INFO    crawler.crawler    found 17 link(s) on this page, 17 of them new
 2026-08-24 15:03:54,938  INFO    crawler.crawler  Visiting persons listing, page 3: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=3
 2026-08-24 15:03:54,938  INFO    crawler.politeness  waiting 5.0s (politeness delay)
@@ -147,23 +147,23 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 2026-08-24 15:04:30,503  INFO    crawler.politeness  waiting 4.4s (politeness delay)
 2026-08-24 15:04:40,444  INFO    crawler.crawler    found 'Nikki Holliday', with a 3369-character biography
 2026-08-24 15:04:40,458  INFO    crawler.crawler    lists 5 publication link(s)
-2026-08-24 15:04:40,459  INFO    crawl  wrote 2 publications and 5 profiles to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-15-03-22-NPT
+2026-08-24 15:04:40,459  INFO    crawl  wrote 2 publications and 5 profiles to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-15-03-22-NPT
 2026-08-24 15:04:40,459  INFO    crawl  index it with: uv run ir-index
 2026-08-24 15:04:40,460  INFO    crawler.scheduler  crawl finished: {'started_at': '2026-08-24T15:03:24+05:45', 'finished_at': '2026-08-24T15:04:40+05:45', 'members_seeded': 117, 'members_found': 5, 'profiles_rejected': 0, 'queue_remaining': 198, 'publication_urls_seen': 2, 'pages_fetched': 15, 'publications_kept': 2, 'affiliation_verified': 2, 'skipped_unparseable': 0, 'errors': [], 'organisation_url': 'https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/', 'fetcher': {'requests_made': 15, 'bytes_downloaded': 930289, 'crawl_delay': 5.0, 'robots_reachable': True}}
 2026-08-24 15:09:40,737  INFO    crawler.scheduler  running scheduled crawl
-2026-08-24 15:09:40,740  INFO    crawl  logging to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-15-09-40-NPT.log
+2026-08-24 15:09:40,740  INFO    crawl  logging to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-15-09-40-NPT.log
 2026-08-24 15:09:41,696  INFO    crawl  crawl delay: 5.0s (from robots.txt)
 2026-08-24 15:09:41,696  INFO    crawler.crawler  Visiting the organisation page: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/
 2026-08-24 15:09:42,291  INFO    crawler.crawler    read successfully
 2026-08-24 15:09:42,291  INFO    crawler.crawler  Visiting publications listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=0
 2026-08-24 15:09:42,291  INFO    crawler.politeness  waiting 4.4s (politeness delay)
 2026-08-24 15:09:46,711  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:09:46,712  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page0.html
+2026-08-24 15:09:46,712  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/publications-page0.html
 2026-08-24 15:09:46,766  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:09:46,766  INFO    crawler.crawler  Visiting publications listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=1
 2026-08-24 15:09:46,766  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:09:51,748  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:09:51,748  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page1.html
+2026-08-24 15:09:51,748  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/publications-page1.html
 2026-08-24 15:09:51,788  INFO    crawler.crawler    found 38 link(s) on this page, 38 of them new
 2026-08-24 15:09:51,788  INFO    crawler.crawler  Visiting publications listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=2
 2026-08-24 15:09:51,788  INFO    crawler.politeness  waiting 4.9s (politeness delay)
@@ -172,17 +172,17 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 2026-08-24 15:09:56,756  INFO    crawler.crawler  Visiting persons listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=0
 2026-08-24 15:09:56,756  INFO    crawler.politeness  waiting 5.0s (politeness delay)
 2026-08-24 15:10:01,757  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:10:01,758  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page0.html
+2026-08-24 15:10:01,758  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page0.html
 2026-08-24 15:10:01,775  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:10:01,775  INFO    crawler.crawler  Visiting persons listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=1
 2026-08-24 15:10:01,775  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:10:06,772  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:10:06,773  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page1.html
+2026-08-24 15:10:06,773  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page1.html
 2026-08-24 15:10:06,799  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:10:06,799  INFO    crawler.crawler  Visiting persons listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=2
 2026-08-24 15:10:06,799  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:10:11,766  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:10:11,766  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page2.html
+2026-08-24 15:10:11,766  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page2.html
 2026-08-24 15:10:11,784  INFO    crawler.crawler    found 17 link(s) on this page, 17 of them new
 2026-08-24 15:10:11,784  INFO    crawler.crawler  Visiting persons listing, page 3: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=3
 2026-08-24 15:10:11,784  INFO    crawler.politeness  waiting 4.9s (politeness delay)
@@ -222,23 +222,23 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 2026-08-24 15:10:47,638  INFO    crawler.politeness  waiting 4.1s (politeness delay)
 2026-08-24 15:10:52,653  INFO    crawler.crawler    found 'Nikki Holliday', with a 3369-character biography
 2026-08-24 15:10:52,667  INFO    crawler.crawler    lists 5 publication link(s)
-2026-08-24 15:10:52,668  INFO    crawl  wrote 2 publications and 5 profiles to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-15-09-40-NPT
+2026-08-24 15:10:52,668  INFO    crawl  wrote 2 publications and 5 profiles to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-15-09-40-NPT
 2026-08-24 15:10:52,668  INFO    crawl  index it with: uv run ir-index
 2026-08-24 15:10:52,669  INFO    crawler.scheduler  crawl finished: {'started_at': '2026-08-24T15:09:41+05:45', 'finished_at': '2026-08-24T15:10:52+05:45', 'members_seeded': 117, 'members_found': 5, 'profiles_rejected': 0, 'queue_remaining': 198, 'publication_urls_seen': 2, 'pages_fetched': 15, 'publications_kept': 2, 'affiliation_verified': 2, 'skipped_unparseable': 0, 'errors': [], 'organisation_url': 'https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/', 'fetcher': {'requests_made': 15, 'bytes_downloaded': 930289, 'crawl_delay': 5.0, 'robots_reachable': True}}
 2026-08-24 15:15:52,935  INFO    crawler.scheduler  running scheduled crawl
-2026-08-24 15:15:52,938  INFO    crawl  logging to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-15-15-52-NPT.log
+2026-08-24 15:15:52,938  INFO    crawl  logging to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-15-15-52-NPT.log
 2026-08-24 15:15:53,612  INFO    crawl  crawl delay: 5.0s (from robots.txt)
 2026-08-24 15:15:53,613  INFO    crawler.crawler  Visiting the organisation page: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/
 2026-08-24 15:15:53,746  INFO    crawler.crawler    read successfully
 2026-08-24 15:15:53,747  INFO    crawler.crawler  Visiting publications listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=0
 2026-08-24 15:15:53,747  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:15:58,630  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:15:58,630  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page0.html
+2026-08-24 15:15:58,630  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/publications-page0.html
 2026-08-24 15:15:58,682  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:15:58,683  INFO    crawler.crawler  Visiting publications listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=1
 2026-08-24 15:15:58,683  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:16:03,726  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:16:03,726  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page1.html
+2026-08-24 15:16:03,726  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/publications-page1.html
 2026-08-24 15:16:03,781  INFO    crawler.crawler    found 38 link(s) on this page, 38 of them new
 2026-08-24 15:16:03,781  INFO    crawler.crawler  Visiting publications listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=2
 2026-08-24 15:16:03,781  INFO    crawler.politeness  waiting 4.8s (politeness delay)
@@ -247,17 +247,17 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 2026-08-24 15:16:08,674  INFO    crawler.crawler  Visiting persons listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=0
 2026-08-24 15:16:08,674  INFO    crawler.politeness  waiting 5.0s (politeness delay)
 2026-08-24 15:16:13,679  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:16:13,679  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page0.html
+2026-08-24 15:16:13,679  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page0.html
 2026-08-24 15:16:13,723  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:16:13,724  INFO    crawler.crawler  Visiting persons listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=1
 2026-08-24 15:16:13,724  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:16:18,678  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:16:18,679  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page1.html
+2026-08-24 15:16:18,679  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page1.html
 2026-08-24 15:16:18,729  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
 2026-08-24 15:16:18,729  INFO    crawler.crawler  Visiting persons listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=2
 2026-08-24 15:16:18,729  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:16:23,694  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
-2026-08-24 15:16:23,694  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page2.html
+2026-08-24 15:16:23,694  INFO    crawler.crawler    using the saved copy instead: xxx/st7071cem-ir-assignment/data/listings/persons-page2.html
 2026-08-24 15:16:23,707  INFO    crawler.crawler    found 17 link(s) on this page, 17 of them new
 2026-08-24 15:16:23,707  INFO    crawler.crawler  Visiting persons listing, page 3: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=3
 2026-08-24 15:16:23,707  INFO    crawler.politeness  waiting 4.9s (politeness delay)
@@ -297,6 +297,6 @@ uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-every-5m
 2026-08-24 15:16:58,801  INFO    crawler.politeness  waiting 4.9s (politeness delay)
 2026-08-24 15:17:03,955  INFO    crawler.crawler    found 'Nikki Holliday', with a 3369-character biography
 2026-08-24 15:17:03,977  INFO    crawler.crawler    lists 5 publication link(s)
-2026-08-24 15:17:03,978  INFO    crawl  wrote 2 publications and 5 profiles to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-15-15-52-NPT
+2026-08-24 15:17:03,978  INFO    crawl  wrote 2 publications and 5 profiles to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-15-15-52-NPT
 2026-08-24 15:17:03,978  INFO    crawl  index it with: uv run ir-index
 2026-08-24 15:17:03,979  INFO    crawler.scheduler  crawl finished: {'started_at': '2026-08-24T15:15:53+05:45', 'finished_at': '2026-08-24T15:17:03+05:45', 'members_seeded': 117, 'members_found': 5, 'profiles_rejected': 0, 'queue_remaining': 198, 'publication_urls_seen': 2, 'pages_fetched': 15, 'publications_kept': 2, 'affiliation_verified': 2, 'skipped_unparseable': 0, 'errors': [], 'organisation_url': 'https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/', 'fetcher': {'requests_made': 15, 'bytes_downloaded': 930289, 'crawl_delay': 5.0, 'robots_reachable': True}}
