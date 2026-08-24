@@ -141,40 +141,77 @@ class PortalCrawler:
         self._people: list[Person] = []
 
     def crawl(self) -> CrawlResult:
-        """Visit every page the queue reaches, adding the links each reveals.
+        """Crawl in three phases: every publication the listing names, then
+        every member profile the listing names, then whatever either phase
+        referenced that neither listing already covered.
 
-        It terminates because no URL is queued twice, and it stays inside the
-        organisation because only a profile that links the organisation is
-        allowed to contribute publications.
+        Phase 3 is what makes this terminate and stay inside the
+        organisation even when the listings are incomplete or missing
+        entirely: it keeps expanding through new links until nothing new
+        turns up, exactly the way the whole crawl used to work before there
+        was a listing to seed from.
         """
         stats = CrawlStats(started_at=_timestamp())
         self._collected = []
         self._people = []
-        queue = deque(self._seed(stats))
-        seen = set(queue)
 
+        publication_urls, member_urls = self._seed(stats)
+        seen = set(publication_urls) | set(member_urls)
+
+        logger.info(
+            "Phase 1: crawling %d publication(s) from the listing",
+            len(publication_urls),
+        )
+        queue = deque(publication_urls)
+        referenced_authors: set[str] = set()
         while queue and not self._reached_limit(stats):
-            url = queue.popleft()
-            page = self._visit(url, stats)
-
-            if page.links:
-                logger.info("  checking where those %d link(s) lead:", len(page.links))
-            for link in page.links:
-                if link in seen:
-                    logger.info("    already queued or crawled, skipping  %s", link)
-                else:
-                    seen.add(link)
-                    queue.append(link)
-                    logger.info("    not seen before, added to the queue  %s", link)
-
+            page = self._visit(queue.popleft(), stats)
+            referenced_authors.update(page.links)
             logger.info(
-                "  done: %s. %d publications kept so far, %d pages left to visit.",
-                page.note,
-                stats.publications_kept,
-                len(queue),
+                "  done: %s (%d kept so far)", page.note, stats.publications_kept
             )
-
         stats.queue_remaining = len(queue)
+
+        if not self._reached_limit(stats):
+            logger.info(
+                "Phase 2: crawling %d member profile(s) from the listing",
+                len(member_urls),
+            )
+            referenced_publications: set[str] = set()
+            for url in member_urls:
+                page = self._visit(url, stats)
+                referenced_publications.update(page.links)
+                logger.info(
+                    "  done: %s (%d members found so far)",
+                    page.note,
+                    stats.members_found,
+                )
+
+            missing = (referenced_authors | referenced_publications) - seen
+            if missing:
+                logger.info(
+                    "Phase 3: %d link(s) referenced by a publication or a profile "
+                    "but not in either listing; crawling them too",
+                    len(missing),
+                )
+                queue = deque(missing)
+                seen.update(queue)
+                while queue and not self._reached_limit(stats):
+                    page = self._visit(queue.popleft(), stats)
+                    fresh = [link for link in page.links if link not in seen]
+                    seen.update(fresh)
+                    queue.extend(fresh)
+                    logger.info(
+                        "  done: %s, %d new link(s) found", page.note, len(fresh)
+                    )
+                stats.queue_remaining += len(queue)
+            else:
+                logger.info(
+                    "Phase 3: nothing missing -- the listings covered everything"
+                )
+        else:
+            stats.queue_remaining += len(member_urls)
+
         stats.finished_at = _timestamp()
         stats.pages_fetched = self.fetcher.requests_made
         return CrawlResult(
@@ -183,18 +220,20 @@ class PortalCrawler:
 
     def _visit(self, url: str, stats: CrawlStats) -> PageResult:
         """Read one page and act on it, according to what kind it is."""
+        kind = "publication" if _is_publication(url) else "profile"
+        logger.info("Visiting %s page: %s", kind, url)
         result = self._fetch(url, stats)
         if result is None:
-            logger.info("Visiting publication or profile page: %s", url)
             logger.info("  could not be read, skipping it")
             return PageResult([], "page could not be read")
-        if _is_publication(url):
+        if kind == "publication":
             return self._keep_publication(result.text, url, stats)
         return self._read_profile(result.text, url, stats)
 
-    def _seed(self, stats: CrawlStats) -> list[str]:
-        """Everything the organisation exposes: its listings, or failing that,
-        whatever the organisation page itself links.
+    def _seed(self, stats: CrawlStats) -> tuple[list[str], list[str]]:
+        """The organisation's publications and its members, as two separate
+        lists, from its listings or -- failing that -- the organisation page
+        itself.
 
         The listings are the complete answer and the organisation page is a
         handful of highlights, so the listings are tried first. On this portal
@@ -204,15 +243,15 @@ class PortalCrawler:
         result = self._fetch(self.organisation_url, stats)
         if result is None:
             logger.warning("  could not be read, so there is nothing to crawl")
-            return []
+            return [], []
         logger.info("  read successfully")
 
         publications = self._listing("publications", extract_publication_links, stats)
         members = self._listing("persons", extract_person_links, stats)
 
-        # This only bootstraps the queue; it is a handful of links, not the
-        # full department. Co-author expansion during the crawl (see
-        # _keep_publication) is what actually reaches the rest of it.
+        # This only bootstraps phase 1/2; it is a handful of links, not the
+        # full department. Phase 3 (see crawl()) is what actually reaches the
+        # rest of it when this fallback is what ran.
         if not publications:
             publications = extract_publication_links(result.text)
             logger.info(
@@ -229,9 +268,7 @@ class PortalCrawler:
             )
 
         stats.members_seeded = len(members)
-        # Publications first, so the corpus starts filling immediately and
-        # --limit cuts off at a predictable place.
-        return publications + members
+        return publications, members
 
     def _listing(
         self,
@@ -276,7 +313,6 @@ class PortalCrawler:
 
     def _keep_publication(self, html: str, url: str, stats: CrawlStats) -> PageResult:
         """Store one publication, and hand back its co-authors' profiles."""
-        logger.info("Visiting publication page: %s", url)
         stats.publication_urls_seen += 1
         publication = extract_publication(html, url)
         if publication is None:
@@ -305,11 +341,11 @@ class PortalCrawler:
         # name: pairing is for display, and a link we cannot attribute is still
         # a member worth visiting.
         profiles = extract_person_links(html)
+        logger.info("  references %d author profile link(s)", len(profiles))
         return PageResult(profiles, note)
 
     def _read_profile(self, html: str, url: str, stats: CrawlStats) -> PageResult:
         """Take this person's publications, if they belong to the organisation."""
-        logger.info("Visiting profile page: %s", url)
         if not belongs_to_organisation(html, self.organisation_slug):
             stats.profiles_rejected += 1
             logger.info(
@@ -328,6 +364,7 @@ class PortalCrawler:
             )
 
         publications = extract_publication_links(html)
+        logger.info("  lists %d publication link(s)", len(publications))
         return PageResult(publications, "confirmed member")
 
     def _fetch(
