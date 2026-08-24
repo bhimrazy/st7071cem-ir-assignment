@@ -12,6 +12,7 @@ from publications import archive
 from publications.paths import CRAWLS_DIR, DATA_DIR, PROJECT_ROOT
 
 DEFAULT_LISTINGS_DIR = DATA_DIR / "listings"
+LOG_FORMAT = "%(asctime)s  %(levelname)-7s %(name)s  %(message)s"
 
 log = logging.getLogger("crawl")
 
@@ -59,7 +60,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--log-file",
-        help="also write logs here (default: <crawls-dir>/crawl.log)",
+        help=(
+            "also write logs here, instead of inside this run's own crawl "
+            "directory (the default)"
+        ),
     )
     parser.add_argument(
         "--no-log-file", action="store_true", help="log to the console only"
@@ -72,24 +76,16 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     crawls_dir = Path(args.crawls_dir) if args.crawls_dir else CRAWLS_DIR
 
-    handlers: list[logging.Handler] = [logging.StreamHandler()]
-    if not args.no_log_file:
-        log_path = Path(args.log_file) if args.log_file else crawls_dir / "crawl.log"
-        log_path.parent.mkdir(parents=True, exist_ok=True)
-        handlers.append(logging.FileHandler(log_path))
-
     logging.basicConfig(
         level=logging.DEBUG if args.verbose else logging.INFO,
-        format="%(asctime)s  %(levelname)-7s %(name)s  %(message)s",
-        handlers=handlers,
+        format=LOG_FORMAT,
+        handlers=[logging.StreamHandler()],
     )
     # httpx/httpcore narrate every request at our own log level, duplicating
     # what the crawler already logs about the same page. Keep only warnings
     # and worse from them, even with -v.
     logging.getLogger("httpx").setLevel(logging.WARNING)
     logging.getLogger("httpcore").setLevel(logging.WARNING)
-    if not args.no_log_file:
-        log.info("logging to %s", log_path)
     state = CrawlState(crawls_dir)
     interval = args.interval_hours * 3600 if args.interval_hours else WEEKLY_SECONDS
 
@@ -98,36 +94,54 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     def crawl_once() -> dict:
-        cache_dir = None if args.no_cache else args.cache_dir
-        fetcher = PoliteFetcher(BASE_URL, cache_dir=cache_dir)
-        log.info("crawl delay from robots.txt: %.1fs", fetcher.crawl_delay)
-        try:
-            result = PortalCrawler(
-                fetcher=fetcher,
-                max_publications=args.limit,
-                listing_snapshot_dir=args.listing_snapshots,
-            ).crawl()
-        finally:
-            fetcher.close()
+        # Chosen upfront so the log can be written under this run's own crawl
+        # id from the first line, not just after archive.write() picks one.
+        crawl_id = archive.new_crawl_id()
+        log_handler, log_path = _open_run_log(args, crawls_dir, crawl_id)
 
-        manifest = result.stats.as_dict() | {
-            "organisation_url": DEFAULT_ORGANISATION_URL,
-            "fetcher": fetcher.stats(),
-        }
-        crawl = archive.write(
-            (publication.to_document() for publication in result.publications),
-            manifest,
-            people=(person.to_document() for person in result.people),
-            root=crawls_dir,
-        )
-        log.info(
-            "wrote %d publications and %d profiles to %s",
-            crawl.publication_count,
-            crawl.person_count,
-            crawl.path,
-        )
-        log.info("index it with: uv run ir-index")
-        return manifest
+        try:
+            cache_dir = None if args.no_cache else args.cache_dir
+            fetcher = PoliteFetcher(BASE_URL, cache_dir=cache_dir)
+            log.info("crawl delay from robots.txt: %.1fs", fetcher.crawl_delay)
+            try:
+                result = PortalCrawler(
+                    fetcher=fetcher,
+                    max_publications=args.limit,
+                    listing_snapshot_dir=args.listing_snapshots,
+                ).crawl()
+            finally:
+                fetcher.close()
+
+            manifest = result.stats.as_dict() | {
+                "organisation_url": DEFAULT_ORGANISATION_URL,
+                "fetcher": fetcher.stats(),
+            }
+            crawl = archive.write(
+                (publication.to_document() for publication in result.publications),
+                manifest,
+                people=(person.to_document() for person in result.people),
+                root=crawls_dir,
+                crawl_id=crawl_id,
+            )
+            log.info(
+                "wrote %d publications and %d profiles to %s",
+                crawl.publication_count,
+                crawl.person_count,
+                crawl.path,
+            )
+            log.info("index it with: uv run ir-index")
+            return manifest
+        finally:
+            # archive.write() owns crawl.path and would have wiped anything
+            # placed there before it existed, so the log is moved in now,
+            # last, once that directory is guaranteed to be there.
+            if log_handler is not None:
+                logging.getLogger().removeHandler(log_handler)
+                log_handler.close()
+                if log_path is not None and not args.log_file:
+                    final_dir = crawls_dir / crawl_id
+                    if final_dir.is_dir():
+                        log_path.replace(final_dir / "crawl.log")
 
     if args.once:
         state.write(crawl_once())
@@ -135,6 +149,26 @@ def main(argv: list[str] | None = None) -> int:
 
     run_forever(crawl_once, state, interval_seconds=interval)
     return 0
+
+
+def _open_run_log(
+    args: argparse.Namespace, crawls_dir: Path, crawl_id: str
+) -> tuple[logging.Handler | None, Path | None]:
+    """Start logging this run to a file, if wanted.
+
+    Written under `crawls_dir` first rather than straight into the crawl's
+    own (not-yet-existing) directory -- crawl_once() moves it there once
+    archive.write() has actually created that directory.
+    """
+    if args.no_log_file:
+        return None, None
+    log_path = Path(args.log_file) if args.log_file else crawls_dir / f"{crawl_id}.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    handler = logging.FileHandler(log_path)
+    handler.setFormatter(logging.Formatter(LOG_FORMAT))
+    logging.getLogger().addHandler(handler)
+    log.info("logging to %s", log_path)
+    return handler, log_path
 
 
 def _report_status(state: CrawlState, crawls_dir: object, interval: float) -> None:

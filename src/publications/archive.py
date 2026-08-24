@@ -60,9 +60,14 @@ def _read_jsonl(path: Path) -> Iterator[dict[str, Any]]:
 
 
 def new_crawl_id(now: datetime | None = None) -> str:
-    """A sortable, filesystem-safe id, so the newest crawl is the last one."""
+    """A sortable, filesystem-safe id, so the newest crawl is the last one.
+
+    Dashes throughout rather than a packed "%Y%m%dT%H%M%SZ" -- still sorts
+    the same way (each field is fixed-width), just easier to read at a glance
+    in a directory listing.
+    """
     moment = now or datetime.now(UTC)
-    return moment.strftime("%Y%m%dT%H%M%SZ")
+    return moment.strftime("%Y-%m-%d-%H-%M-%SZ")
 
 
 def write(
