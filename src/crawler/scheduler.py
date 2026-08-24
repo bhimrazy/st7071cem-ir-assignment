@@ -75,6 +75,22 @@ def parse_interval(text: str) -> float:
     return float(match.group(1)) * unit_seconds
 
 
+def format_duration(seconds: float) -> str:
+    """Seconds as a duration in whichever unit reads best, e.g. "45s",
+    "3.0 minutes", "2.5 hours", "8.0 days" -- so a "due in" line for a
+    --schedule 1min test crawl doesn't get stuck reporting "0.0 hours"
+    the whole time, while a real weekly schedule still reads in hours.
+    """
+    seconds = max(seconds, 0.0)
+    if seconds < 60:
+        return f"{seconds:.0f}s"
+    if seconds < HOUR_SECONDS:
+        return f"{seconds / 60:.1f} minutes"
+    if seconds < DAY_SECONDS:
+        return f"{seconds / HOUR_SECONDS:.1f} hours"
+    return f"{seconds / DAY_SECONDS:.1f} days"
+
+
 class CrawlState:
     """Records when the crawler last ran, and what happened.
 
@@ -160,7 +176,7 @@ def run_forever(
     # KATHMANDU clock -- harmless here since the machine's own local time
     # already is Asia/Kathmandu.
     scheduled.next_run = datetime.now() + timedelta(seconds=due_in)  # noqa: DTZ005
-    logger.info("next crawl due in %.1f hours", due_in / 3600)
+    logger.info("next crawl due in %s", format_duration(due_in))
 
     try:
         while not stop.is_set():

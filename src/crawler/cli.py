@@ -7,7 +7,13 @@ from pathlib import Path
 
 from crawler.crawler import BASE_URL, DEFAULT_ORGANISATION_URL, PortalCrawler
 from crawler.fetcher import PoliteFetcher
-from crawler.scheduler import WEEKLY_SECONDS, CrawlState, parse_interval, run_forever
+from crawler.scheduler import (
+    WEEKLY_SECONDS,
+    CrawlState,
+    format_duration,
+    parse_interval,
+    run_forever,
+)
 from publications import archive
 from publications.paths import CRAWLS_DIR, DATA_DIR, PROJECT_ROOT
 
@@ -206,7 +212,7 @@ def _report_status(state: CrawlState, crawls_dir: object, interval: float) -> No
     last = state.last_run()
     log.info("crawls directory: %s", crawls_dir)
     log.info("last run:         %s", last.isoformat() if last else "never")
-    log.info("due in:           %.1f hours", state.seconds_until_due(interval) / 3600)
+    log.info("due in:           %s", format_duration(state.seconds_until_due(interval)))
     for crawl in archive.all_crawls(Path(str(crawls_dir))):
         log.info(
             "  %s  %3d publications  %3d profiles  %s",
