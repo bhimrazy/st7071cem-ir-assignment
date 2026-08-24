@@ -473,3 +473,30 @@ def test_falls_back_when_listings_are_blocked(pages):
     assert any("/publications/?page=0" in url for url in fetcher.requested)
     assert result.stats.members_seeded == 1  # read off the organisation page
     assert not result.stats.errors
+
+
+def test_a_publication_only_a_profile_lists_is_not_kept_when_a_listing_exists():
+    """A member's profile lists everything they've ever published, not just
+    work affiliated with this centre -- being reachable through a member
+    isn't enough once there's an actual listing to check against."""
+    listing = ORG_URL.rstrip("/")
+    pages = {
+        ORG_URL: '<a href="/en/persons/gemma-pearce/">P</a>',
+        f"{listing}/publications/?page=0": (
+            '<a href="/en/publications/diabetes-prevention/">1</a>'
+        ),
+        f"{listing}/persons/?page=0": '<a href="/en/persons/gemma-pearce/">P</a>',
+        # Lists both diabetes-prevention (on the listing) and another-paper
+        # (not on the listing -- something else Gemma has published).
+        PERSON_URL: PERSON_HTML,
+        PUB_URL: PUBLICATION_HTML,
+        PUB2_URL: PUBLICATION_HTML.replace(
+            "Diabetes prevention in community settings", "Another paper"
+        ),
+    }
+    fetcher = FakeFetcher(pages)
+    result = PortalCrawler(fetcher=fetcher, organisation_url=ORG_URL).crawl()
+
+    assert result.stats.publications_kept == 1
+    assert PUB_URL in _urls(result)
+    assert PUB2_URL not in _urls(result)

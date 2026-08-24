@@ -145,16 +145,26 @@ class PortalCrawler:
         fetching each co-author's profile the moment it's referenced, rather
         than waiting for phase 2 -- then whichever listed member profiles
         weren't already picked up that way, then whatever either phase
-        referenced that still hasn't been crawled.
+        referenced that still hasn't been crawled *and is on the listing*.
 
         Fetching a co-author's profile inline in phase 1 is what makes
         persons.jsonl reflect the authors of whatever publications actually
         got kept, even on a `--limit`-capped test crawl that never reaches
         phase 2. Phase 3 is what makes the whole thing terminate and stay
-        inside the organisation even when the listings are incomplete or
+        inside the organisation even when the listing is incomplete or
         missing entirely: it keeps expanding through new links until nothing
         new turns up, exactly the way the whole crawl used to work before
         there was a listing to seed from.
+
+        A member's profile lists everything they have ever published, not
+        just work affiliated with this centre, so phase 3 only chases a
+        profile-referenced publication down when it's also one the listing
+        itself named -- being *reachable* through a member isn't reason
+        enough to treat it as belonging to the organisation. If the listing
+        gave us nothing at all (both it and the organisation-page fallback
+        came up empty), there is nothing to check against, so every
+        referenced publication is pursued instead -- the same full BFS
+        reachability this crawler relied on before there was a listing.
         """
         stats = CrawlStats(started_at=_timestamp())
         self._collected = []
@@ -164,11 +174,12 @@ class PortalCrawler:
         visited: set[str] = set()
         # Publications a visited profile lists, however that profile was
         # reached (phase 1's inline fetch or phase 2's listing walk). What
-        # phase 3 still needs to crawl is exactly this, minus what's already
-        # visited.
+        # phase 3 still needs to crawl is this, minus what's already visited
+        # and (see docstring) filtered down to known_publications.
         referenced_publications: set[str] = set()
 
         publication_urls, member_urls = self._seed(stats)
+        known_publications = set(publication_urls)
 
         logger.info(
             "Phase 1: crawling %d publication(s) from the listing, fetching "
@@ -215,23 +226,48 @@ class PortalCrawler:
                 )
 
             missing = referenced_publications - visited
+            skipped_unlisted = 0
+            if known_publications:
+                before = len(missing)
+                missing &= known_publications
+                skipped_unlisted = before - len(missing)
+
             if missing:
                 logger.info(
                     "Phase 3: %d publication link(s) referenced by a profile "
-                    "but not yet crawled; crawling them too",
+                    "but not yet crawled; crawling them too%s",
                     len(missing),
+                    f" ({skipped_unlisted} other referenced link(s) skipped -- "
+                    "not on the listing)"
+                    if skipped_unlisted
+                    else "",
                 )
                 queue = deque(missing)
                 visited.update(queue)
                 while queue and not self._reached_limit(stats):
                     page = self._visit(queue.popleft(), stats)
-                    fresh = [link for link in page.links if link not in visited]
+                    fresh = [
+                        link
+                        for link in page.links
+                        if link not in visited
+                        and (
+                            not known_publications
+                            or not _is_publication(link)
+                            or link in known_publications
+                        )
+                    ]
                     visited.update(fresh)
                     queue.extend(fresh)
                     logger.info(
                         "  done: %s, %d new link(s) found", page.note, len(fresh)
                     )
                 stats.queue_remaining += len(queue)
+            elif skipped_unlisted:
+                logger.info(
+                    "Phase 3: %d publication link(s) referenced by a profile "
+                    "but not on the listing; not crawling them",
+                    skipped_unlisted,
+                )
             else:
                 logger.info(
                     "Phase 3: nothing missing -- everything referenced was "
