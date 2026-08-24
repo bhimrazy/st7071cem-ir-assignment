@@ -161,11 +161,11 @@ class PortalCrawler:
                 logger.info("  checking where those %d link(s) lead:", len(page.links))
             for link in page.links:
                 if link in seen:
-                    logger.info("    already visited, skipping  %s", link)
+                    logger.info("    already queued or crawled, skipping  %s", link)
                 else:
                     seen.add(link)
                     queue.append(link)
-                    logger.info("    new, added to the queue    %s", link)
+                    logger.info("    not seen before, added to the queue  %s", link)
 
             logger.info(
                 "  done: %s. %d publications kept so far, %d pages left to visit.",
