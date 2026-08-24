@@ -37,6 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
             "  ir-crawl --schedule 1month\n"
             "  ir-crawl --schedule 3months\n"
             "  ir-crawl --schedule 1min --limit 4         # exercise the loop fast\n"
+            "  ir-crawl --once --limit 4 --skip-delay     # fastest local test\n"
             "  ir-crawl --status\n"
         ),
     )
@@ -62,6 +63,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="stop after keeping N publications, for a quick test crawl",
     )
     parser.add_argument("--crawls-dir", help="where crawl output is written")
+    parser.add_argument(
+        "--skip-delay",
+        action="store_true",
+        help=(
+            "don't wait between requests -- normally robots.txt's Crawl-delay "
+            "(5s here). For a fast local test crawl only -- a real crawl "
+            "against the live portal should leave this alone."
+        ),
+    )
     parser.add_argument(
         "--log-file",
         help=(
@@ -111,8 +121,11 @@ def main(argv: list[str] | None = None) -> int:
         log_handler, log_path = _open_run_log(args, crawls_dir, crawl_id)
 
         try:
-            fetcher = PoliteFetcher(BASE_URL)
-            log.info("crawl delay from robots.txt: %.1fs", fetcher.crawl_delay)
+            fetcher = PoliteFetcher(
+                BASE_URL, min_delay=0.0 if args.skip_delay else None
+            )
+            source = "--skip-delay" if args.skip_delay else "robots.txt"
+            log.info("crawl delay: %.1fs (from %s)", fetcher.crawl_delay, source)
             try:
                 result = PortalCrawler(
                     fetcher=fetcher,

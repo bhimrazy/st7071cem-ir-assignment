@@ -59,6 +59,7 @@ they can be compared on the same data: BM25 and TF-IDF with cosine similarity.
 ```bash
 uv run ir-crawl --once                       # ~35-40 minutes, polite pacing
 uv run ir-crawl --once --limit 5             # a quick sample instead
+uv run ir-crawl --once --limit 5 --skip-delay  # same, without the crawl delay
 uv run ir-crawl --schedule                   # weekly, as the brief asks
 uv run ir-crawl --schedule 1min --limit 5    # exercise the schedule loop fast
 uv run ir-crawl --status                     # when it last ran
