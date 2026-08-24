@@ -116,7 +116,7 @@ uv run ir-crawl --status                     # when it last ran, and what it fou
 # The 2>&1 matters: logging goes to stderr, so a plain `| tee` only
 # captures stdout and silently produces an empty file.
 uv run ir-crawl --once 2>&1 | tee logs/full-crawl.log
-uv run ir-crawl --schedule 1min --limit 5 2>&1 | tee logs/schedule-test.log
+uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-5min-2limit.log
 ```
 
 `--schedule` takes the interval directly: a number plus a unit (`min`, `h`,

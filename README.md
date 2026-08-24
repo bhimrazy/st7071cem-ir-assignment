@@ -68,7 +68,11 @@ uv run ir-bm25                               # checks BM25 against the formula w
 
 `ir-crawl`'s console logging goes to stderr, so redirecting into a file needs
 `2>&1` (plain `| tee file.log` only captures stdout and silently misses it):
-`uv run ir-crawl --once 2>&1 | tee logs/full-crawl.log`.
+
+```bash
+uv run ir-crawl --once 2>&1 | tee logs/full-crawl.log
+uv run ir-crawl --schedule 5min --limit 2 2>&1 | tee logs/schedule-test-5min-2limit.log
+```
 
 [`src/crawler/README.md`](src/crawler/README.md) covers the collection side on
 its own, including how it stays polite and one bug that made it silently
