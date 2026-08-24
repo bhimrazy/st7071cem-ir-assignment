@@ -1,4 +1,4 @@
-2026-08-24 16:37:12,133  INFO    crawl  logging to /tmp/full-verify/2026-08-24-16-37-12-NPT.log
+2026-08-24 16:37:12,133  INFO    crawl  logging to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-16-37-12-NPT.log
 2026-08-24 16:37:12,765  INFO    crawl  crawl delay: 5.0s (from robots.txt)
 2026-08-24 16:37:12,765  INFO    crawler.crawler  Visiting the organisation page: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/
 2026-08-24 16:37:13,314  INFO    crawler.crawler    read successfully
@@ -1147,5 +1147,5 @@
 2026-08-24 16:59:54,999  INFO    crawler.crawler    lists 5 publication link(s)
 2026-08-24 16:59:54,999  INFO    crawler.crawler    done: confirmed member (117 members found so far)
 2026-08-24 16:59:54,999  INFO    crawler.crawler  Phase 3: 148 publication link(s) referenced by a profile but not on the listing; not crawling them
-2026-08-24 16:59:55,003  INFO    crawl  wrote 88 publications and 117 profiles to /tmp/full-verify/2026-08-24-16-37-12-NPT
+2026-08-24 16:59:55,003  INFO    crawl  wrote 88 publications and 117 profiles to xxx/st7071cem-ir-assignment/data/crawls/2026-08-24-16-37-12-NPT
 2026-08-24 16:59:55,003  INFO    crawl  index it with: uv run ir-index
