@@ -4,9 +4,10 @@ import logging
 from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
 from typing import Any, NamedTuple
+from zoneinfo import ZoneInfo
 
 from .extract import (
     Person,
@@ -34,13 +35,13 @@ class PageResult(NamedTuple):
     note: str
 
 
-def _short(url: str) -> str:
-    """The trailing slug, for readable logs."""
-    return url.rstrip("/").rsplit("/", 1)[-1][:44]
+# Local to Kathmandu rather than UTC, so a timestamp in a log or a manifest
+# reads the same as the clock on the wall.
+KATHMANDU = ZoneInfo("Asia/Kathmandu")
 
 
 def _timestamp() -> str:
-    return datetime.now(UTC).isoformat(timespec="seconds")
+    return datetime.now(KATHMANDU).isoformat(timespec="seconds")
 
 
 BASE_URL = "https://pureportal.coventry.ac.uk"
@@ -156,16 +157,18 @@ class PortalCrawler:
             url = queue.popleft()
             page = self._visit(url, stats)
 
+            if page.links:
+                logger.info("  checking where those %d link(s) lead:", len(page.links))
             for link in page.links:
                 if link in seen:
-                    logger.info("  already visited, skip  %s", _short(link))
+                    logger.info("    already visited, skipping  %s", link)
                 else:
                     seen.add(link)
                     queue.append(link)
-                    logger.info("  new, queued             %s", _short(link))
+                    logger.info("    new, added to the queue    %s", link)
 
             logger.info(
-                "-- %s (%d kept so far, %d left in queue)",
+                "  done: %s. %d publications kept so far, %d pages left to visit.",
                 page.note,
                 stats.publications_kept,
                 len(queue),
@@ -182,8 +185,9 @@ class PortalCrawler:
         """Read one page and act on it, according to what kind it is."""
         result = self._fetch(url, stats)
         if result is None:
-            logger.info("crawl unreachable  %s", _short(url))
-            return PageResult([], "unreachable")
+            logger.info("Visiting publication or profile page: %s", url)
+            logger.info("  could not be read, skipping it")
+            return PageResult([], "page could not be read")
         if _is_publication(url):
             return self._keep_publication(result.text, url, stats)
         return self._read_profile(result.text, url, stats)
@@ -196,11 +200,12 @@ class PortalCrawler:
         handful of highlights, so the listings are tried first. On this portal
         they are behind a bot check and the fallback is what actually runs.
         """
-        logger.info("seed  %s", self.organisation_url)
+        logger.info("Visiting the organisation page: %s", self.organisation_url)
         result = self._fetch(self.organisation_url, stats)
         if result is None:
-            logger.warning("seed  organisation page unreachable, nothing to crawl")
+            logger.warning("  could not be read, so there is nothing to crawl")
             return []
+        logger.info("  read successfully")
 
         publications = self._listing("publications", extract_publication_links, stats)
         members = self._listing("persons", extract_person_links, stats)
@@ -211,11 +216,17 @@ class PortalCrawler:
         if not publications:
             publications = extract_publication_links(result.text)
             logger.info(
-                "seed  %d publications linked on the page instead", len(publications)
+                "No publications listing available; using the %d publication "
+                "link(s) on the organisation page itself instead",
+                len(publications),
             )
         if not members:
             members = extract_person_links(result.text)
-            logger.info("seed  %d members linked on the page instead", len(members))
+            logger.info(
+                "No persons listing available; using the %d member link(s) "
+                "on the organisation page itself instead",
+                len(members),
+            )
 
         stats.members_seeded = len(members)
         # Publications first, so the corpus starts filling immediately and
@@ -237,51 +248,48 @@ class PortalCrawler:
         found: list[str] = []
         for page in range(MAX_LISTING_PAGES):
             url = f"{self.organisation_url.rstrip('/')}/{section}/?page={page}"
+            logger.info("Visiting %s listing, page %d: %s", section, page, url)
             result = self._fetch(url, stats, record_errors=False)
             if result is not None:
                 html = result.text
             else:
-                html = self._read_snapshot(section, page)
-                if html is None:
-                    logger.info(
-                        "seed  %s page %d unavailable (live and no snapshot)",
-                        section,
-                        page,
-                    )
+                snapshot_path = self._snapshot_path(section, page)
+                if not snapshot_path.is_file():
+                    logger.info("  no saved copy of this page either, stopping here")
                     break
-            new = [link for link in extract(html) if link not in found]
-            logger.info("seed  %s page %d gave %d new links", section, page, len(new))
+                logger.info("  using the saved copy instead: %s", snapshot_path)
+                html = snapshot_path.read_text(encoding="utf-8")
+            links = extract(html)
+            new = [link for link in links if link not in found]
+            logger.info(
+                "  found %d link(s) on this page, %d of them new", len(links), len(new)
+            )
             if not new:
                 break
             found.extend(new)
         return found
 
-    def _read_snapshot(self, section: str, page: int) -> str | None:
-        """A hand-saved copy of a listing page, if one was provided."""
-        if self.listing_snapshot_dir is None:
-            return None
-        path = self.listing_snapshot_dir / f"{section}-page{page}.html"
-        if not path.is_file():
-            return None
-        logger.info("seed  %s page %d read from %s", section, page, path)
-        return path.read_text(encoding="utf-8")
+    def _snapshot_path(self, section: str, page: int) -> Path:
+        """Where a hand-saved copy of one listing page would be, if provided."""
+        directory = self.listing_snapshot_dir or Path()
+        return directory / f"{section}-page{page}.html"
 
     def _keep_publication(self, html: str, url: str, stats: CrawlStats) -> PageResult:
         """Store one publication, and hand back its co-authors' profiles."""
-        logger.info("crawl publication  %s", _short(url))
+        logger.info("Visiting publication page: %s", url)
         stats.publication_urls_seen += 1
         publication = extract_publication(html, url)
         if publication is None:
             stats.skipped_unparseable += 1
-            logger.info("  not a publication page")
+            logger.info("  this is not a publication page, skipping it")
             return PageResult([], "not a publication page")
 
         logger.info(
-            "  extracted: %r, %d author(s), %s %s",
+            "  found %r by %d author(s), published in %s (%s)",
             publication.title,
             len(publication.authors),
-            publication.journal or "no journal",
-            publication.year,
+            publication.journal or "an unknown venue",
+            publication.year or "unknown year",
         )
 
         if publication.is_affiliated:
@@ -289,36 +297,38 @@ class PortalCrawler:
         if publication.is_affiliated or not self.require_affiliation:
             self._collected.append(publication)
             stats.publications_kept += 1
-            note = f"kept ({stats.publications_kept} so far)"
+            note = f"kept publication ({stats.publications_kept} so far)"
         else:
-            note = "skipped, not affiliated"
+            note = "skipped, not affiliated with the organisation"
 
         # Every profile the page links, not just the ones pairing matched to a
         # name: pairing is for display, and a link we cannot attribute is still
         # a member worth visiting.
         profiles = extract_person_links(html)
-        logger.info("  checking %d author profile link(s)", len(profiles))
         return PageResult(profiles, note)
 
     def _read_profile(self, html: str, url: str, stats: CrawlStats) -> PageResult:
         """Take this person's publications, if they belong to the organisation."""
-        logger.info("crawl profile      %s", _short(url))
+        logger.info("Visiting profile page: %s", url)
         if not belongs_to_organisation(html, self.organisation_slug):
             stats.profiles_rejected += 1
-            logger.info("  not a member of the organisation")
-            return PageResult([], "not a member")
+            logger.info(
+                "  not a member of the organisation, skipping their publications"
+            )
+            return PageResult([], "not a member of the organisation")
 
         stats.members_found += 1
         person = extract_person(html, url)
         if person is not None:
             self._people.append(person)
             logger.info(
-                "  extracted: %r, %d-char biography", person.name, len(person.biography)
+                "  found %r, with a %d-character biography",
+                person.name,
+                len(person.biography),
             )
 
         publications = extract_publication_links(html)
-        logger.info("  member; checking %d publication link(s)", len(publications))
-        return PageResult(publications, "member")
+        return PageResult(publications, "confirmed member")
 
     def _fetch(
         self, url: str, stats: CrawlStats, *, record_errors: bool = True
@@ -331,12 +341,18 @@ class PortalCrawler:
         try:
             result = self.fetcher.fetch(url)
         except (DisallowedByRobots, Exception) as error:
+            logger.info("  failed to fetch: %s", error)
             if record_errors:
                 stats.errors.append(f"{url}: {error}")
             return None
         if result.unchanged:
+            logger.info("  unchanged since last crawl (304), nothing to parse")
             return None
         if not result.ok:
+            logger.info(
+                "  failed to fetch: HTTP %d (blocked, or the page is gone)",
+                result.status_code,
+            )
             if record_errors:
                 stats.errors.append(f"{url} returned {result.status_code}")
             return None

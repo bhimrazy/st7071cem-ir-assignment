@@ -5,9 +5,10 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
 from typing import TypedDict
+from zoneinfo import ZoneInfo
 
 from sklearn.decomposition import PCA
 
@@ -15,6 +16,8 @@ from clustering.dataset import Corpus, load_corpus
 from clustering.evaluate import DEFAULT_K_RANGE, EvaluationReport, evaluate
 from clustering.model import DEFAULT_MODEL_PATH, ClusteringModel
 from clustering.paths import REPORT_PATH
+
+KATHMANDU = ZoneInfo("Asia/Kathmandu")
 
 DEFAULT_REPORT_PATH = REPORT_PATH
 
@@ -159,7 +162,7 @@ def _build_report(
     sizes = {cluster_id: cluster_ids.count(cluster_id) for cluster_id in top_terms}
 
     return {
-        "generated_at": datetime.now(UTC).isoformat(),
+        "generated_at": datetime.now(KATHMANDU).isoformat(),
         "corpus": {
             "total": len(corpus),
             "categories": list(corpus.categories),

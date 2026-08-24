@@ -8,8 +8,9 @@ from __future__ import annotations
 import re
 import unicodedata
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup, Tag
 
@@ -18,6 +19,8 @@ from bs4 import BeautifulSoup, Tag
 # portal appends an abbreviation: "... Community Transformation (HCT)".
 ORGANISATION_NAME = "centre for healthcare and community transformation"
 ORGANISATION_SLUG = "/organisations/centre-for-healthcare-and-community-transformation"
+
+KATHMANDU = ZoneInfo("Asia/Kathmandu")
 
 
 @dataclass(slots=True)
@@ -169,7 +172,7 @@ def extract_publication(html: str, url: str) -> Publication | None:
         year=year,
         doi=_meta_value(soup, "citation_doi"),
         keywords=_meta_value(soup, "citation_keywords"),
-        crawled_at=datetime.now(UTC).isoformat(timespec="seconds"),
+        crawled_at=datetime.now(KATHMANDU).isoformat(timespec="seconds"),
     )
 
 
@@ -263,7 +266,7 @@ def extract_person(html: str, url: str) -> Person | None:
         name=name,
         url=url,
         biography=_extract_biography(soup),
-        crawled_at=datetime.now(UTC).isoformat(timespec="seconds"),
+        crawled_at=datetime.now(KATHMANDU).isoformat(timespec="seconds"),
     )
 
 

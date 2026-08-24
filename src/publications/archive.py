@@ -7,11 +7,14 @@ import json
 import shutil
 from collections.abc import Iterable, Iterator, Mapping
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from .paths import CRAWLS_DIR
+
+KATHMANDU = ZoneInfo("Asia/Kathmandu")
 
 FORMAT_VERSION = 1
 RECORDS_FILE = "publications.jsonl"
@@ -62,12 +65,13 @@ def _read_jsonl(path: Path) -> Iterator[dict[str, Any]]:
 def new_crawl_id(now: datetime | None = None) -> str:
     """A sortable, filesystem-safe id, so the newest crawl is the last one.
 
-    Dashes throughout rather than a packed "%Y%m%dT%H%M%SZ" -- still sorts
+    Dashes throughout rather than a packed "%Y%m%dT%H%M%S" -- still sorts
     the same way (each field is fixed-width), just easier to read at a glance
-    in a directory listing.
+    in a directory listing. In Kathmandu time (NPT, UTC+5:45), like every
+    other timestamp this project writes.
     """
-    moment = now or datetime.now(UTC)
-    return moment.strftime("%Y-%m-%d-%H-%M-%SZ")
+    moment = now or datetime.now(KATHMANDU)
+    return moment.strftime("%Y-%m-%d-%H-%M-%S-NPT")
 
 
 def write(

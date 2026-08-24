@@ -8,8 +8,9 @@ import json
 import random
 import zipfile
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import httpx
 
@@ -33,6 +34,8 @@ _FOLDER_MAP = {
 # keeping the classes balanced, which stops k-means centroids drifting towards
 # whichever category happens to be largest. The smallest of the three folders
 # holds 386 articles, so this is always satisfiable.
+KATHMANDU = ZoneInfo("Asia/Kathmandu")
+
 DOCUMENTS_PER_CATEGORY = 200
 SAMPLE_SEED = 42
 
@@ -130,7 +133,7 @@ def load_corpus(
         # Always the URL: the cached file is a copy of that download, so the
         # origin is the same whether or not this call went to the network.
         source=DOWNLOAD_URL,
-        fetched_at=datetime.now(UTC).isoformat(),
+        fetched_at=datetime.now(KATHMANDU).isoformat(),
         cache_file=_relative(cache_path),
         category_counts=_counts(labels),
         available_counts=available,

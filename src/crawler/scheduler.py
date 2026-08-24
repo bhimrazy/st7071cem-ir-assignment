@@ -10,14 +10,16 @@ import logging
 import os
 import threading
 from collections.abc import Callable
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 logger = logging.getLogger(__name__)
 
 WEEKLY_SECONDS = 7 * 24 * 60 * 60
 STATE_FILE = "crawl_state.json"
+KATHMANDU = ZoneInfo("Asia/Kathmandu")
 
 
 class CrawlState:
@@ -40,7 +42,7 @@ class CrawlState:
     def write(self, stats: dict[str, Any]) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         payload = {
-            "last_run": datetime.now(UTC).isoformat(timespec="seconds"),
+            "last_run": datetime.now(KATHMANDU).isoformat(timespec="seconds"),
             "last_stats": stats,
         }
         self.path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
@@ -59,7 +61,7 @@ class CrawlState:
         last = self.last_run()
         if last is None:
             return 0.0
-        elapsed = (datetime.now(UTC) - last).total_seconds()
+        elapsed = (datetime.now(KATHMANDU) - last).total_seconds()
         return max(interval_seconds - elapsed, 0.0)
 
     def is_due(self, interval_seconds: float = WEEKLY_SECONDS) -> bool:
@@ -97,7 +99,7 @@ def run_forever(
             state.write(
                 {
                     "error": "crawl failed",
-                    "when": datetime.now(UTC).isoformat(timespec="seconds"),
+                    "when": datetime.now(KATHMANDU).isoformat(timespec="seconds"),
                 }
             )
 
@@ -108,6 +110,6 @@ def run_forever(
 def next_run_time(
     state: CrawlState, interval_seconds: float = WEEKLY_SECONDS
 ) -> datetime:
-    return datetime.now(UTC) + timedelta(
+    return datetime.now(KATHMANDU) + timedelta(
         seconds=state.seconds_until_due(interval_seconds)
     )
