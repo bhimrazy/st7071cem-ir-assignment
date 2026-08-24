@@ -83,6 +83,11 @@ def main(argv: list[str] | None = None) -> int:
         format="%(asctime)s  %(levelname)-7s %(name)s  %(message)s",
         handlers=handlers,
     )
+    # httpx/httpcore narrate every request at our own log level, duplicating
+    # what the crawler already logs about the same page. Keep only warnings
+    # and worse from them, even with -v.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("httpcore").setLevel(logging.WARNING)
     if not args.no_log_file:
         log.info("logging to %s", log_path)
     state = CrawlState(crawls_dir)
