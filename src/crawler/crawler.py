@@ -141,45 +141,72 @@ class PortalCrawler:
         self._people: list[Person] = []
 
     def crawl(self) -> CrawlResult:
-        """Crawl in three phases: every publication the listing names, then
-        every member profile the listing names, then whatever either phase
-        referenced that neither listing already covered.
+        """Crawl in three phases: every publication the listing names --
+        fetching each co-author's profile the moment it's referenced, rather
+        than waiting for phase 2 -- then whichever listed member profiles
+        weren't already picked up that way, then whatever either phase
+        referenced that still hasn't been crawled.
 
-        Phase 3 is what makes this terminate and stay inside the
-        organisation even when the listings are incomplete or missing
-        entirely: it keeps expanding through new links until nothing new
-        turns up, exactly the way the whole crawl used to work before there
-        was a listing to seed from.
+        Fetching a co-author's profile inline in phase 1 is what makes
+        persons.jsonl reflect the authors of whatever publications actually
+        got kept, even on a `--limit`-capped test crawl that never reaches
+        phase 2. Phase 3 is what makes the whole thing terminate and stay
+        inside the organisation even when the listings are incomplete or
+        missing entirely: it keeps expanding through new links until nothing
+        new turns up, exactly the way the whole crawl used to work before
+        there was a listing to seed from.
         """
         stats = CrawlStats(started_at=_timestamp())
         self._collected = []
         self._people = []
+        # Every URL actually fetched so far, whichever phase did it -- the
+        # single source of truth for "don't fetch this again".
+        visited: set[str] = set()
+        # Publications a visited profile lists, however that profile was
+        # reached (phase 1's inline fetch or phase 2's listing walk). What
+        # phase 3 still needs to crawl is exactly this, minus what's already
+        # visited.
+        referenced_publications: set[str] = set()
 
         publication_urls, member_urls = self._seed(stats)
-        seen = set(publication_urls) | set(member_urls)
 
         logger.info(
-            "Phase 1: crawling %d publication(s) from the listing",
+            "Phase 1: crawling %d publication(s) from the listing, fetching "
+            "each co-author's profile as soon as it's referenced",
             len(publication_urls),
         )
         queue = deque(publication_urls)
-        referenced_authors: set[str] = set()
         while queue and not self._reached_limit(stats):
-            page = self._visit(queue.popleft(), stats)
-            referenced_authors.update(page.links)
+            url = queue.popleft()
+            page = self._visit(url, stats)
+            visited.add(url)
             logger.info(
                 "  done: %s (%d kept so far)", page.note, stats.publications_kept
             )
+            for author_url in page.links:
+                if author_url in visited:
+                    logger.info(
+                        "  already have %s from an earlier publication, skipping",
+                        author_url,
+                    )
+                    continue
+                visited.add(author_url)
+                profile = self._visit(author_url, stats)
+                referenced_publications.update(profile.links)
         stats.queue_remaining = len(queue)
 
         if not self._reached_limit(stats):
+            pending_members = [url for url in member_urls if url not in visited]
             logger.info(
-                "Phase 2: crawling %d member profile(s) from the listing",
+                "Phase 2: crawling %d member profile(s) from the listing not "
+                "already fetched in phase 1 (%d of %d already have one)",
+                len(pending_members),
+                len(member_urls) - len(pending_members),
                 len(member_urls),
             )
-            referenced_publications: set[str] = set()
-            for url in member_urls:
+            for url in pending_members:
                 page = self._visit(url, stats)
+                visited.add(url)
                 referenced_publications.update(page.links)
                 logger.info(
                     "  done: %s (%d members found so far)",
@@ -187,19 +214,19 @@ class PortalCrawler:
                     stats.members_found,
                 )
 
-            missing = (referenced_authors | referenced_publications) - seen
+            missing = referenced_publications - visited
             if missing:
                 logger.info(
-                    "Phase 3: %d link(s) referenced by a publication or a profile "
-                    "but not in either listing; crawling them too",
+                    "Phase 3: %d publication link(s) referenced by a profile "
+                    "but not yet crawled; crawling them too",
                     len(missing),
                 )
                 queue = deque(missing)
-                seen.update(queue)
+                visited.update(queue)
                 while queue and not self._reached_limit(stats):
                     page = self._visit(queue.popleft(), stats)
-                    fresh = [link for link in page.links if link not in seen]
-                    seen.update(fresh)
+                    fresh = [link for link in page.links if link not in visited]
+                    visited.update(fresh)
                     queue.extend(fresh)
                     logger.info(
                         "  done: %s, %d new link(s) found", page.note, len(fresh)
@@ -207,10 +234,13 @@ class PortalCrawler:
                 stats.queue_remaining += len(queue)
             else:
                 logger.info(
-                    "Phase 3: nothing missing -- the listings covered everything"
+                    "Phase 3: nothing missing -- everything referenced was "
+                    "already crawled"
                 )
         else:
-            stats.queue_remaining += len(member_urls)
+            stats.queue_remaining += len(
+                [url for url in member_urls if url not in visited]
+            )
 
         stats.finished_at = _timestamp()
         stats.pages_fetched = self.fetcher.requests_made

@@ -325,6 +325,21 @@ def test_max_publications_limits_the_crawl(pages):
     assert result.stats.publications_kept == 1
 
 
+def test_a_kept_publication_s_author_is_fetched_even_under_the_limit(pages):
+    """A profile referenced by a kept publication is fetched inline, in phase
+    1 -- not deferred to phase 2, which a low --limit can stop short of."""
+    result = PortalCrawler(
+        fetcher=FakeFetcher(pages),
+        organisation_url=ORG_URL,
+        max_publications=1,
+    ).crawl()
+    # members_found counts every confirmed member regardless of which phase
+    # fetched them; phase 2 itself never ran here.
+    assert result.stats.members_found == 1
+    assert len(result.people) == 1
+    assert result.people[0].name == "Gemma Pearce"
+
+
 # ---- scheduling --------------------------------------------------------
 
 
