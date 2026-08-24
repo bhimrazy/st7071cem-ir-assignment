@@ -62,6 +62,7 @@ uv run ir-crawl --once --limit 5             # a quick sample instead
 uv run ir-crawl --once --limit 5 --skip-delay  # same, without the crawl delay
 uv run ir-crawl --schedule                   # full crawl, weekly, as the brief asks
 uv run ir-crawl --schedule 1week             # same, written out explicitly
+uv run ir-crawl --schedule 1month            # full crawl, monthly instead
 uv run ir-crawl --schedule 3months           # full crawl, every 3 months instead
 uv run ir-crawl --schedule 1min --limit 5    # exercise the schedule loop fast
 uv run ir-crawl --status                     # when it last ran
