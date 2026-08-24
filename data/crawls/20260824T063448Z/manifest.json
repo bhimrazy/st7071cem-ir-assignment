@@ -1,0 +1,24 @@
+{
+  "format_version": 1,
+  "crawl_id": "20260824T063448Z",
+  "publications": 116,
+  "started_at": "2026-08-24T06:21:11+00:00",
+  "finished_at": "2026-08-24T06:34:48+00:00",
+  "members_seeded": 19,
+  "members_found": 34,
+  "profiles_rejected": 11,
+  "queue_remaining": 0,
+  "publication_urls_seen": 116,
+  "pages_fetched": 164,
+  "publications_kept": 116,
+  "affiliation_verified": 32,
+  "skipped_unparseable": 0,
+  "errors": [],
+  "organisation_url": "https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/",
+  "fetcher": {
+    "requests_made": 164,
+    "bytes_downloaded": 12508504,
+    "crawl_delay": 5.0,
+    "robots_reachable": true
+  }
+}

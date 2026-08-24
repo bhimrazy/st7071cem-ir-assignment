@@ -5,6 +5,7 @@ from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any, NamedTuple
 
 from .extract import (
@@ -113,11 +114,18 @@ class PortalCrawler:
         organisation_slug: str = DEFAULT_ORGANISATION_SLUG,
         max_publications: int | None = None,
         require_affiliation: bool = False,
+        listing_snapshot_dir: Path | str | None = None,
     ) -> None:
         self.fetcher = fetcher or PoliteFetcher(BASE_URL)
         self.organisation_url = organisation_url
         self.organisation_slug = organisation_slug
         self.max_publications = max_publications
+        # A folder of listing pages saved by hand (the portal's bot check blocks
+        # them for us, but not for a person browsing normally). A file named
+        # "<section>-page<N>.html" here is used instead of fetching that page.
+        self.listing_snapshot_dir = (
+            Path(listing_snapshot_dir) if listing_snapshot_dir else None
+        )
         # Reaching a publication through a member's profile already satisfies
         # the brief. Requiring the organisation to *also* appear in the paper's
         # own institution metadata discards valid work, because that metadata
@@ -220,16 +228,29 @@ class PortalCrawler:
         found: list[str] = []
         for page in range(MAX_LISTING_PAGES):
             url = f"{self.organisation_url.rstrip('/')}/{section}/?page={page}"
-            result = self._fetch(url, stats, record_errors=False)
-            if result is None:
-                logger.info("seed  %s page %d unavailable", section, page)
-                break
-            new = [link for link in extract(result.text) if link not in found]
+            html = self._read_snapshot(section, page)
+            if html is None:
+                result = self._fetch(url, stats, record_errors=False)
+                if result is None:
+                    logger.info("seed  %s page %d unavailable", section, page)
+                    break
+                html = result.text
+            new = [link for link in extract(html) if link not in found]
             logger.info("seed  %s page %d gave %d new links", section, page, len(new))
             if not new:
                 break
             found.extend(new)
         return found
+
+    def _read_snapshot(self, section: str, page: int) -> str | None:
+        """A hand-saved copy of a listing page, if one was provided."""
+        if self.listing_snapshot_dir is None:
+            return None
+        path = self.listing_snapshot_dir / f"{section}-page{page}.html"
+        if not path.is_file():
+            return None
+        logger.info("seed  %s page %d read from %s", section, page, path)
+        return path.read_text(encoding="utf-8")
 
     def _keep_publication(self, html: str, url: str, stats: CrawlStats) -> PageResult:
         """Store one publication, and hand back its co-authors' profiles."""

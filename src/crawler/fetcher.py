@@ -3,9 +3,11 @@ do we want" can be tested apart."""
 
 from __future__ import annotations
 
+import hashlib
 import logging
 import time
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Protocol, Self
 
 import httpx
@@ -75,11 +77,16 @@ class PoliteFetcher:
         max_retries: int = 3,
         min_delay: float | None = None,
         client: httpx.Client | None = None,
+        cache_dir: Path | str | None = None,
     ) -> None:
         self.base_url = base_url
         self.user_agent = user_agent
         self.max_retries = max_retries
         self.robots = RobotsPolicy(base_url=base_url, user_agent=user_agent)
+        # A page saved here is never fetched again -- for iterating locally
+        # without hitting the live site each run. Off by default: it would
+        # otherwise hide the very changes the weekly re-crawl exists to catch.
+        self.cache_dir = Path(cache_dir) if cache_dir else None
 
         delay = min_delay if min_delay is not None else self.robots.crawl_delay()
         self.limiter = RateLimiter(delay)
@@ -109,6 +116,18 @@ class PoliteFetcher:
         """
         if not same_host(url, self.base_url):
             raise ValueError(f"refusing to fetch off-host URL: {url}")
+
+        if self.cache_dir is not None:
+            cached = self._cache_path(url)
+            if cached.is_file():
+                logger.info("cache hit  %s", url)
+                return FetchResult(
+                    url=url,
+                    status_code=200,
+                    text=cached.read_text(encoding="utf-8"),
+                    from_cache=True,
+                )
+
         if not self.robots.can_fetch(url):
             raise DisallowedByRobots(f"robots.txt disallows {url}")
 
@@ -153,6 +172,10 @@ class PoliteFetcher:
             if modified := response.headers.get("Last-Modified"):
                 self._validators.setdefault(url, {})["If-Modified-Since"] = modified
 
+            if self.cache_dir is not None and 200 <= response.status_code < 300:
+                self.cache_dir.mkdir(parents=True, exist_ok=True)
+                self._cache_path(url).write_text(response.text, encoding="utf-8")
+
             return FetchResult(
                 url=str(response.url),
                 status_code=response.status_code,
@@ -164,6 +187,11 @@ class PoliteFetcher:
         if last_error is not None:
             raise last_error
         return FetchResult(url=url, status_code=503, text="")
+
+    def _cache_path(self, url: str) -> Path:
+        assert self.cache_dir is not None
+        digest = hashlib.sha1(url.encode()).hexdigest()
+        return self.cache_dir / f"{digest}.html"
 
     def stats(self) -> dict[str, Any]:
         return {

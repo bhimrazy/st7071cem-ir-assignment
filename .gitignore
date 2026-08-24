@@ -18,10 +18,22 @@ outputs/
 data/clustering/*.zip
 
 # The crawled publication corpus IS committed: it is the result of a polite,
-# rate-limited crawl that takes 7 minutes and hits a live university server,
-# so a checkout should not have to repeat it just to run the search engine.
+# rate-limited crawl that takes several minutes and hits a live university
+# server, so a checkout should not have to repeat it just to run the search
+# engine. data/listings (hand-saved, since the portal blocks these for a
+# script) is committed for the same reason.
+
+# Rebuilt from a crawl by: uv run ir-index. Derived data, disposable.
+data/index/
+
+# Operational, not corpus: the running log and the scheduler's last-run marker.
+data/crawls/crawl.log
+data/crawls/crawl_state.json
 
 # Working notes and the build log. Kept out of the repo deliberately.
 .idea/
+
+# Locally cached pages, opted into with ir-crawl --cache-dir. Not the corpus.
+.cache/
 
 .DS_Store

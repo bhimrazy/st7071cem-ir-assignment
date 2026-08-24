@@ -9,7 +9,9 @@ from crawler.crawler import BASE_URL, DEFAULT_ORGANISATION_URL, PortalCrawler
 from crawler.fetcher import PoliteFetcher
 from crawler.scheduler import WEEKLY_SECONDS, CrawlState, run_forever
 from publications import archive
-from publications.paths import CRAWLS_DIR
+from publications.paths import CRAWLS_DIR, DATA_DIR, PROJECT_ROOT
+
+DEFAULT_LISTINGS_DIR = DATA_DIR / "listings"
 
 log = logging.getLogger("crawl")
 
@@ -29,6 +31,32 @@ def build_parser() -> argparse.ArgumentParser:
         "--interval-hours", type=float, help="override the weekly schedule"
     )
     parser.add_argument("--crawls-dir", help="where crawl output is written")
+    parser.add_argument(
+        "--listing-snapshots",
+        default=str(DEFAULT_LISTINGS_DIR),
+        help=(
+            "folder of hand-saved listing pages (<section>-page<N>.html), read "
+            "instead of fetching a listing the portal blocks for us "
+            f"(default: {DEFAULT_LISTINGS_DIR})"
+        ),
+    )
+    parser.add_argument(
+        "--cache-dir",
+        nargs="?",
+        const=str(PROJECT_ROOT / ".cache"),
+        help=(
+            "cache every successfully fetched page and reuse it on later runs, "
+            "for local testing without repeatedly hitting the live site. "
+            "Bare flag caches to <project root>/.cache; give a path to choose "
+            "another. Off by default -- a real weekly crawl needs to keep "
+            "re-fetching, or it will never notice a page changed."
+        ),
+    )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="ignore --cache-dir and always fetch live",
+    )
     parser.add_argument(
         "--log-file",
         help="also write logs here (default: <crawls-dir>/crawl.log)",
@@ -65,10 +93,15 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     def crawl_once() -> dict:
-        fetcher = PoliteFetcher(BASE_URL)
+        cache_dir = None if args.no_cache else args.cache_dir
+        fetcher = PoliteFetcher(BASE_URL, cache_dir=cache_dir)
         log.info("crawl delay from robots.txt: %.1fs", fetcher.crawl_delay)
         try:
-            result = PortalCrawler(fetcher=fetcher, max_publications=args.limit).crawl()
+            result = PortalCrawler(
+                fetcher=fetcher,
+                max_publications=args.limit,
+                listing_snapshot_dir=args.listing_snapshots,
+            ).crawl()
         finally:
             fetcher.close()
 
