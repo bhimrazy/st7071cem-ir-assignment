@@ -1,0 +1,73 @@
+2026-08-24 15:15:52,938  INFO    crawl  logging to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-15-15-52-NPT.log
+2026-08-24 15:15:53,612  INFO    crawl  crawl delay: 5.0s (from robots.txt)
+2026-08-24 15:15:53,613  INFO    crawler.crawler  Visiting the organisation page: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/
+2026-08-24 15:15:53,746  INFO    crawler.crawler    read successfully
+2026-08-24 15:15:53,747  INFO    crawler.crawler  Visiting publications listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=0
+2026-08-24 15:15:53,747  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-24 15:15:58,630  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-24 15:15:58,630  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page0.html
+2026-08-24 15:15:58,682  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
+2026-08-24 15:15:58,683  INFO    crawler.crawler  Visiting publications listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=1
+2026-08-24 15:15:58,683  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-24 15:16:03,726  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-24 15:16:03,726  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page1.html
+2026-08-24 15:16:03,781  INFO    crawler.crawler    found 38 link(s) on this page, 38 of them new
+2026-08-24 15:16:03,781  INFO    crawler.crawler  Visiting publications listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=2
+2026-08-24 15:16:03,781  INFO    crawler.politeness  waiting 4.8s (politeness delay)
+2026-08-24 15:16:08,674  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-24 15:16:08,674  INFO    crawler.crawler    no saved copy of this page either, stopping here
+2026-08-24 15:16:08,674  INFO    crawler.crawler  Visiting persons listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=0
+2026-08-24 15:16:08,674  INFO    crawler.politeness  waiting 5.0s (politeness delay)
+2026-08-24 15:16:13,679  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-24 15:16:13,679  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page0.html
+2026-08-24 15:16:13,723  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
+2026-08-24 15:16:13,724  INFO    crawler.crawler  Visiting persons listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=1
+2026-08-24 15:16:13,724  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-24 15:16:18,678  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-24 15:16:18,679  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page1.html
+2026-08-24 15:16:18,729  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
+2026-08-24 15:16:18,729  INFO    crawler.crawler  Visiting persons listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=2
+2026-08-24 15:16:18,729  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-24 15:16:23,694  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-24 15:16:23,694  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page2.html
+2026-08-24 15:16:23,707  INFO    crawler.crawler    found 17 link(s) on this page, 17 of them new
+2026-08-24 15:16:23,707  INFO    crawler.crawler  Visiting persons listing, page 3: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=3
+2026-08-24 15:16:23,707  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-24 15:16:28,696  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-24 15:16:28,696  INFO    crawler.crawler    no saved copy of this page either, stopping here
+2026-08-24 15:16:28,696  INFO    crawler.crawler  Phase 1: crawling 88 publication(s) from the listing, fetching each co-author's profile as soon as it's referenced
+2026-08-24 15:16:28,697  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/a-cross-sectional-study-of-postgraduate-students-mental-well-bein/
+2026-08-24 15:16:28,697  INFO    crawler.politeness  waiting 5.0s (politeness delay)
+2026-08-24 15:16:33,790  INFO    crawler.crawler    found "A Cross-Sectional Study of Postgraduate Students' Mental Well-Being: Exploring the Relationship Between Mental Well-Being, Perceived Stress, Academic Self-Efficacy, and Self-Efficacy for Self-Regulated Learning" by 7 author(s), published in Health Science Reports (2026)
+2026-08-24 15:16:33,797  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-24 15:16:33,797  INFO    crawler.crawler    done: kept publication (1 so far) (1 kept so far)
+2026-08-24 15:16:33,797  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/andy-turner/
+2026-08-24 15:16:33,797  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-24 15:16:39,517  INFO    crawler.crawler    found 'Andy Turner', with a 726-character biography
+2026-08-24 15:16:39,529  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-24 15:16:39,529  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/celine-brookes-smith/
+2026-08-24 15:16:39,529  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-24 15:16:44,523  INFO    crawler.crawler    found 'Celine Brookes-Smith', with a 444-character biography
+2026-08-24 15:16:44,532  INFO    crawler.crawler    lists 3 publication link(s)
+2026-08-24 15:16:44,532  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/deborah-lycett/
+2026-08-24 15:16:44,532  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-24 15:16:49,213  INFO    crawler.crawler    found 'Professor Deborah Lycett, PhD', with a 3710-character biography
+2026-08-24 15:16:49,223  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-24 15:16:49,223  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/maxine-whelan/
+2026-08-24 15:16:49,223  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-24 15:16:54,575  INFO    crawler.crawler    found 'Maxine Whelan', with a 2297-character biography
+2026-08-24 15:16:54,591  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-24 15:16:54,591  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/a-digital-yoga-based-pause-grow-reflect-intervention-for-postgrad/
+2026-08-24 15:16:54,591  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-24 15:16:58,791  INFO    crawler.crawler    found "A digital yoga-based 'Pause Grow Reflect' intervention for postgraduate researchers: a feasibility randomised controlled trial and embedded qualitative acceptability study" by 6 author(s), published in Pilot and Feasibility Studies (2026)
+2026-08-24 15:16:58,801  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-24 15:16:58,801  INFO    crawler.crawler    done: kept publication (2 so far) (2 kept so far)
+2026-08-24 15:16:58,801  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/andy-turner/ from an earlier publication, skipping
+2026-08-24 15:16:58,801  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/deborah-lycett/ from an earlier publication, skipping
+2026-08-24 15:16:58,801  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/maxine-whelan/ from an earlier publication, skipping
+2026-08-24 15:16:58,801  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/nikki-holliday/
+2026-08-24 15:16:58,801  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-24 15:17:03,955  INFO    crawler.crawler    found 'Nikki Holliday', with a 3369-character biography
+2026-08-24 15:17:03,977  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-24 15:17:03,978  INFO    crawl  wrote 2 publications and 5 profiles to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-24-15-15-52-NPT
+2026-08-24 15:17:03,978  INFO    crawl  index it with: uv run ir-index
