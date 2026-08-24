@@ -65,6 +65,10 @@ uv run ir-crawl --status                     # when it last ran
 uv run ir-bm25                               # checks BM25 against the formula worked by hand
 ```
 
+`ir-crawl`'s console logging goes to stderr, so redirecting into a file needs
+`2>&1` (plain `| tee file.log` only captures stdout and silently misses it):
+`uv run ir-crawl --once 2>&1 | tee logs/full-crawl.log`.
+
 [`src/crawler/README.md`](src/crawler/README.md) covers the collection side on
 its own, including how it stays polite and one bug that made it silently
 believe it was banned from the whole site.

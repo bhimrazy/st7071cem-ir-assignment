@@ -110,8 +110,11 @@ uv run ir-crawl --schedule 1min --limit 5    # exercise the schedule loop fast:
 uv run ir-crawl --status                     # when it last ran, and what it found
 
 # Redirect a run's own console output somewhere durable, alongside the
-# per-crawl log ir-crawl already writes to data/crawls/<id>/crawl.log:
+# per-crawl log ir-crawl already writes to data/crawls/<id>/crawl.log.
+# The 2>&1 matters: logging goes to stderr, so a plain `| tee` only
+# captures stdout and silently produces an empty file.
 uv run ir-crawl --once 2>&1 | tee logs/full-crawl.log
+uv run ir-crawl --schedule 1min --limit 5 2>&1 | tee logs/schedule-test.log
 ```
 
 `--schedule` takes the interval directly: a number plus a unit (`min`, `h`,
