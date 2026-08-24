@@ -114,23 +114,19 @@ def author(
     documents = [
         document
         for document in collection
-        if name in document.fields.get("authors", [])
+        if any(a.get("name") == name for a in document.fields.get("authors", []))
     ]
     if not documents:
         raise HTTPException(status_code=404, detail=f"no publications for {name!r}")
 
-    # The profile URL sits at the same index as the name in the parallel
-    # author_profiles list. External co-authors have none.
     profile_url = ""
     co_authors: set[str] = set()
     for document in documents:
-        authors = document.fields.get("authors", [])
-        profiles = document.fields.get("author_profiles", [])
-        co_authors.update(a for a in authors if a != name)
-        if not profile_url and name in authors:
-            position = authors.index(name)
-            if position < len(profiles):
-                profile_url = profiles[position]
+        for entry in document.fields.get("authors", []):
+            if entry.get("name") == name:
+                profile_url = profile_url or entry.get("profile_url", "")
+            elif co_author := entry.get("name"):
+                co_authors.add(co_author)
 
     years = sorted(y for d in documents if (y := str(d.fields.get("year") or "")))
 

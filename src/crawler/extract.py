@@ -47,13 +47,17 @@ class Publication:
         return {
             "id": self.id,
             "title": self.title,
-            "authors": self.authors,
+            "authors": [
+                {"name": name, "profile_url": profile}
+                for name, profile in zip(
+                    self.authors, self.author_profiles, strict=True
+                )
+            ],
             "abstract": self.abstract,
             "journal": self.journal,
             "year": self.year,
             "url": self.url,
             "doi": self.doi,
-            "author_profiles": self.author_profiles,
             "crawled_at": self.crawled_at,
         }
 

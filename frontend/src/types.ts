@@ -2,17 +2,21 @@
 
 export type ScorerName = "bm25" | "tf-idf"
 
+export interface AuthorInfo {
+  name: string
+  profile_url: string
+}
+
 export interface PublicationHit {
   id: string
   score: number
   title: string | null
-  authors: string[]
+  authors: AuthorInfo[]
   abstract: string | null
   journal: string | null
   year: number | string | null
   url: string | null
   doi: string | null
-  author_profiles: string[]
   crawled_at: string | null
 }
 
@@ -36,8 +40,7 @@ export interface StatsResponse {
 export interface AuthorPublication {
   id: string
   title: string | null
-  authors: string[]
-  author_profiles: string[]
+  authors: AuthorInfo[]
   abstract: string | null
   journal: string | null
   year: number | string | null

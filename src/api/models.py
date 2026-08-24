@@ -6,6 +6,14 @@ from __future__ import annotations
 from pydantic import BaseModel, Field
 
 
+class AuthorInfo(BaseModel):
+    """One author of a publication: their name, and their profile link if
+    they have one on pureportal."""
+
+    name: str
+    profile_url: str = ""
+
+
 class PublicationHit(BaseModel):
     """One ranked publication, with every field the UI needs to render it.
 
@@ -17,13 +25,12 @@ class PublicationHit(BaseModel):
     id: str
     score: float
     title: str | None = None
-    authors: list[str] = Field(default_factory=list)
+    authors: list[AuthorInfo] = Field(default_factory=list)
     abstract: str | None = None
     journal: str | None = None
     year: int | str | None = None
     url: str | None = None
     doi: str | None = None
-    author_profiles: list[str] = Field(default_factory=list)
     crawled_at: str | None = None
 
 
@@ -46,8 +53,7 @@ class AuthorPublication(BaseModel):
 
     id: str
     title: str | None = None
-    authors: list[str] = Field(default_factory=list)
-    author_profiles: list[str] = Field(default_factory=list)
+    authors: list[AuthorInfo] = Field(default_factory=list)
     abstract: str | None = None
     journal: str | None = None
     year: int | str | None = None

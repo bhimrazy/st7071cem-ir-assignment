@@ -81,17 +81,17 @@ function AuthorPanel({ author, onClose, onSelectAuthor }: AuthorPanelProps) {
             )}
 
             <p className="mt-1.5 text-sm text-muted">
-              {publication.authors.map((name, index) => (
+              {publication.authors.map((entry, index) => (
                 <span key={`${publication.id}-author-${index}`}>
-                  {name === author.name ? (
-                    <strong className="font-semibold text-ink">{name}</strong>
+                  {entry.name === author.name ? (
+                    <strong className="font-semibold text-ink">{entry.name}</strong>
                   ) : (
                     <button
                       type="button"
-                      onClick={() => onSelectAuthor(name)}
+                      onClick={() => onSelectAuthor(entry.name)}
                       className="cursor-pointer text-link underline decoration-1 underline-offset-2 hover:text-accent"
                     >
-                      {name}
+                      {entry.name}
                     </button>
                   )}
                   {index < publication.authors.length - 1 ? ", " : ""}

@@ -20,47 +20,56 @@ PUBLICATIONS = [
     {
         "id": "https://pureportal.coventry.ac.uk/pub/1",
         "title": "Machine learning for diabetes risk prediction",
-        "authors": ["Alice Smith", "Bob Jones"],
+        "authors": [
+            {
+                "name": "Alice Smith",
+                "profile_url": "https://pureportal.coventry.ac.uk/en/persons/alice-smith",
+            },
+            {
+                "name": "Bob Jones",
+                "profile_url": "https://pureportal.coventry.ac.uk/en/persons/bob-jones",
+            },
+        ],
         "abstract": "A study predicting diabetes risk in adult populations "
         "using machine learning models.",
         "journal": "Journal of Health Informatics",
         "year": 2023,
         "url": "https://pureportal.coventry.ac.uk/pub/1",
         "doi": "10.1000/diabetes1",
-        "author_profiles": [
-            "https://pureportal.coventry.ac.uk/en/persons/alice-smith",
-            "https://pureportal.coventry.ac.uk/en/persons/bob-jones",
-        ],
         "crawled_at": "2026-08-01T00:00:00Z",
     },
     {
         "id": "https://pureportal.coventry.ac.uk/pub/2",
         "title": "Community health interventions in urban populations",
-        "authors": ["Carol Lee"],
+        "authors": [
+            {
+                "name": "Carol Lee",
+                "profile_url": "https://pureportal.coventry.ac.uk/en/persons/carol-lee",
+            },
+        ],
         "abstract": "A qualitative study of community health outcomes "
         "following targeted interventions.",
         "journal": "Community Health Review",
         "year": 2022,
         "url": "https://pureportal.coventry.ac.uk/pub/2",
         "doi": "10.1000/health2",
-        "author_profiles": [
-            "https://pureportal.coventry.ac.uk/en/persons/carol-lee",
-        ],
         "crawled_at": "2026-08-02T00:00:00Z",
     },
     {
         "id": "https://pureportal.coventry.ac.uk/pub/3",
         "title": "Diabetes management strategies for elderly patients",
-        "authors": ["Alice Smith"],
+        "authors": [
+            {
+                "name": "Alice Smith",
+                "profile_url": "https://pureportal.coventry.ac.uk/en/persons/alice-smith",
+            },
+        ],
         "abstract": "Reviewing diabetes management approaches suited to "
         "elderly patients in community settings.",
         "journal": "Journal of Health Informatics",
         "year": 2024,
         "url": "https://pureportal.coventry.ac.uk/pub/3",
         "doi": "10.1000/diabetes3",
-        "author_profiles": [
-            "https://pureportal.coventry.ac.uk/en/persons/alice-smith",
-        ],
         "crawled_at": "2026-08-03T00:00:00Z",
     },
 ]
@@ -139,7 +148,8 @@ def test_search_hit_includes_display_fields(client: TestClient) -> None:
 
     assert hit["title"]
     assert hit["authors"]
-    assert hit["author_profiles"]
+    assert hit["authors"][0]["name"]
+    assert hit["authors"][0]["profile_url"]
     assert hit["journal"]
     assert hit["url"].startswith("https://pureportal.coventry.ac.uk")
 

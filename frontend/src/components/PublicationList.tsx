@@ -28,14 +28,14 @@ function PublicationList({ publications, onSelectAuthor }: PublicationListProps)
 
           {publication.authors.length > 0 && (
             <p className="mt-1.5 text-sm text-muted">
-              {publication.authors.map((name, index) => (
+              {publication.authors.map((author, index) => (
                 <span key={`${publication.id}-author-${index}`}>
                   <button
                     type="button"
-                    onClick={() => onSelectAuthor(name)}
+                    onClick={() => onSelectAuthor(author.name)}
                     className="cursor-pointer text-link underline decoration-1 underline-offset-2 hover:text-accent"
                   >
-                    {name}
+                    {author.name}
                   </button>
                   {index < publication.authors.length - 1 ? ", " : ""}
                 </span>

@@ -16,6 +16,8 @@ PUBLICATION_SCHEMA = Schema(
     fields=(
         Field("id", indexed=False, stored=True),
         Field("title", indexed=True, stored=True, weight=3.0),
+        # Each entry is {"name": ..., "profile_url": ...}. Only the name is
+        # indexed, the profile URL is display-only.
         Field("authors", indexed=True, stored=True, weight=2.0),
         Field("abstract", indexed=True, stored=True, weight=1.0),
         Field("journal", indexed=True, stored=True, weight=1.0),
@@ -25,9 +27,6 @@ PUBLICATION_SCHEMA = Schema(
         Field("year", indexed=False, stored=True),
         Field("url", indexed=False, stored=True),
         Field("doi", indexed=False, stored=True),
-        # Author profile links, required by the brief. Not indexed for the
-        # same reason as url: every value contains "pureportal.coventry.ac.uk".
-        Field("author_profiles", indexed=False, stored=True),
         Field("crawled_at", indexed=False, stored=True),
     ),
     id_field="id",

@@ -71,9 +71,9 @@ function ResultItem({ hit, rank, scorer, onSelectAuthor }: ResultItemProps) {
 
       {hit.authors.length > 0 && (
         <p className="mt-1.5 text-sm text-muted">
-          {hit.authors.map((name, index) => (
+          {hit.authors.map((author, index) => (
             <span key={`${hit.id}-author-${index}`}>
-              <AuthorLink name={name} onSelectAuthor={onSelectAuthor} />
+              <AuthorLink name={author.name} onSelectAuthor={onSelectAuthor} />
               {index < hit.authors.length - 1 ? ", " : ""}
             </span>
           ))}

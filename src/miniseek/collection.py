@@ -73,6 +73,14 @@ DEFAULT_COMPACT_RATIO = 2.0
 DEFAULT_COMPACT_MIN_ENTRIES = 64
 
 
+def _field_text(value: Any) -> str:
+    """One field value as text. A dict indexes by its "name"/"text" key,
+    not its str() repr."""
+    if isinstance(value, dict):
+        return str(value.get("name") or value.get("text") or "")
+    return str(value)
+
+
 class Collection:
     """A searchable set of documents sharing one schema.
 
@@ -168,9 +176,9 @@ class Collection:
             if value is None:
                 continue
             if isinstance(value, (list, tuple)):
-                text = " ".join(str(v) for v in value)
+                text = " ".join(_field_text(v) for v in value)
             else:
-                text = str(value)
+                text = _field_text(value)
             analyzed[field.name] = self.analyzer.analyze(text)
         return analyzed
 
