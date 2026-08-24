@@ -7,7 +7,7 @@ from pathlib import Path
 
 from crawler.crawler import BASE_URL, DEFAULT_ORGANISATION_URL, PortalCrawler
 from crawler.fetcher import PoliteFetcher
-from crawler.scheduler import WEEKLY_SECONDS, CrawlState, run_forever
+from crawler.scheduler import WEEKLY_SECONDS, CrawlState, parse_interval, run_forever
 from publications import archive
 from publications.paths import CRAWLS_DIR, DATA_DIR, PROJECT_ROOT
 
@@ -19,17 +19,35 @@ log = logging.getLogger("crawl")
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Crawl an organisation's publications."
+        description="Crawl an organisation's publications.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "examples:\n"
+            "  ir-crawl --once\n"
+            "  ir-crawl --schedule            # weekly, the default interval\n"
+            "  ir-crawl --schedule 100h\n"
+            "  ir-crawl --schedule 2weeks\n"
+            "  ir-crawl --schedule 1month\n"
+            "  ir-crawl --schedule 3months\n"
+        ),
     )
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--once", action="store_true", help="run a single crawl")
-    mode.add_argument("--schedule", action="store_true", help="run weekly, forever")
+    mode.add_argument(
+        "--schedule",
+        nargs="?",
+        const="1week",
+        metavar="INTERVAL",
+        help=(
+            "run repeatedly, forever, waiting INTERVAL between crawls -- a "
+            "number plus a unit: hours (h), days (d), weeks (w), or months "
+            "(mo). E.g. 100h, 2weeks, 1month. Defaults to 1week if you just "
+            "pass the bare flag. See the examples below."
+        ),
+    )
     mode.add_argument("--status", action="store_true", help="show past crawls")
     parser.add_argument(
         "--limit", type=int, help="maximum publications to keep (for testing)"
-    )
-    parser.add_argument(
-        "--interval-hours", type=float, help="override the weekly schedule"
     )
     parser.add_argument("--crawls-dir", help="where crawl output is written")
     parser.add_argument(
@@ -73,7 +91,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = build_parser().parse_args(argv)
+    parser = build_parser()
+    args = parser.parse_args(argv)
     crawls_dir = Path(args.crawls_dir) if args.crawls_dir else CRAWLS_DIR
 
     logging.basicConfig(
@@ -87,7 +106,13 @@ def main(argv: list[str] | None = None) -> int:
     logging.getLogger("httpx").setLevel(logging.WARNING)
     logging.getLogger("httpcore").setLevel(logging.WARNING)
     state = CrawlState(crawls_dir)
-    interval = args.interval_hours * 3600 if args.interval_hours else WEEKLY_SECONDS
+    if args.schedule:
+        try:
+            interval = parse_interval(args.schedule)
+        except ValueError as error:
+            parser.error(str(error))
+    else:
+        interval = WEEKLY_SECONDS
 
     if args.status:
         _report_status(state, crawls_dir, interval)

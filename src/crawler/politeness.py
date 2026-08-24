@@ -4,6 +4,7 @@ rest is wrong."""
 
 from __future__ import annotations
 
+import logging
 import threading
 import time
 import urllib.robotparser
@@ -11,6 +12,8 @@ from dataclasses import dataclass, field
 from urllib.parse import urljoin, urlparse
 
 import httpx
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_USER_AGENT = "IRCourseworkBot/1.0 (+coursework crawler; polite)"
 
@@ -47,6 +50,7 @@ class RateLimiter:
             slept = 0.0
             if now < earliest:
                 slept = earliest - now
+                logger.info("waiting %.1fs (politeness delay)", slept)
                 time.sleep(slept)
             self._last_request = time.monotonic()
             return slept

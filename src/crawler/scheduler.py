@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import threading
 from collections.abc import Callable
 from datetime import datetime, timedelta
@@ -17,9 +18,52 @@ from zoneinfo import ZoneInfo
 
 logger = logging.getLogger(__name__)
 
-WEEKLY_SECONDS = 7 * 24 * 60 * 60
+HOUR_SECONDS = 60 * 60
+DAY_SECONDS = 24 * HOUR_SECONDS
+WEEKLY_SECONDS = 7 * DAY_SECONDS
 STATE_FILE = "crawl_state.json"
 KATHMANDU = ZoneInfo("Asia/Kathmandu")
+
+# Accepted on --schedule, so a run interval never needs a separate flag: a
+# number plus one of these unit spellings, e.g. "1week", "100h", "3months".
+# A month is approximated as 30 days -- there is no calendar-exact "month" of
+# seconds, and the coursework brief only needs "roughly monthly".
+_INTERVAL_UNITS: dict[str, float] = {
+    "h": HOUR_SECONDS,
+    "hr": HOUR_SECONDS,
+    "hrs": HOUR_SECONDS,
+    "hour": HOUR_SECONDS,
+    "hours": HOUR_SECONDS,
+    "d": DAY_SECONDS,
+    "day": DAY_SECONDS,
+    "days": DAY_SECONDS,
+    "w": WEEKLY_SECONDS,
+    "wk": WEEKLY_SECONDS,
+    "wks": WEEKLY_SECONDS,
+    "week": WEEKLY_SECONDS,
+    "weeks": WEEKLY_SECONDS,
+    "mo": 30 * DAY_SECONDS,
+    "mos": 30 * DAY_SECONDS,
+    "month": 30 * DAY_SECONDS,
+    "months": 30 * DAY_SECONDS,
+}
+_INTERVAL_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)\s*([a-zA-Z]+)\s*$")
+
+
+def parse_interval(text: str) -> float:
+    """ "1week", "100h", "2months", ... -> seconds.
+
+    Raises ValueError, with a message meant to be shown to the user as-is,
+    if `text` isn't a number followed by one of the known units.
+    """
+    match = _INTERVAL_RE.match(text)
+    unit_seconds = match and _INTERVAL_UNITS.get(match.group(2).lower())
+    if not match or unit_seconds is None:
+        raise ValueError(
+            f"can't understand interval {text!r} -- try e.g. 1week, 100h, "
+            "2months, 12hours"
+        )
+    return float(match.group(1)) * unit_seconds
 
 
 class CrawlState:
