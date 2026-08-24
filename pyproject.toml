@@ -16,6 +16,7 @@ dependencies = [
     "scikit-learn>=1.9.0",     # clustering: TF-IDF and k-means
     "scipy>=1.16.0",           # sparse matrix types
     "matplotlib>=3.11.1",      # figures written by scripts/
+    "schedule>=1.2.2",
 ]
 
 [project.scripts]

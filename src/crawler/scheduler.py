@@ -16,6 +16,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+import schedule
+
 logger = logging.getLogger(__name__)
 
 HOUR_SECONDS = 60 * 60
@@ -119,26 +121,24 @@ def run_forever(
     interval_seconds: float = WEEKLY_SECONDS,
     stop: threading.Event | None = None,
 ) -> None:
-    """Run `crawl` on an interval until `stop` is set.
+    """Run `crawl` on an interval until `stop` is set, via the `schedule`
+    package.
 
-    Waits out any remaining interval before the first run, so restarting the
-    process does not trigger an immediate re-crawl.
+    `schedule` owns the run-every-N-seconds bookkeeping; we only need to
+    point its job's first `next_run` at what `CrawlState` says is actually
+    due, so restarting the process does not trigger an immediate re-crawl
+    just because it happened to restart mid-interval.
     """
     stop = stop or threading.Event()
-    while not stop.is_set():
-        wait = state.seconds_until_due(interval_seconds)
-        if wait > 0:
-            logger.info("next crawl due in %.1f hours", wait / 3600)
-            if stop.wait(wait):
-                break
 
+    def job() -> None:
         try:
             stats = crawl()
             state.write(stats)
             logger.info("crawl finished: %s", stats)
         except Exception:
             # A scheduler that dies on one failed crawl stops updating the
-            # index silently. Log it and wait for the next window instead.
+            # index silently. Log it and let `schedule` retry next interval.
             logger.exception("crawl failed; will retry at the next interval")
             state.write(
                 {
@@ -147,8 +147,21 @@ def run_forever(
                 }
             )
 
-        if stop.wait(interval_seconds):
-            break
+    scheduled = schedule.every(round(interval_seconds)).seconds.do(job)
+    due_in = state.seconds_until_due(interval_seconds)
+    # `schedule` compares against naive local time, not our timezone-aware
+    # KATHMANDU clock -- harmless here since the machine's own local time
+    # already is Asia/Kathmandu.
+    scheduled.next_run = datetime.now() + timedelta(seconds=due_in)  # noqa: DTZ005
+    logger.info("next crawl due in %.1f hours", due_in / 3600)
+
+    try:
+        while not stop.is_set():
+            schedule.run_pending()
+            if stop.wait(1):
+                break
+    finally:
+        schedule.cancel_job(scheduled)
 
 
 def next_run_time(
