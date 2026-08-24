@@ -26,14 +26,10 @@ data/clustering/*.zip
 # Rebuilt from a crawl by: uv run ir-index. Derived data, disposable.
 data/index/
 
-# Operational, not corpus: the running log and the scheduler's last-run marker.
-data/crawls/crawl.log
+# Operational, not corpus: the scheduler's last-run marker.
 data/crawls/crawl_state.json
 
 # Working notes and the build log. Kept out of the repo deliberately.
 .idea/
-
-# Locally cached pages, opted into with ir-crawl --cache-dir. Not the corpus.
-.cache/
 
 .DS_Store

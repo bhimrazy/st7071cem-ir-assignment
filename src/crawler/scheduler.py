@@ -155,6 +155,7 @@ def run_forever(
     stop = stop or threading.Event()
 
     def job() -> None:
+        logger.info("running scheduled crawl")
         try:
             stats = crawl()
             state.write(stats)
