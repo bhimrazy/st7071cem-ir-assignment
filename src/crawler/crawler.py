@@ -9,8 +9,10 @@ from pathlib import Path
 from typing import Any, NamedTuple
 
 from .extract import (
+    Person,
     Publication,
     belongs_to_organisation,
+    extract_person,
     extract_person_links,
     extract_publication,
     extract_publication_links,
@@ -93,6 +95,7 @@ class CrawlResult:
 
     stats: CrawlStats
     publications: list[Publication]
+    people: list[Person]
 
 
 class PortalCrawler:
@@ -134,6 +137,7 @@ class PortalCrawler:
         self.require_affiliation = require_affiliation
         # Filled during crawl(); a fresh list per run.
         self._collected: list[Publication] = []
+        self._people: list[Person] = []
 
     def crawl(self) -> CrawlResult:
         """Visit every page the queue reaches, adding the links each reveals.
@@ -144,6 +148,7 @@ class PortalCrawler:
         """
         stats = CrawlStats(started_at=_timestamp())
         self._collected = []
+        self._people = []
         queue = deque(self._seed(stats))
         seen = set(queue)
 
@@ -151,29 +156,33 @@ class PortalCrawler:
             url = queue.popleft()
             page = self._visit(url, stats)
 
-            fresh = [link for link in page.links if link not in seen]
-            seen.update(fresh)
-            queue.extend(fresh)
+            for link in page.links:
+                if link in seen:
+                    logger.info("  already visited, skip  %s", _short(link))
+                else:
+                    seen.add(link)
+                    queue.append(link)
+                    logger.info("  new, queued             %s", _short(link))
 
             logger.info(
-                "[%3d] %-11s %-46s %3d left | %s%s",
-                len(seen) - len(queue),
-                "publication" if _is_publication(url) else "profile",
-                _short(url),
-                len(queue),
+                "-- %s (%d kept so far, %d left in queue)",
                 page.note,
-                f", +{len(fresh)} queued" if fresh else "",
+                stats.publications_kept,
+                len(queue),
             )
 
         stats.queue_remaining = len(queue)
         stats.finished_at = _timestamp()
         stats.pages_fetched = self.fetcher.requests_made
-        return CrawlResult(stats=stats, publications=self._collected)
+        return CrawlResult(
+            stats=stats, publications=self._collected, people=self._people
+        )
 
     def _visit(self, url: str, stats: CrawlStats) -> PageResult:
         """Read one page and act on it, according to what kind it is."""
         result = self._fetch(url, stats)
         if result is None:
+            logger.info("crawl unreachable  %s", _short(url))
             return PageResult([], "unreachable")
         if _is_publication(url):
             return self._keep_publication(result.text, url, stats)
@@ -228,13 +237,18 @@ class PortalCrawler:
         found: list[str] = []
         for page in range(MAX_LISTING_PAGES):
             url = f"{self.organisation_url.rstrip('/')}/{section}/?page={page}"
-            html = self._read_snapshot(section, page)
-            if html is None:
-                result = self._fetch(url, stats, record_errors=False)
-                if result is None:
-                    logger.info("seed  %s page %d unavailable", section, page)
-                    break
+            result = self._fetch(url, stats, record_errors=False)
+            if result is not None:
                 html = result.text
+            else:
+                html = self._read_snapshot(section, page)
+                if html is None:
+                    logger.info(
+                        "seed  %s page %d unavailable (live and no snapshot)",
+                        section,
+                        page,
+                    )
+                    break
             new = [link for link in extract(html) if link not in found]
             logger.info("seed  %s page %d gave %d new links", section, page, len(new))
             if not new:
@@ -254,11 +268,21 @@ class PortalCrawler:
 
     def _keep_publication(self, html: str, url: str, stats: CrawlStats) -> PageResult:
         """Store one publication, and hand back its co-authors' profiles."""
+        logger.info("crawl publication  %s", _short(url))
         stats.publication_urls_seen += 1
         publication = extract_publication(html, url)
         if publication is None:
             stats.skipped_unparseable += 1
+            logger.info("  not a publication page")
             return PageResult([], "not a publication page")
+
+        logger.info(
+            "  extracted: %r, %d author(s), %s %s",
+            publication.title,
+            len(publication.authors),
+            publication.journal or "no journal",
+            publication.year,
+        )
 
         if publication.is_affiliated:
             stats.affiliation_verified += 1
@@ -273,17 +297,28 @@ class PortalCrawler:
         # name: pairing is for display, and a link we cannot attribute is still
         # a member worth visiting.
         profiles = extract_person_links(html)
-        return PageResult(profiles, f"{note}, {len(profiles)} profile links")
+        logger.info("  checking %d author profile link(s)", len(profiles))
+        return PageResult(profiles, note)
 
     def _read_profile(self, html: str, url: str, stats: CrawlStats) -> PageResult:
         """Take this person's publications, if they belong to the organisation."""
+        logger.info("crawl profile      %s", _short(url))
         if not belongs_to_organisation(html, self.organisation_slug):
             stats.profiles_rejected += 1
+            logger.info("  not a member of the organisation")
             return PageResult([], "not a member")
 
         stats.members_found += 1
+        person = extract_person(html, url)
+        if person is not None:
+            self._people.append(person)
+            logger.info(
+                "  extracted: %r, %d-char biography", person.name, len(person.biography)
+            )
+
         publications = extract_publication_links(html)
-        return PageResult(publications, f"member, {len(publications)} publications")
+        logger.info("  member; checking %d publication link(s)", len(publications))
+        return PageResult(publications, "member")
 
     def _fetch(
         self, url: str, stats: CrawlStats, *, record_errors: bool = True

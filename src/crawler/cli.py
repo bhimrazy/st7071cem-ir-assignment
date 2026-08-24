@@ -117,9 +117,15 @@ def main(argv: list[str] | None = None) -> int:
         crawl = archive.write(
             (publication.to_document() for publication in result.publications),
             manifest,
+            people=(person.to_document() for person in result.people),
             root=crawls_dir,
         )
-        log.info("wrote %d publications to %s", crawl.publication_count, crawl.path)
+        log.info(
+            "wrote %d publications and %d profiles to %s",
+            crawl.publication_count,
+            crawl.person_count,
+            crawl.path,
+        )
         log.info("index it with: uv run ir-index")
         return manifest
 
@@ -138,9 +144,10 @@ def _report_status(state: CrawlState, crawls_dir: object, interval: float) -> No
     log.info("due in:           %.1f hours", state.seconds_until_due(interval) / 3600)
     for crawl in archive.all_crawls(Path(str(crawls_dir))):
         log.info(
-            "  %s  %3d publications  %s",
+            "  %s  %3d publications  %3d profiles  %s",
             crawl.crawl_id,
             crawl.publication_count,
+            crawl.person_count,
             crawl.manifest.get("finished_at", ""),
         )
 

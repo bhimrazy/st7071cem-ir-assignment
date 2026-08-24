@@ -15,6 +15,7 @@ from .paths import CRAWLS_DIR
 
 FORMAT_VERSION = 1
 RECORDS_FILE = "publications.jsonl"
+PEOPLE_FILE = "persons.jsonl"
 MANIFEST_FILE = "manifest.json"
 # A crawl still being written carries this suffix, so an interrupted run is
 # never mistaken for a finished one.
@@ -36,12 +37,26 @@ class Crawl:
     def publication_count(self) -> int:
         return int(self.manifest.get("publications", 0))
 
+    @property
+    def person_count(self) -> int:
+        return int(self.manifest.get("people", 0))
+
     def records(self) -> Iterator[dict[str, Any]]:
         """The crawled publications, one per line, in the order found."""
-        with open(self.path / RECORDS_FILE, encoding="utf-8") as handle:
-            for line in handle:
-                if line.strip():
-                    yield json.loads(line)
+        yield from _read_jsonl(self.path / RECORDS_FILE)
+
+    def people(self) -> Iterator[dict[str, Any]]:
+        """The crawled member profiles, one per line."""
+        yield from _read_jsonl(self.path / PEOPLE_FILE)
+
+
+def _read_jsonl(path: Path) -> Iterator[dict[str, Any]]:
+    if not path.is_file():
+        return
+    with open(path, encoding="utf-8") as handle:
+        for line in handle:
+            if line.strip():
+                yield json.loads(line)
 
 
 def new_crawl_id(now: datetime | None = None) -> str:
@@ -54,6 +69,7 @@ def write(
     records: Iterable[Mapping[str, Any]],
     manifest: Mapping[str, Any],
     *,
+    people: Iterable[Mapping[str, Any]] = (),
     root: Path = CRAWLS_DIR,
     crawl_id: str | None = None,
 ) -> Crawl:
@@ -64,16 +80,14 @@ def write(
         shutil.rmtree(staging)
     staging.mkdir(parents=True)
 
-    count = 0
-    with open(staging / RECORDS_FILE, "w", encoding="utf-8") as handle:
-        for record in records:
-            handle.write(json.dumps(dict(record), ensure_ascii=False) + "\n")
-            count += 1
+    count = _write_jsonl(staging / RECORDS_FILE, records)
+    person_count = _write_jsonl(staging / PEOPLE_FILE, people)
 
     full = {
         "format_version": FORMAT_VERSION,
         "crawl_id": crawl_id,
         "publications": count,
+        "people": person_count,
         **dict(manifest),
     }
     (staging / MANIFEST_FILE).write_text(
@@ -85,6 +99,15 @@ def write(
         shutil.rmtree(final)
     staging.rename(final)
     return Crawl(path=final, manifest=full)
+
+
+def _write_jsonl(path: Path, records: Iterable[Mapping[str, Any]]) -> int:
+    count = 0
+    with open(path, "w", encoding="utf-8") as handle:
+        for record in records:
+            handle.write(json.dumps(dict(record), ensure_ascii=False) + "\n")
+            count += 1
+    return count
 
 
 def all_crawls(root: Path = CRAWLS_DIR) -> list[Crawl]:

@@ -8,6 +8,7 @@ import pytest
 
 from crawler.crawler import PortalCrawler
 from crawler.extract import (
+    extract_person,
     extract_person_links,
     extract_publication,
     extract_publication_links,
@@ -45,9 +46,15 @@ ORGANISATION_HTML = """
 # A member profile: it links the organisation, which is what qualifies it.
 PERSON_HTML = """
 <html><body>
+<h1>Gemma Pearce</h1>
 <a href="/en/organisations/centre-for-healthcare-and-community-transformation/">HCT</a>
 <a href="/en/publications/diabetes-prevention/">Diabetes prevention</a>
 <a href="/en/publications/another-paper/">Another paper</a>
+<section class="person-profileinformation">
+<div class="rendering_profileinformationportal">
+<div class="textblock"><p>Researches community-based diabetes prevention.</p></div>
+</div>
+</section>
 </body></html>
 """
 
@@ -158,6 +165,17 @@ def test_link_extraction_deduplicates():
     assert len(pubs) == 2
 
 
+def test_extract_person_reads_name_and_biography():
+    person = extract_person(PERSON_HTML, "https://example.org/persons/gemma-pearce/")
+    assert person is not None
+    assert person.name == "Gemma Pearce"
+    assert "diabetes prevention" in person.biography
+
+
+def test_extract_person_is_none_without_a_name():
+    assert extract_person(NON_PUBLICATION_HTML, "https://example.org/") is None
+
+
 # ---- politeness --------------------------------------------------------
 
 
@@ -232,6 +250,16 @@ def test_crawl_walks_org_then_people_then_publications(pages):
     assert PUB_URL in _urls(result)
     kept = next(p for p in result.publications if p.url == PUB_URL)
     assert kept.journal == "Health Science Reports"
+
+
+def test_member_profiles_are_collected_with_their_biography(pages):
+    result = PortalCrawler(fetcher=FakeFetcher(pages), organisation_url=ORG_URL).crawl()
+
+    assert len(result.people) == 1
+    person = result.people[0]
+    assert person.name == "Gemma Pearce"
+    assert person.url == PERSON_URL
+    assert "diabetes prevention" in person.biography
 
 
 def test_recrawl_finds_the_same_publications(pages):

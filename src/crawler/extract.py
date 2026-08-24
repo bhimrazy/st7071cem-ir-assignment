@@ -58,6 +58,26 @@ class Publication:
         }
 
 
+@dataclass(slots=True)
+class Person:
+    """One organisation member, as found on their profile page."""
+
+    id: str
+    name: str
+    url: str
+    biography: str = ""
+    crawled_at: str = ""
+
+    def to_document(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "url": self.url,
+            "biography": self.biography,
+            "crawled_at": self.crawled_at,
+        }
+
+
 def slugify(name: str) -> str:
     """Convert a display name to the portal's profile-URL slug.
 
@@ -225,6 +245,39 @@ def extract_publication_links(html: str) -> list[str]:
     return sorted(
         f"https://pureportal.coventry.ac.uk/en/publications/{slug}/" for slug in slugs
     )
+
+
+def extract_person(html: str, url: str) -> Person | None:
+    """A member's name and biography, from their own profile page."""
+    soup = BeautifulSoup(html, "lxml")
+    heading = soup.find("h1")
+    name = heading.get_text(strip=True) if heading else ""
+    if not name:
+        return None
+    return Person(
+        id=url,
+        name=name,
+        url=url,
+        biography=_extract_biography(soup),
+        crawled_at=datetime.now(UTC).isoformat(timespec="seconds"),
+    )
+
+
+def _extract_biography(soup: BeautifulSoup) -> str:
+    """Pull the "Biography" text from a profile page, if it has one.
+
+    Scoped to the profile-information block specifically, not a bare
+    `div.textblock`: a profile page has several of those (prizes, activities,
+    datasets), and only this one is the biography.
+    """
+    for selector in (
+        "div.rendering_profileinformationportal div.textblock",
+        "section.person-profileinformation div.textblock",
+    ):
+        node = soup.select_one(selector)
+        if node and (text := node.get_text(" ", strip=True)):
+            return text
+    return ""
 
 
 def belongs_to_organisation(html: str, slug: str = ORGANISATION_SLUG) -> bool:
