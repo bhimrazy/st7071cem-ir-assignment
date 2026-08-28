@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>miniseek viewer</title>
+<!--
+  Tailwind's Play CDN, which compiles classes in the browser. Fine for a local
+  developer tool and explicitly not meant for production, which this is not.
+  The one real cost: with no network the page loads unstyled. It still works --
+  every number and document is plain HTML -- it just looks like 1994.
+-->
+<script src="https://cdn.tailwindcss.com"></script>
+<style type="text/tailwindcss">
+  @layer utilities {
+    .panel { @apply bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg; }
+    .label { @apply text-xs uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400; }
+  }
+</style>
+</head>
+<body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+<main class="max-w-4xl mx-auto px-5 py-10">
+
+  <h1 id="name" class="text-2xl font-semibold">Loading…</h1>
+  <p id="path" class="font-mono text-xs text-slate-500 dark:text-slate-400 break-all mt-1"></p>
+
+  <div id="stats" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-6"></div>
+
+  <h2 class="label mt-10 mb-3">Schema <span id="idfield" class="normal-case tracking-normal font-normal"></span></h2>
+  <div class="panel overflow-x-auto">
+    <table id="fields" class="w-full text-sm"></table>
+  </div>
+
+  <h2 class="label mt-10 mb-3">Analyzer</h2>
+  <div id="analyzer" class="flex flex-wrap gap-2"></div>
+
+  <h2 class="label mt-10 mb-3">Documents</h2>
+  <div class="flex flex-wrap gap-2 items-center mb-3">
+    <input type="search" id="filter"
+           placeholder="Filter documents (plain substring, not a search)"
+           class="flex-1 min-w-64 px-3 py-2 rounded-md border border-slate-200 dark:border-slate-800
+                  bg-white dark:bg-slate-950 text-sm outline-none focus:border-blue-500">
+    <button id="prev" class="btn">Prev</button>
+    <button id="next" class="btn">Next</button>
+    <button id="reload" class="btn" title="Re-read the collection from disk">Reload</button>
+  </div>
+  <p id="range" class="text-xs text-slate-500 dark:text-slate-400 mb-3"></p>
+  <div id="docs" class="space-y-2"></div>
+
+</main>
+
+<style type="text/tailwindcss">
+  @layer components {
+    .btn { @apply px-3 py-2 text-sm rounded-md border border-slate-200 dark:border-slate-800
+                  bg-slate-50 dark:bg-slate-900 hover:border-blue-500 hover:text-blue-600
+                  disabled:opacity-40 disabled:hover:border-slate-200 disabled:hover:text-inherit; }
+  }
+</style>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let offset = 0;
+const limit = 10;
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => (
+  { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+async function loadCollection() {
+  const response = await fetch("api/collection");
+  if (!response.ok) { $("name").textContent = "Failed to load collection"; return; }
+  const data = await response.json();
+
+  $("name").textContent = data.name;
+  $("path").textContent = data.path ?? "(in memory)";
+
+  $("stats").innerHTML = [
+    ["documents", data.stats.documents],
+    ["vocabulary", data.stats.vocabulary],
+    ["log entries", data.stats.log_entries],
+    ["reclaimable", data.stats.dead_entries],
+  ].map(([key, value]) => `
+    <div class="panel px-3 py-2">
+      <div class="text-2xl font-semibold tabular-nums">${value.toLocaleString()}</div>
+      <div class="text-xs text-slate-500 dark:text-slate-400">${key}</div>
+    </div>`).join("");
+
+  $("idfield").innerHTML =
+    `<span class="text-slate-500 dark:text-slate-400">— id field:</span>
+     <code class="font-mono">${esc(data.id_field)}</code>`;
+
+  const cell = "px-3 py-2 border-b border-slate-200 dark:border-slate-800";
+  const dash = '<span class="text-slate-400">—</span>';
+  $("fields").innerHTML =
+    `<thead><tr class="label">
+       <th class="${cell} text-left">Field</th>
+       <th class="${cell} text-left">Indexed</th>
+       <th class="${cell} text-left">Stored</th>
+       <th class="${cell} text-right">Weight</th>
+       <th class="${cell} text-right">Avg length</th>
+     </tr></thead><tbody>` +
+    data.fields.map((field) => `<tr>
+       <td class="${cell} font-mono">${esc(field.name)}</td>
+       <td class="${cell}">${field.indexed ? "yes" : '<span class="text-slate-400">no</span>'}</td>
+       <td class="${cell}">${field.stored ? "yes" : '<span class="text-slate-400">no</span>'}</td>
+       <td class="${cell} text-right tabular-nums">${field.indexed ? field.weight.toFixed(1) : dash}</td>
+       <td class="${cell} text-right tabular-nums">${field.average_length ?? dash}</td>
+     </tr>`).join("") + "</tbody>";
+
+  // false shows struck through rather than hidden: which stages are *off* is
+  // as much a fact about the index as which are on.
+  $("analyzer").innerHTML = Object.entries(data.analyzer).map(([key, value]) => {
+    const base = "panel px-3 py-1 text-sm";
+    if (value === true) return `<span class="${base}">${esc(key)}</span>`;
+    if (value === false) return `<span class="${base} text-slate-400 line-through">${esc(key)}</span>`;
+    return `<span class="${base}">${esc(key)}: <b class="font-semibold">${esc(value)}</b></span>`;
+  }).join("");
+}
+
+async function loadDocuments() {
+  const query = new URLSearchParams({ offset, limit, contains: $("filter").value });
+  const response = await fetch("api/documents?" + query);
+  if (!response.ok) {
+    $("docs").innerHTML = '<p class="text-red-600">Failed to load documents.</p>';
+    return;
+  }
+  const data = await response.json();
+
+  $("range").textContent = data.total
+    ? `${offset + 1}–${Math.min(offset + limit, data.total)} of ${data.total.toLocaleString()}`
+    : "No documents match.";
+
+  $("docs").innerHTML = data.documents.map((doc) => `
+    <details class="panel">
+      <summary class="px-3 py-2 cursor-pointer">
+        <span class="text-sm">${esc(doc.fields.title ?? doc.id)}</span>
+        <span class="block font-mono text-xs text-slate-500 dark:text-slate-400 break-all">
+          #${doc.internal_id} · ${esc(doc.id)}
+        </span>
+      </summary>
+      <pre class="px-3 py-2 text-xs overflow-x-auto border-t border-slate-200 dark:border-slate-800"
+      >${esc(JSON.stringify(doc.fields, null, 2))}</pre>
+    </details>`).join("");
+
+  $("prev").disabled = offset <= 0;
+  $("next").disabled = offset + limit >= data.total;
+}
+
+$("prev").onclick = () => { offset = Math.max(0, offset - limit); loadDocuments(); };
+$("next").onclick = () => { offset += limit; loadDocuments(); };
+$("reload").onclick = async () => {
+  await fetch("api/reload", { method: "POST" });
+  offset = 0;
+  await loadCollection();
+  await loadDocuments();
+};
+
+// Debounced so typing does not fire a request per keystroke.
+let pending;
+$("filter").oninput = () => {
+  clearTimeout(pending);
+  pending = setTimeout(() => { offset = 0; loadDocuments(); }, 200);
+};
+
+loadCollection().then(loadDocuments);
+</script>
+</body>
+</html>

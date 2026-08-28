@@ -10,10 +10,11 @@ src/
   publications/   The schema both sides agree on, and where it is stored
   clustering/     Task 2: corpus, k-means model, evaluation
   api/            FastAPI routes for both tasks, and the app itself
-tests/            150 tests, none of which touch the network
+tests/            165 tests, none of which touch the network
 frontend/         React and Tailwind interface for both tasks
 data/             Input data
 outputs/          Generated files, all rebuildable
+typesense/        Docker Compose bench comparing miniseek to a real engine
 ```
 
 Each package stands on its own. Collecting, indexing and clustering are
@@ -67,6 +68,7 @@ uv run ir-crawl --schedule 3months           # full crawl, every 3 months instea
 uv run ir-crawl --schedule 1min --limit 5    # exercise the schedule loop fast
 uv run ir-crawl --status                     # when it last ran
 uv run ir-bm25                               # checks BM25 against the formula worked by hand
+uv run miniseek-view data/index              # browse the index: counts, settings, documents
 ```
 
 `ir-crawl`'s console logging goes to stderr, so redirecting into a file needs
@@ -83,6 +85,25 @@ believe it was banned from the whole site.
 
 The crawled corpus is committed, so the search engine works on a fresh
 checkout without crawling a live university server again.
+
+### Comparing against Typesense
+
+`miniseek` is shaped after [Typesense](https://typesense.org), so
+[`typesense/`](typesense/) runs a real one on the same 88 publications and puts
+the two side by side. It is a bench, not a component: nothing in `src/` imports
+it and nothing breaks when the container is down.
+
+```bash
+cd typesense && docker compose up -d      # Typesense on 127.0.0.1:8108
+cd .. && uv run python typesense/load.py  # same corpus, same field weights
+
+uv run python typesense/compare.py                # a fixed set of queries
+uv run python typesense/compare.py --typo         # misspellings, which only Typesense answers
+```
+
+[`typesense/README.md`](typesense/README.md) covers how the two schemas are
+matched up, and why the scores must not be compared directly even though the
+orderings can be.
 
 ## Task 2: Document clustering
 
@@ -117,7 +138,7 @@ uv run ruff check src tests
 uv run ty check src tests
 ```
 
-150 tests. The crawler tests use a stand-in fetcher and the clustering tests
+165 tests. The crawler tests use a stand-in fetcher and the clustering tests
 use a fixture, so the suite runs offline and never hits a real server.
 
 ## Licence

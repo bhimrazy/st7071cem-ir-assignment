@@ -93,6 +93,7 @@ dictionary lookups instead of reading every document.
 | `ranking.py` | `Bm25Scorer`, `TfIdfScorer` and `Coordinated`, behind one `Scorer` protocol |
 | `collection.py` | Ties it together, and owns persistence |
 | `worked_example.py` | The `ir-bm25` command: checks BM25 against a hand calculation |
+| `viewer.py` + `viewer.html` | The `miniseek-view` command: browse any collection |
 
 Two scorers exist so they can be compared on identical data rather than argued
 about. Both follow the same intuition: a term matters more when it is frequent
@@ -234,6 +235,48 @@ a handful of queries picked by the person doing the fitting.
 can lose up to a second of writes. That is the right trade for this corpus,
 where the writer is a weekly crawl whose output is on disk anyway and can
 simply be re-indexed.
+
+## Viewing a collection
+
+```bash
+uv run miniseek-view data/index          # opens a browser at :8100
+uv run miniseek-view data/index --port 9000 --no-browser
+```
+
+A small read-only viewer for **any** miniseek collection: the counts, the
+persisted settings, and the documents themselves, with a substring filter and
+a Reload button for after a re-index.
+
+It is generic because it can afford to be — `Collection.open` reads the schema
+and analyzer back out of `meta.json`, so the viewer never has to be told what
+a collection holds. Point it at a directory and it works.
+
+It shows only what is actually **persisted**: the schema, and the analyzer
+config. `sync_interval` and `compact_ratio` are options of whichever process
+opened the collection, so reporting them would describe the viewer rather than
+the data on disk.
+
+Two deliberate choices worth knowing:
+
+- **`http.server`, not FastAPI.** Not squeamishness about dependencies in
+  general — the API uses FastAPI happily — but about *this* package's.
+  `miniseek` sits underneath everything else, and a viewer is no reason for a
+  search library to start depending on a web framework.
+- **A static `viewer.html`, not a template.** There is nothing to interpolate:
+  the page ships static and fetches its data as JSON, so Jinja would be a
+  dependency substituting zero variables. Styling is Tailwind's Play CDN,
+  which means the page loads unstyled with no network — still fully readable,
+  just plain.
+
+The filter is a plain substring match over the stored fields, deliberately
+*not* a search. A ranked result set would show something else, ordered by a
+relevance score that has nothing to do with browsing.
+
+Opening it is genuinely read-only, which took a fix to make true:
+`Collection.open` holds the log for appending and rewrites `meta.json` on
+close *even when nothing was added*, so the first version of this quietly
+touched every collection it looked at. `Collection.open(read_only=True)` now
+skips the log handle entirely and makes writes raise rather than vanish.
 
 ## Compared with Typesense
 
