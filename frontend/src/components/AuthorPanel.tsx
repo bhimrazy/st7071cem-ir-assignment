@@ -1,3 +1,4 @@
+import AuthorNames from "./AuthorNames"
 import type { AuthorResponse } from "../types"
 
 interface AuthorPanelProps {
@@ -81,22 +82,11 @@ function AuthorPanel({ author, onClose, onSelectAuthor }: AuthorPanelProps) {
             )}
 
             <p className="mt-1.5 text-sm text-muted">
-              {publication.authors.map((entry, index) => (
-                <span key={`${publication.id}-author-${index}`}>
-                  {entry.name === author.name ? (
-                    <strong className="font-semibold text-ink">{entry.name}</strong>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => onSelectAuthor(entry.name)}
-                      className="cursor-pointer text-link underline decoration-1 underline-offset-2 hover:text-accent"
-                    >
-                      {entry.name}
-                    </button>
-                  )}
-                  {index < publication.authors.length - 1 ? ", " : ""}
-                </span>
-              ))}
+              <AuthorNames
+                authors={publication.authors}
+                highlight={author.name}
+                onSelectAuthor={onSelectAuthor}
+              />
             </p>
 
             {(publication.journal || publication.year) && (

@@ -1,3 +1,4 @@
+import AuthorNames from "./AuthorNames"
 import type { PublicationHit } from "../types"
 
 const ABSTRACT_SNIPPET_LENGTH = 280
@@ -6,25 +7,6 @@ function snippet(text: string | null): string | null {
   if (!text) return null
   if (text.length <= ABSTRACT_SNIPPET_LENGTH) return text
   return `${text.slice(0, ABSTRACT_SNIPPET_LENGTH).trimEnd()}…`
-}
-
-interface AuthorLinkProps {
-  name: string
-  onSelectAuthor: (name: string) => void
-}
-
-// A button, not an anchor: this navigates in-app, so an <a> would mislead
-// assistive technology and break middle-click.
-function AuthorLink({ name, onSelectAuthor }: AuthorLinkProps) {
-  return (
-    <button
-      type="button"
-      onClick={() => onSelectAuthor(name)}
-      className="cursor-pointer text-link underline decoration-1 underline-offset-2 hover:text-accent"
-    >
-      {name}
-    </button>
-  )
 }
 
 interface ResultItemProps {
@@ -71,12 +53,7 @@ function ResultItem({ hit, rank, scorer, onSelectAuthor }: ResultItemProps) {
 
       {hit.authors.length > 0 && (
         <p className="mt-1.5 text-sm text-muted">
-          {hit.authors.map((author, index) => (
-            <span key={`${hit.id}-author-${index}`}>
-              <AuthorLink name={author.name} onSelectAuthor={onSelectAuthor} />
-              {index < hit.authors.length - 1 ? ", " : ""}
-            </span>
-          ))}
+          <AuthorNames authors={hit.authors} onSelectAuthor={onSelectAuthor} />
         </p>
       )}
 
