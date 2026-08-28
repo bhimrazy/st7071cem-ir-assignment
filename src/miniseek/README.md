@@ -90,7 +90,7 @@ dictionary lookups instead of reading every document.
 | `schema.py` | Which fields exist, which are indexed, what each is worth |
 | `index.py` | The inverted index, and the lengths and norms ranking needs |
 | `store.py` | Documents by id, and the external id to internal id mapping |
-| `ranking.py` | `Bm25Scorer` and `TfIdfScorer`, behind one `Scorer` protocol |
+| `ranking.py` | `Bm25Scorer`, `TfIdfScorer` and `Coordinated`, behind one `Scorer` protocol |
 | `collection.py` | Ties it together, and owns persistence |
 | `worked_example.py` | The `ir-bm25` command: checks BM25 against a hand calculation |
 
@@ -98,6 +98,33 @@ Two scorers exist so they can be compared on identical data rather than argued
 about. Both follow the same intuition: a term matters more when it is frequent
 in this document and rare across the corpus. They disagree about what to do
 when a word repeats twenty times, and BM25 wins that argument.
+
+## How much of the query did we match?
+
+Both models sum a contribution per matching term and say nothing about the
+terms that missed, so one loud term can beat real coverage. On the real
+corpus, `sleep quality students` ranked five documents matching a single term
+above the only document matching two of the three, and
+`digital intervention mental health` put a three-of-four match above a
+four-of-four one.
+
+`Coordinated` wraps either scorer and multiplies by the fraction of the query
+a document actually covers — Lucene's old coordination factor:
+
+```
+coord(q, d) = matching query terms in d / query terms that exist
+```
+
+The denominator counts only terms the index has seen, so a query word present
+in no document (`transformation` here, which stems to a term with df=0) does
+not quietly scale every result down. Both registered scorers are wrapped, and
+they keep their names, so `?scorer=bm25` still selects BM25.
+
+It is a correction, not a cure. On the two queries above it moved the
+two-of-three match from 6th to 4th and closed a 26.4-to-19.4 gap to
+19.8-to-19.4 — better orderings, but a strong single term can still win.
+Ranking those cases properly needs the query treated as more than a bag of
+independent words, which is what phrase support would buy.
 
 ## Staying on disk
 

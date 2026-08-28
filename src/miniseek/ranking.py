@@ -20,7 +20,17 @@ class Scorer(Protocol):
     the report compare them on identical data rather than by assertion.
     """
 
-    name: str
+    @property
+    def name(self) -> str:
+        """What to call this scorer in a result and in the API.
+
+        Read-only on purpose. A plain `name: str` would demand a *settable*
+        attribute, which rules out any implementation that derives its name
+        rather than storing one -- `Coordinated` wraps another scorer and
+        reports that scorer's name. Nothing renames a scorer, so requiring
+        the write was overreach.
+        """
+        ...
 
     def score(
         self,
@@ -185,8 +195,88 @@ class Bm25Scorer:
         return scores
 
 
-DEFAULT_SCORER: Scorer = Bm25Scorer()
+@dataclass(slots=True)
+class Coordinated:
+    """Scales another scorer's output by how much of the query a document covers.
+
+    Both models above sum a contribution per matching term, and say nothing
+    about the terms that did *not* match. One strong term can therefore
+    outscore genuine coverage. On this corpus, searching
+    "digital intervention mental health" put a paper matching three of the
+    four terms above one matching all four, and "sleep quality students"
+    buried the only two-of-three match under five documents matching a single
+    term. Both are the same failure: a query is a statement of what the reader
+    wants, and matching more of it should count for something.
+
+    The fix is Lucene's classic coordination factor -- multiply by the
+    fraction of the query the document actually contains:
+
+        coord(q, d) = matching query terms in d / query terms that exist
+
+    The denominator counts only terms the index has ever seen, so a query
+    containing a word in no document ("transformation", which stems to a term
+    with df=0 here) does not quietly penalise every result. Without that, the
+    factor would be a constant below 1 -- harmless to the ordering, but it
+    would make the scores lie about how well anything matched.
+
+    This multiplies rather than adds so it stays a proportion of whatever the
+    inner model produced, which keeps BM25 and TF-IDF comparable afterwards:
+    each is scaled by the same factor, so the comparison in the report still
+    measures the two models against each other rather than against two
+    different corrections.
+
+    Lucene dropped coord when it moved to BM25, on the grounds that BM25's
+    saturation already limits how far one repeated term can carry a document.
+    That reasoning holds for long documents; it holds less well here, where
+    the fields are a title and an abstract and a single well-placed title
+    term is easily enough to win outright.
+    """
+
+    inner: Scorer
+
+    @property
+    def name(self) -> str:
+        """The inner scorer's name, since this is a correction and not a model.
+
+        Keeping the name means `?scorer=bm25` still selects BM25 and the API
+        contract does not change; what changed is that BM25 now accounts for
+        query coverage.
+        """
+        return self.inner.name
+
+    def score(
+        self,
+        index: InvertedIndex,
+        query_terms: Counter[str],
+        field_weights: dict[str, float],
+    ) -> dict[int, float]:
+        scores = self.inner.score(index, query_terms, field_weights)
+
+        # Only terms the index knows can be covered, so only they can count
+        # towards the denominator.
+        findable = [t for t in query_terms if index.document_frequency(t) > 0]
+        if len(findable) < 2:
+            # One term (or none): every candidate covers all of the findable
+            # query, so the factor is 1.0 for everything and the multiply is
+            # pure arithmetic. Skipping it keeps single-term search exact.
+            return scores
+
+        overlap: Counter[int] = Counter()
+        for term in findable:
+            overlap.update(index.postings(term).keys())
+
+        total = float(len(findable))
+        return {
+            doc_id: score * (overlap[doc_id] / total)
+            for doc_id, score in scores.items()
+        }
+
+
+# Coordination is on by default because the uncoordinated ranking is wrong in
+# a way a reader notices immediately. The bare scorers stay importable so the
+# report can quantify what the correction is worth rather than assert it.
+DEFAULT_SCORER: Scorer = Coordinated(Bm25Scorer())
 SCORERS: dict[str, Scorer] = {
-    "tf-idf": TfIdfScorer(),
-    "bm25": Bm25Scorer(),
+    "tf-idf": Coordinated(TfIdfScorer()),
+    "bm25": Coordinated(Bm25Scorer()),
 }

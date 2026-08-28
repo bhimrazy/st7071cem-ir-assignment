@@ -10,7 +10,7 @@ src/
   publications/   The schema both sides agree on, and where it is stored
   clustering/     Task 2: corpus, k-means model, evaluation
   api/            FastAPI routes for both tasks, and the app itself
-tests/            141 tests, none of which touch the network
+tests/            150 tests, none of which touch the network
 frontend/         React and Tailwind interface for both tasks
 data/             Input data
 outputs/          Generated files, all rebuildable
@@ -117,7 +117,7 @@ uv run ruff check src tests
 uv run ty check src tests
 ```
 
-141 tests. The crawler tests use a stand-in fetcher and the clustering tests
+150 tests. The crawler tests use a stand-in fetcher and the clustering tests
 use a fixture, so the suite runs offline and never hits a real server.
 
 ## Licence

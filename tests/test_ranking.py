@@ -4,7 +4,7 @@ import pytest
 
 from miniseek.collection import Collection
 from miniseek.index import InvertedIndex
-from miniseek.ranking import Bm25Scorer, TfIdfScorer
+from miniseek.ranking import SCORERS, Bm25Scorer, Coordinated, TfIdfScorer
 from miniseek.schema import Field, Schema
 
 CORPUS = [
@@ -191,3 +191,84 @@ def test_empty_index_scores_nothing():
 def test_deleted_documents_leave_the_ranking(collection):
     assert collection.delete("a") is True
     assert {h.id for h in collection.search("diabetes")} == {"b"}
+
+
+def _coverage_collection() -> Collection:
+    """One document covering the whole query, one covering half of it loudly.
+
+    Reproduces the real "sleep quality students" failure in miniature. Two
+    things have to line up for the inversion, and both are true of the real
+    corpus: "sleep" is repeated in the partial match so term frequency carries
+    it, and "students" is common enough (df=9 of 10 here) that its IDF is
+    small, so covering it adds almost nothing to the document that does.
+    Without the filler documents "students" would be rare, its IDF would
+    dominate, and the full match would already win for the wrong reason.
+    """
+    schema = Schema(fields=(Field("id", indexed=False), Field("body")))
+    coll = Collection("t", schema=schema)
+    coll.add({"id": "both", "body": "sleep students"})
+    coll.add({"id": "half", "body": "sleep sleep sleep"})
+    for n in range(8):
+        coll.add({"id": f"filler{n}", "body": "students seminar timetable campus"})
+    return coll
+
+
+@pytest.mark.parametrize("inner", [TfIdfScorer(), Bm25Scorer()])
+def test_covering_the_whole_query_beats_a_louder_partial_match(inner):
+    """The defect: without coordination, repeating one term wins outright."""
+    coll = _coverage_collection()
+
+    uncoordinated = [h.id for h in coll.search("sleep students", scorer=inner)]
+    coordinated = [
+        h.id for h in coll.search("sleep students", scorer=Coordinated(inner))
+    ]
+
+    assert uncoordinated[0] == "half"
+    assert coordinated[0] == "both"
+
+
+@pytest.mark.parametrize("inner", [TfIdfScorer(), Bm25Scorer()])
+def test_coordination_halves_a_document_matching_half_the_query(inner):
+    coll = _coverage_collection()
+    before = {h.id: h.score for h in coll.search("sleep students", scorer=inner)}
+    after = {
+        h.id: h.score for h in coll.search("sleep students", scorer=Coordinated(inner))
+    }
+
+    assert after["both"] == pytest.approx(before["both"])  # 2/2 -> unchanged
+    assert after["half"] == pytest.approx(before["half"] / 2)  # 1/2 -> halved
+
+
+def test_a_single_term_query_is_left_exactly_alone():
+    """Every candidate covers all of a one-term query, so the factor is 1.0."""
+    coll = _coverage_collection()
+    before = {h.id: h.score for h in coll.search("sleep", scorer=Bm25Scorer())}
+    after = {
+        h.id: h.score for h in coll.search("sleep", scorer=Coordinated(Bm25Scorer()))
+    }
+    assert after == pytest.approx(before)
+
+
+def test_a_query_term_in_no_document_does_not_penalise_everything():
+    """A word the corpus has never seen cannot be 'covered', so it must not
+    count towards the denominator -- otherwise a full match would be scaled
+    below 1.0 and the score would misreport how well it matched."""
+    coll = _coverage_collection()
+    exact = {h.id: h.score for h in coll.search("sleep students", scorer=Bm25Scorer())}
+    with_unknown = {
+        h.id: h.score
+        for h in coll.search(
+            "sleep students zzzznotacorpusword", scorer=Coordinated(Bm25Scorer())
+        )
+    }
+    assert with_unknown["both"] == pytest.approx(exact["both"])
+
+
+def test_coordination_reports_the_wrapped_scorer_s_name():
+    """`?scorer=bm25` must still say bm25: this is a correction, not a model."""
+    assert Coordinated(Bm25Scorer()).name == "bm25"
+    assert Coordinated(TfIdfScorer()).name == "tf-idf"
+
+
+def test_the_registered_scorers_are_coordinated():
+    assert all(isinstance(s, Coordinated) for s in SCORERS.values())
