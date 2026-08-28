@@ -33,10 +33,17 @@ PUBLICATION_SCHEMA = Schema(
 )
 
 
-def open_publications(path: str | os.PathLike[str] | None = None) -> Collection:
-    """Open (or create) the searchable index built from a crawl."""
+def open_publications(
+    path: str | os.PathLike[str] | None = None, *, read_only: bool = False
+) -> Collection:
+    """Open (or create) the searchable index built from a crawl.
+
+    `read_only=True` for anything that only queries: an ordinary open rewrites
+    meta.json on close even when nothing was added.
+    """
     return Collection.open(
         Path(path) if path is not None else INDEX_DIR,
         schema=PUBLICATION_SCHEMA,
         name="publications",
+        read_only=read_only,
     )

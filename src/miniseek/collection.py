@@ -93,6 +93,7 @@ class Collection:
         "_log",
         "_log_entries",
         "_path",
+        "_read_only",
         "_stop",
         "_syncer",
         "analyzer",
@@ -115,6 +116,7 @@ class Collection:
         sync_interval: float | None = None,
         compact_ratio: float | None = DEFAULT_COMPACT_RATIO,
         compact_min_entries: int = DEFAULT_COMPACT_MIN_ENTRIES,
+        read_only: bool = False,
     ) -> None:
         self.name = name
         self.schema = schema
@@ -125,6 +127,7 @@ class Collection:
         self.compact_ratio = compact_ratio
         self.compact_min_entries = compact_min_entries
         self._path = Path(path) if path is not None else None
+        self._read_only = read_only
         self._log = None
         self._log_entries = 0
         self._lock = threading.RLock()
@@ -272,6 +275,14 @@ class Collection:
         return max(self._log_entries - len(self.store), 0)
 
     def _append(self, operation: dict[str, Any]) -> None:
+        # A read-only collection has no log handle, so without this the write
+        # would be dropped on the floor and reported as success -- the caller
+        # would be told the document was indexed and find it gone on reopen.
+        if self._read_only:
+            raise RuntimeError(
+                f"collection {self.name!r} is open read-only; reopen it "
+                "without read_only=True to modify it"
+            )
         if self._log is None:
             return
         self._log.write(json.dumps(operation, ensure_ascii=False) + "\n")
@@ -321,6 +332,7 @@ class Collection:
         sync_interval: float | None = DEFAULT_SYNC_INTERVAL,
         compact_ratio: float | None = DEFAULT_COMPACT_RATIO,
         compact_min_entries: int = DEFAULT_COMPACT_MIN_ENTRIES,
+        read_only: bool = False,
     ) -> Self:
         """Open an existing collection, or create one if the directory is new.
 
@@ -331,18 +343,28 @@ class Collection:
 
         Pass `sync_interval=None` to disable the background syncer and take
         responsibility for calling `flush()` yourself.
+
+        Pass `read_only=True` to open without touching the directory at all.
+        Ordinary opening is not as passive as it looks: it holds the log open
+        for appending, and `close()` rewrites `meta.json` on the way out even
+        if nothing was ever added. That is harmless for a writer and wrong for
+        a reader, which should be able to inspect a collection another process
+        owns without leaving a fingerprint on it.
         """
         directory = Path(path)
         meta_path = directory / META_FILE
         options = {
-            "sync_interval": sync_interval,
+            "sync_interval": None if read_only else sync_interval,
             "compact_ratio": compact_ratio,
             "compact_min_entries": compact_min_entries,
+            "read_only": read_only,
         }
 
         if meta_path.exists():
             collection = cls._load(directory, options)
         else:
+            if read_only:
+                raise FileNotFoundError(f"no collection at {directory} to read")
             if schema is None:
                 raise ValueError(
                     f"no collection at {directory} -- pass schema= to create one"
@@ -357,7 +379,11 @@ class Collection:
             )
             collection._write_meta()
 
-        collection._log = open(directory / LOG_FILE, "a", encoding="utf-8")
+        # Leaving the log unopened is what makes read-only stick: flush() and
+        # close() both no-op on a null handle, so nothing is written even by
+        # the shutdown path.
+        if not read_only:
+            collection._log = open(directory / LOG_FILE, "a", encoding="utf-8")
         collection._start_syncer()
         return collection
 
@@ -437,7 +463,7 @@ class Collection:
         leaves the original log untouched rather than half-destroyed.
         """
         with self._lock:
-            if self._path is None:
+            if self._path is None or self._read_only:
                 return 0
 
             live = [
