@@ -21,10 +21,9 @@ data/clustering/*.zip
 # rate-limited crawl that takes several minutes and hits a live university
 # server, so a checkout should not have to repeat it just to run the search
 # engine. data/listings (hand-saved, since the portal blocks these for a
-# script) is committed for the same reason.
-
-# Rebuilt from a crawl by: uv run ir-index. Derived data, disposable.
-data/index/
+# script) is committed for the same reason. data/index is derived from the
+# corpus and rebuildable with `uv run ir-index`, but it is committed too so
+# the API serves on a fresh checkout without a build step first.
 
 # Working notes and the build log. Kept out of the repo deliberately.
 .idea/

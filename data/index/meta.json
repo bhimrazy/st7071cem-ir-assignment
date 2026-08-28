@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "name": "publications",
+  "schema": {
+    "id_field": "id",
+    "fields": [
+      {
+        "name": "id",
+        "indexed": false,
+        "stored": true,
+        "weight": 1.0
+      },
+      {
+        "name": "title",
+        "indexed": true,
+        "stored": true,
+        "weight": 3.0
+      },
+      {
+        "name": "authors",
+        "indexed": true,
+        "stored": true,
+        "weight": 2.0
+      },
+      {
+        "name": "abstract",
+        "indexed": true,
+        "stored": true,
+        "weight": 1.0
+      },
+      {
+        "name": "journal",
+        "indexed": true,
+        "stored": true,
+        "weight": 1.0
+      },
+      {
+        "name": "year",
+        "indexed": false,
+        "stored": true,
+        "weight": 1.0
+      },
+      {
+        "name": "url",
+        "indexed": false,
+        "stored": true,
+        "weight": 1.0
+      },
+      {
+        "name": "doi",
+        "indexed": false,
+        "stored": true,
+        "weight": 1.0
+      },
+      {
+        "name": "crawled_at",
+        "indexed": false,
+        "stored": true,
+        "weight": 1.0
+      }
+    ]
+  },
+  "analyzer": {
+    "lowercase": true,
+    "remove_stopwords": true,
+    "stem": true,
+    "min_token_length": 2,
+    "split_compounds": true
+  },
+  "next_internal_id": 88
+}
