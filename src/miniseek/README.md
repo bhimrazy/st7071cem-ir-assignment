@@ -163,6 +163,78 @@ Compaction and `meta.json` are both written to a temp file and then renamed
 over the original, so an interrupted write leaves the previous good file rather
 than half of a new one.
 
+## Settings
+
+Four groups of knobs, and they are not equally consequential. The analyzer and
+the schema decide what can be found at all; the ranking and persistence
+settings only decide how well and how safely.
+
+### Analyzer — what a word becomes
+
+Set on `Analyzer`, and **persisted into `meta.json`** so they travel with the
+index. That persistence is not tidiness: an index built with stemming on is
+meaningless to an analyzer with stemming off, because the index only ever
+holds `retriev` and a query for "retrieval" would arrive unstemmed and match
+nothing.
+
+| Setting | Default | What it does | Turn it off to show |
+|---|---|---|---|
+| `lowercase` | `True` | Case-folds before tokenising | "Diabetes" and "diabetes" become different terms |
+| `remove_stopwords` | `True` | Drops NLTK's English stopwords | "the" and "of" get postings covering the whole corpus |
+| `stem` | `True` | Porter stemmer, applied last | "Retrieving" stops matching "retrieval" |
+| `min_token_length` | `2` | Drops single characters | Stray initials and list markers enter the vocabulary |
+| `split_compounds` | `True` | Indexes `yoga-based` *and* `yoga`, `based` | "yoga" stops matching a paper titled "yoga-based" |
+
+Stemming runs **last** on purpose: the stopword list is written unstemmed, so
+filtering afterwards would let `ar` (from "are") through.
+
+### Schema — which fields exist and what they are worth
+
+`Field(name, indexed=True, stored=True, weight=1.0)`. `indexed` and `stored`
+are independent, which gives three useful combinations: searchable but hidden,
+displayed but unsearchable, or both.
+
+The weights this project actually ships ([`publications/index.py`](../publications/index.py)):
+
+| Field | Indexed | Weight | Why |
+|---|---|---|---|
+| `title` | yes | **3.0** | A query term in the title is the strongest evidence available |
+| `authors` | yes | **2.0** | A vertical engine gets "find this researcher's work" constantly |
+| `abstract` | yes | 1.0 | Plenty of signal, but also plenty of incidental mentions |
+| `journal` | yes | 1.0 | Occasionally what someone is searching for |
+| `year`, `url`, `doi`, `crawled_at` | no | — | Stored for display and sorting. "2024" as a *search* term matches every paper from that year, which is a filter, not a relevance signal |
+
+Weights multiply each field's contribution at scoring time, so they are ratios,
+not magic numbers: title at 3.0 and abstract at 1.0 says a title match is worth
+three abstract matches, nothing more.
+
+### Ranking
+
+| Setting | Default | What it does |
+|---|---|---|
+| `Bm25Scorer.k1` | `1.2` | How fast term frequency saturates. Lower saturates sooner; `k1=0` ignores frequency past the first occurrence |
+| `Bm25Scorer.b` | `0.75` | How hard long documents are penalised. `b=1.0` full length normalisation, `b=0.0` none |
+| `Coordinated` | on | Scales by the fraction of the query a document covers |
+
+`k1=1.2, b=0.75` are the values Robertson et al. found robust across the TREC
+collections, and they remain the standard starting point. They are untuned
+here — with 88 documents and no relevance judgements there is nothing
+trustworthy to tune *against*, and quoting a default honestly beats fitting to
+a handful of queries picked by the person doing the fitting.
+
+### Persistence
+
+| Setting | Default | What it does |
+|---|---|---|
+| `sync_interval` | `1.0` s on `Collection.open`, `None` on a bare `Collection` | How often the background thread fsyncs. `None` disables the thread and hands you responsibility for calling `flush()` — the default for an in-memory collection, which has nothing to sync to, and what the tests use |
+| `compact_ratio` | `2.0` | Compact once the log holds this many entries per live document — 2.0 means "at least half the log is dead weight" |
+| `compact_min_entries` | `64` | Floor, so a tiny collection does not compact constantly |
+
+`sync_interval` is the only setting here that trades away correctness: a crash
+can lose up to a second of writes. That is the right trade for this corpus,
+where the writer is a weekly crawl whose output is on disk anyway and can
+simply be re-indexed.
+
 ## What it does not do
 
 Worth being straight about, since these are the things a real engine spends
