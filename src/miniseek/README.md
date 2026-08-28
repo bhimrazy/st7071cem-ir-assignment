@@ -235,6 +235,32 @@ can lose up to a second of writes. That is the right trade for this corpus,
 where the writer is a weekly crawl whose output is on disk anyway and can
 simply be re-indexed.
 
+## Compared with Typesense
+
+The shape is deliberately the same, so the ideas transfer. Everything past the
+shape is different, and the honest summary is that Typesense does the hard
+parts this skips.
+
+| | miniseek | Typesense |
+|---|---|---|
+| Language | Python, ~1,400 lines including comments | C++ |
+| Schema | Typed fields with weights | Same idea, plus faceting and sorting attributes |
+| Default ranking | BM25 (+ coordination) | BM25, blended with typo distance and user-defined sort |
+| Documents on disk | Append-only JSON log | RocksDB |
+| Index on disk | None — rebuilt by replaying the log | Persisted, memory-mapped |
+| Typo tolerance | None | Yes, and it is the headline feature |
+| Filtering / faceting | None | Yes |
+| Concurrency | One process, one lock | Multi-threaded, clustered with Raft |
+| Query language | One free-text string | Filters, groupings, vector and hybrid search |
+
+Two design choices genuinely diverge rather than just being smaller.
+**Typesense persists its index; this rebuilds it on open.** Rebuilding costs
+startup time and buys the guarantee that the index cannot drift from the
+documents, because there is no second copy to drift — and it means changing
+the analyzer needs a reindex, not a recrawl. **Typesense treats typo tolerance
+as core; this has none at all**, which is why a misspelt query here returns
+nothing rather than something close.
+
 ## What it does not do
 
 Worth being straight about, since these are the things a real engine spends
