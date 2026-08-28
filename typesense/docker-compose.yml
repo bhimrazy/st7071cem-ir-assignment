@@ -1,0 +1,23 @@
+# Local Typesense to compare miniseek against. Not part of the application.
+# The API key guards a container bound to localhost; it is not a secret.
+
+services:
+  typesense:
+    image: typesense/typesense:30.2
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8108:8108"
+    volumes:
+      - typesense-data:/data
+    command: >
+      --data-dir /data
+      --api-key=localdev
+      --enable-cors
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8108/health"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+volumes:
+  typesense-data:
