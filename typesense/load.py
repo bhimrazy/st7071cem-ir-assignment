@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 
 import httpx
 
@@ -95,6 +96,19 @@ def load(client: httpx.Client, records: list[dict]) -> int:
     return len(records)
 
 
+def wait_until_ready(client: httpx.Client, attempts: int = 15) -> bool:
+    """`docker compose up -d` returns before Typesense is serving."""
+    for attempt in range(attempts):
+        try:
+            client.get("/health").raise_for_status()
+            return True
+        except httpx.HTTPError:
+            if attempt == 0:
+                print("waiting for Typesense…", file=sys.stderr)
+            time.sleep(1)
+    return False
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Load the crawled publications into a local Typesense."
@@ -121,11 +135,9 @@ def main(argv: list[str] | None = None) -> int:
     headers = {"X-TYPESENSE-API-KEY": args.api_key}
 
     with httpx.Client(base_url=args.url, headers=headers, timeout=30.0) as client:
-        try:
-            client.get("/health").raise_for_status()
-        except httpx.HTTPError as error:
+        if not wait_until_ready(client):
             print(
-                f"cannot reach Typesense at {args.url} ({error}).\n"
+                f"cannot reach Typesense at {args.url}.\n"
                 "Start it with:  cd typesense && docker compose up -d",
                 file=sys.stderr,
             )

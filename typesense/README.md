@@ -9,7 +9,7 @@ It lives outside `src/` for that reason: it is a bench, not a component.
 ## Running it
 
 ```bash
-cd typesense && docker compose up -d      # Typesense on 127.0.0.1:8108
+cd typesense && docker compose up -d      # Typesense :8108, dashboard :8109
 cd .. && uv run python typesense/load.py  # create the collection, load the crawl
 
 uv run python typesense/compare.py                      # a fixed set of queries
@@ -18,7 +18,31 @@ uv run python typesense/compare.py "mental health" --scorer tf-idf
 uv run python typesense/compare.py --typo               # misspelled queries
 ```
 
-`docker compose down -v` removes the container and its volume.
+`docker compose down -v` removes the containers and the volume.
+
+## The UI
+
+Typesense has no UI of its own — `:8108` is a REST API, and opening it in a
+browser tells you nothing. The compose file also runs the community
+[Typesense Dashboard](https://github.com/bfritscher/typesense-dashboard),
+which is the nearest counterpart to `uv run miniseek-view`:
+
+**<http://localhost:8109>**
+
+It asks for connection details on first load. Everything but the key is
+already correct, so in practice you type one word:
+
+| Field | Value |
+|---|---|
+| **Api Key** | `localdev` |
+| Protocol | `http` |
+| Host | `localhost` |
+| Port | `8108` |
+| Path | *(leave blank)* |
+
+The key is the one in `docker-compose.yml`. The dashboard runs entirely in
+your browser and talks to `:8108` directly, which is what `--enable-cors` on
+the server is for — without it the login fails.
 
 ## Matching the two setups
 
@@ -79,8 +103,9 @@ Compare *orderings*, never the numbers.
 
 ## Caveats
 
-The image is pinned to `typesense/typesense:30.2`. Bump it if you want a newer
-one — nothing here depends on version-specific behaviour.
+The images are pinned to `typesense/typesense:30.2` and
+`bfritscher/typesense-dashboard:2.5.0`. Bump them if you want newer ones —
+nothing here depends on version-specific behaviour.
 
 The API key is `localdev`, written in the clear in `docker-compose.yml`. It
 guards a container bound to `127.0.0.1` and is not a secret; a placeholder that

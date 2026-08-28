@@ -94,12 +94,16 @@ the two side by side. It is a bench, not a component: nothing in `src/` imports
 it and nothing breaks when the container is down.
 
 ```bash
-cd typesense && docker compose up -d      # Typesense on 127.0.0.1:8108
+cd typesense && docker compose up -d      # Typesense on :8108, dashboard on :8109
 cd .. && uv run python typesense/load.py  # same corpus, same field weights
 
 uv run python typesense/compare.py                # a fixed set of queries
 uv run python typesense/compare.py --typo         # misspellings, which only Typesense answers
 ```
+
+Typesense has no UI of its own, so the compose file also runs the community
+dashboard at <http://localhost:8109> — log in with the API key `localdev`
+(host and port are already right).
 
 [`typesense/README.md`](typesense/README.md) covers how the two schemas are
 matched up, and why the scores must not be compared directly even though the
