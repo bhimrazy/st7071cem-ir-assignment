@@ -7,7 +7,11 @@ __pycache__/
 
 # Node
 node_modules/
-frontend/dist/
+
+# frontend/dist IS committed, unlike most build output. FastAPI serves it at
+# "/" and deployment builds the Python app only, with no Node step, so an
+# ignored dist means a deployed site with a working /api and a 404 homepage.
+# Rebuild with `npm run build` in frontend/ after changing the interface.
 
 # Generated artefacts. Everything here is rebuilt by:
 #   uv run ir-cluster

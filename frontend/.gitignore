@@ -8,7 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
+# dist is committed on purpose: FastAPI serves it at "/" and deployment runs
+# no Node build step. See the note in the repository root .gitignore.
 dist-ssr
 *.local
 
