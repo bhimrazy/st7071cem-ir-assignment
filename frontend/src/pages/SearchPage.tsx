@@ -44,10 +44,27 @@ function authorPath(name: string, query: string): string {
   return `/author/${encodeURIComponent(name)}${suffix}`
 }
 
+/**
+ * A duration in milliseconds, at a precision that suits its size.
+ *
+ * Not seconds. Ranking 92 documents takes a fraction of a millisecond, and
+ * formatting that as seconds to three decimals renders every query as
+ * "0.000 seconds", which reads like a broken timer rather than a fast one.
+ */
+function formatMs(ms: number): string {
+  if (ms < 1) return `${ms.toFixed(2)} ms`
+  if (ms < 1000) return `${ms.toFixed(1)} ms`
+  return `${(ms / 1000).toFixed(2)} s`
+}
+
 interface ResultsState {
   hits: PublicationHit[]
   total: number
+  /** Time the engine spent ranking, measured server side. */
   elapsedMs: number
+  /** Time the browser waited, measured client side. Mostly network: it is the
+      number a user actually experiences, where elapsedMs is the engine's. */
+  roundTripMs: number
   /** Taken from the response, not local state, so the label always matches
       the model that actually produced these scores. */
   scorer: ScorerName
@@ -82,6 +99,7 @@ export default function SearchPage({ path, navigate }: SearchPageProps) {
       else setLoading(true)
       setError(null)
 
+      const sentAt = performance.now()
       try {
         const response = await search({
           query,
@@ -89,6 +107,7 @@ export default function SearchPage({ path, navigate }: SearchPageProps) {
           offset,
           scorer: activeScorer,
         })
+        const roundTripMs = performance.now() - sentAt
         if (thisRequest !== requestId.current) return
 
         setResults((previous) => ({
@@ -98,6 +117,7 @@ export default function SearchPage({ path, navigate }: SearchPageProps) {
               : response.hits,
           total: response.total,
           elapsedMs: response.elapsed_ms,
+          roundTripMs,
           scorer: response.scorer,
         }))
       } catch (err) {
@@ -341,8 +361,8 @@ export default function SearchPage({ path, navigate }: SearchPageProps) {
             <>
               <p className="py-4 text-sm text-faint">
                 About {results.total.toLocaleString()} result
-                {results.total === 1 ? "" : "s"} (
-                {(results.elapsedMs / 1000).toFixed(3)} seconds)
+                {results.total === 1 ? "" : "s"} ({formatMs(results.elapsedMs)}{" "}
+                to rank, {formatMs(results.roundTripMs)} round trip)
                 <InfoTip label="the score" wide>
                   <ScoreExplainer scorer={results.scorer} />
                 </InfoTip>
