@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ApiError, fetchAuthor, fetchPublications, fetchStats, search } from "../api"
 import AuthorPanel from "../components/AuthorPanel"
+import InfoTip from "../components/InfoTip"
 import PublicationList from "../components/PublicationList"
 import ResultItem from "../components/ResultItem"
+import ScoreExplainer from "../components/ScoreExplainer"
 import ScorerToggle from "../components/ScorerToggle"
 import SearchBox from "../components/SearchBox"
 import type {
@@ -48,7 +50,7 @@ interface ResultsState {
   elapsedMs: number
   /** Taken from the response, not local state, so the label always matches
       the model that actually produced these scores. */
-  scorer: string
+  scorer: ScorerName
 }
 
 export default function SearchPage({ path, navigate }: SearchPageProps) {
@@ -341,6 +343,9 @@ export default function SearchPage({ path, navigate }: SearchPageProps) {
                 About {results.total.toLocaleString()} result
                 {results.total === 1 ? "" : "s"} (
                 {(results.elapsedMs / 1000).toFixed(3)} seconds)
+                <InfoTip label="the score" wide>
+                  <ScoreExplainer scorer={results.scorer} />
+                </InfoTip>
               </p>
               <ul className="m-0 list-none p-0">
                 {results.hits.map((hit, index) => (
