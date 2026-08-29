@@ -13,9 +13,16 @@ node_modules/
 # ignored dist means a deployed site with a working /api and a 404 homepage.
 # Rebuild with `npm run build` in frontend/ after changing the interface.
 
-# Generated artefacts. Everything here is rebuilt by:
-#   uv run ir-cluster
-outputs/
+# Generated artefacts, rebuilt by `uv run ir-cluster`. Ignored except the two
+# the API needs: without them the first request to the clustering task
+# downloads the BBC corpus and fits k-means before it can answer, which a
+# deployment should not be doing on a visitor's request. The figures stay out,
+# because the interface draws its charts from the report JSON and the report
+# keeps its own copies.
+outputs/**
+!outputs/clustering/
+!outputs/clustering/kmeans_model.pkl
+!outputs/clustering/clustering_report.json
 
 # Source data that is downloaded, not authored. 2.7 MB, fetched on first run
 # from http://mlg.ucd.ie/files/datasets/bbc-fulltext.zip
