@@ -1,0 +1,1165 @@
+2026-08-28 14:54:00,255  INFO    crawl  logging to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-28-14-54-00-NPT.log
+2026-08-28 14:54:00,674  INFO    crawl  crawl delay: 5.0s (from robots.txt)
+2026-08-28 14:54:00,674  INFO    crawler.crawler  Visiting the organisation page: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/
+2026-08-28 14:54:01,166  INFO    crawler.crawler    read successfully
+2026-08-28 14:54:01,167  INFO    crawler.crawler  Visiting publications listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=0
+2026-08-28 14:54:01,167  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 14:54:05,694  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-28 14:54:05,694  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page0.html
+2026-08-28 14:54:05,747  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
+2026-08-28 14:54:05,747  INFO    crawler.crawler  Visiting publications listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=1
+2026-08-28 14:54:05,747  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-28 14:54:10,729  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-28 14:54:10,729  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/publications-page1.html
+2026-08-28 14:54:10,762  INFO    crawler.crawler    found 40 link(s) on this page, 40 of them new
+2026-08-28 14:54:10,763  INFO    crawler.crawler  Visiting publications listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/publications/?page=2
+2026-08-28 14:54:10,763  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-28 14:54:15,738  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-28 14:54:15,738  INFO    crawler.crawler    no saved copy of this page either, stopping here
+2026-08-28 14:54:15,738  INFO    crawler.crawler  Visiting persons listing, page 0: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=0
+2026-08-28 14:54:15,739  INFO    crawler.politeness  waiting 5.0s (politeness delay)
+2026-08-28 14:54:20,736  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-28 14:54:20,736  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page0.html
+2026-08-28 14:54:20,762  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
+2026-08-28 14:54:20,763  INFO    crawler.crawler  Visiting persons listing, page 1: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=1
+2026-08-28 14:54:20,763  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-28 14:54:25,731  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-28 14:54:25,731  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page1.html
+2026-08-28 14:54:25,759  INFO    crawler.crawler    found 50 link(s) on this page, 50 of them new
+2026-08-28 14:54:25,759  INFO    crawler.crawler  Visiting persons listing, page 2: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=2
+2026-08-28 14:54:25,759  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-28 14:54:30,743  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-28 14:54:30,743  INFO    crawler.crawler    using the saved copy instead: /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/listings/persons-page2.html
+2026-08-28 14:54:30,760  INFO    crawler.crawler    found 17 link(s) on this page, 17 of them new
+2026-08-28 14:54:30,760  INFO    crawler.crawler  Visiting persons listing, page 3: https://pureportal.coventry.ac.uk/en/organisations/centre-for-healthcare-and-community-transformation/persons/?page=3
+2026-08-28 14:54:30,760  INFO    crawler.politeness  waiting 4.9s (politeness delay)
+2026-08-28 14:54:35,753  INFO    crawler.crawler    failed to fetch: HTTP 403 (blocked, or the page is gone)
+2026-08-28 14:54:35,753  INFO    crawler.crawler    no saved copy of this page either, stopping here
+2026-08-28 14:54:35,754  INFO    crawler.crawler  Phase 1: crawling 90 publication(s) from the listing, fetching each co-author's profile as soon as it's referenced
+2026-08-28 14:54:35,754  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/a-cross-sectional-study-of-postgraduate-students-mental-well-bein/
+2026-08-28 14:54:35,754  INFO    crawler.politeness  waiting 5.0s (politeness delay)
+2026-08-28 14:54:41,866  INFO    crawler.crawler    found "A Cross-Sectional Study of Postgraduate Students' Mental Well-Being: Exploring the Relationship Between Mental Well-Being, Perceived Stress, Academic Self-Efficacy, and Self-Efficacy for Self-Regulated Learning" by 7 author(s), published in Health Science Reports (2026)
+2026-08-28 14:54:41,874  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 14:54:41,874  INFO    crawler.crawler    done: kept publication (1 so far) (1 kept so far)
+2026-08-28 14:54:41,874  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/andy-turner/
+2026-08-28 14:54:41,874  INFO    crawler.politeness  waiting 3.8s (politeness delay)
+2026-08-28 14:54:45,991  INFO    crawler.crawler    found 'Andy Turner', with a 726-character biography
+2026-08-28 14:54:46,003  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:54:46,003  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/celine-brookes-smith/
+2026-08-28 14:54:46,003  INFO    crawler.politeness  waiting 4.7s (politeness delay)
+2026-08-28 14:54:51,364  INFO    crawler.crawler    found 'Celine Brookes-Smith', with a 444-character biography
+2026-08-28 14:54:51,372  INFO    crawler.crawler    lists 3 publication link(s)
+2026-08-28 14:54:51,372  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/deborah-lycett/
+2026-08-28 14:54:51,373  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:54:56,759  INFO    crawler.crawler    found 'Professor Deborah Lycett, PhD', with a 3710-character biography
+2026-08-28 14:54:56,771  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:54:56,771  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/maxine-whelan/
+2026-08-28 14:54:56,771  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:55:02,366  INFO    crawler.crawler    found 'Maxine Whelan', with a 2297-character biography
+2026-08-28 14:55:02,377  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:55:02,377  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/a-digital-yoga-based-pause-grow-reflect-intervention-for-postgrad/
+2026-08-28 14:55:02,377  INFO    crawler.politeness  waiting 3.4s (politeness delay)
+2026-08-28 14:55:06,866  INFO    crawler.crawler    found "A digital yoga-based 'Pause Grow Reflect' intervention for postgraduate researchers: a feasibility randomised controlled trial and embedded qualitative acceptability study" by 6 author(s), published in Pilot and Feasibility Studies (2026)
+2026-08-28 14:55:06,873  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 14:55:06,873  INFO    crawler.crawler    done: kept publication (2 so far) (2 kept so far)
+2026-08-28 14:55:06,873  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/andy-turner/ from an earlier publication, skipping
+2026-08-28 14:55:06,873  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/deborah-lycett/ from an earlier publication, skipping
+2026-08-28 14:55:06,873  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/maxine-whelan/ from an earlier publication, skipping
+2026-08-28 14:55:06,873  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/nikki-holliday/
+2026-08-28 14:55:06,873  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 14:55:13,354  INFO    crawler.crawler    found 'Nikki Holliday', with a 3369-character biography
+2026-08-28 14:55:13,371  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:55:13,371  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/a-novel-digital-intervention-to-support-mental-and-sexual-wellbei/
+2026-08-28 14:55:13,371  INFO    crawler.politeness  waiting 2.4s (politeness delay)
+2026-08-28 14:55:16,579  INFO    crawler.crawler    found 'A novel digital intervention to support mental and sexual wellbeing after stroke and brain injury: a feasibility randomised controlled trial' by 4 author(s), published in Clinical Rehabilitation (2026)
+2026-08-28 14:55:16,585  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 14:55:16,585  INFO    crawler.crawler    done: kept publication (3 so far) (3 kept so far)
+2026-08-28 14:55:16,585  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/aimee-walker-clarke/
+2026-08-28 14:55:16,586  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:55:21,891  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 14:55:21,891  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/andy-turner/ from an earlier publication, skipping
+2026-08-28 14:55:21,891  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/david-mcwilliams/
+2026-08-28 14:55:21,891  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 14:55:27,115  INFO    crawler.crawler    found 'David McWilliams', with a 0-character biography
+2026-08-28 14:55:27,126  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:55:27,126  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/hayley-wright/
+2026-08-28 14:55:27,126  INFO    crawler.politeness  waiting 3.6s (politeness delay)
+2026-08-28 14:55:31,292  INFO    crawler.crawler    found 'Hayley Wright', with a 203-character biography
+2026-08-28 14:55:31,305  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:55:31,305  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/a-review-of-remote-sensing-based-crop-yield-estimation-machine-le/
+2026-08-28 14:55:31,305  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 14:55:36,454  INFO    crawler.crawler    found 'A review of remote sensing-based crop yield estimation: machine learning techniques and environmental, algorithmic, and hardware limitations' by 7 author(s), published in Frontiers in Plant Science (2026)
+2026-08-28 14:55:36,461  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:55:36,461  INFO    crawler.crawler    done: kept publication (4 so far) (4 kept so far)
+2026-08-28 14:55:36,461  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/syed-aziz-shah/
+2026-08-28 14:55:36,461  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:55:41,650  INFO    crawler.crawler    found 'Syed Aziz Shah', with a 3974-character biography
+2026-08-28 14:55:41,661  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:55:41,661  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/a-verbal-and-visual-account-of-the-perceived-influences-on-health/
+2026-08-28 14:55:41,661  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 14:55:46,533  INFO    crawler.crawler    found 'A verbal and visual account of the perceived influences on health-promoting behaviors among women at midlife navigating perimenopause' by 9 author(s), published in Menopause (2026)
+2026-08-28 14:55:46,537  INFO    crawler.crawler    references 3 author profile link(s)
+2026-08-28 14:55:46,537  INFO    crawler.crawler    done: kept publication (5 so far) (5 kept so far)
+2026-08-28 14:55:46,537  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/christine-duffy/
+2026-08-28 14:55:46,537  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:55:51,526  INFO    crawler.crawler    found 'Christine Duffy', with a 0-character biography
+2026-08-28 14:55:51,533  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 14:55:51,533  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/maxine-whelan/ from an earlier publication, skipping
+2026-08-28 14:55:51,533  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/robyn-tapp/
+2026-08-28 14:55:51,533  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:55:56,724  INFO    crawler.crawler    found 'Robyn Tapp', with a 1652-character biography
+2026-08-28 14:55:56,738  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:55:56,738  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/age-and-sex-specific-percentile-curves-for-the-test-of-gross-moto/
+2026-08-28 14:55:56,738  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:56:01,509  INFO    crawler.crawler    found 'Age-and sex-specific percentile curves for the Test of Gross Motor Development from 7,263 children aged 3-5 years from 13 countries' by 43 author(s), published in Journal of Motor Learning and Development (2026)
+2026-08-28 14:56:01,519  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:56:01,520  INFO    crawler.crawler    done: kept publication (6 so far) (6 kept so far)
+2026-08-28 14:56:01,520  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/michael-duncan/
+2026-08-28 14:56:01,520  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:56:07,172  INFO    crawler.crawler    found 'Michael Duncan', with a 1018-character biography
+2026-08-28 14:56:07,198  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:56:07,198  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/an-open-label-clinical-feasibility-study-of-the-efficacy-of-remde/
+2026-08-28 14:56:07,198  INFO    crawler.politeness  waiting 3.6s (politeness delay)
+2026-08-28 14:56:11,626  INFO    crawler.crawler    found 'An open-label, clinical feasibility study of the efficacy of Remdesivir for Long-COVID' by 16 author(s), published in Pilot and Feasibility Studies (2026)
+2026-08-28 14:56:11,631  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 14:56:11,631  INFO    crawler.crawler    done: kept publication (7 so far) (7 kept so far)
+2026-08-28 14:56:11,631  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/area-level-medication-demand-prediction-via-multitask-spatial-tem/
+2026-08-28 14:56:11,631  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:56:17,082  INFO    crawler.crawler    found 'Area-Level Medication Demand Prediction Via Multitask Spatial-Temporal Machine Learning' by 6 author(s), published in ACM Transactions on Computing for Healthcare (2026)
+2026-08-28 14:56:17,090  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:56:17,090  INFO    crawler.crawler    done: kept publication (8 so far) (8 kept so far)
+2026-08-28 14:56:17,090  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/dingchang-zheng-2/
+2026-08-28 14:56:17,090  INFO    crawler.politeness  waiting 3.7s (politeness delay)
+2026-08-28 14:56:21,833  INFO    crawler.crawler    found 'Dingchang Zheng', with a 1774-character biography
+2026-08-28 14:56:21,845  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:56:21,845  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/associations-of-parental-physical-activity-and-physical-fitness-w/
+2026-08-28 14:56:21,846  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:56:26,556  INFO    crawler.crawler    found 'Associations of Parental Physical Activity and Physical Fitness With Motor Competence, Physical Fitness, Anthropometry, and 24-Hour Movement Behaviors in Preschool Children: A Cross-Sectional Study' by 5 author(s), published in Journal of Exercise Science & Fitness (2026)
+2026-08-28 14:56:26,560  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:56:26,560  INFO    crawler.crawler    done: kept publication (9 so far) (9 kept so far)
+2026-08-28 14:56:26,560  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 14:56:26,560  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/bactericidal-and-anti-inflammatory-activity-of-defined-hypochlori/
+2026-08-28 14:56:26,560  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:56:32,548  INFO    crawler.crawler    found 'Bactericidal and anti-inflammatory activity of defined hypochlorite solution' by 3 author(s), published in PLoS ONE (2026)
+2026-08-28 14:56:32,555  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 14:56:32,555  INFO    crawler.crawler    done: kept publication (10 so far) (10 kept so far)
+2026-08-28 14:56:32,555  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/behavioural-determinants-of-dietary-selfmanagement-in-chronic-kid/
+2026-08-28 14:56:32,555  INFO    crawler.politeness  waiting 3.3s (politeness delay)
+2026-08-28 14:56:36,562  INFO    crawler.crawler    found 'Behavioural Determinants of Dietary Self‐Management in Chronic Kidney Disease: A Theory‐Informed Analysis to Inform Dietetic Interventions' by 3 author(s), published in Journal of Human Nutrition and Dietetics (2026)
+2026-08-28 14:56:36,568  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 14:56:36,568  INFO    crawler.crawler    done: kept publication (11 so far) (11 kept so far)
+2026-08-28 14:56:36,569  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/andrew-morris/
+2026-08-28 14:56:36,569  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:56:41,863  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 14:56:41,863  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/deborah-lycett/ from an earlier publication, skipping
+2026-08-28 14:56:41,863  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/blockchain-and-homomorphic-based-data-aggregation-for-load-monito/
+2026-08-28 14:56:41,864  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:56:46,558  INFO    crawler.crawler    found 'Blockchain and homomorphic-based data aggregation for load monitoring and billing in smart grids' by 6 author(s), published in International Journal of Information Security (2026)
+2026-08-28 14:56:46,566  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:56:46,566  INFO    crawler.crawler    done: kept publication (12 so far) (12 kept so far)
+2026-08-28 14:56:46,566  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/syed-aziz-shah/ from an earlier publication, skipping
+2026-08-28 14:56:46,566  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/canvas-to-change-a-pilot-study-exploring-experiences-of-a-creativ/
+2026-08-28 14:56:46,566  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:56:51,685  INFO    crawler.crawler    found 'Canvas to Change:  a pilot study exploring experiences of a creative arts programme supporting youth mental Health' by 3 author(s), published in Vulnerable Children and Youth Studies (2026)
+2026-08-28 14:56:51,692  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:56:51,692  INFO    crawler.crawler    done: kept publication (13 so far) (13 kept so far)
+2026-08-28 14:56:51,692  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/ruth-d-postlethwaite/
+2026-08-28 14:56:51,693  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:56:56,864  INFO    crawler.crawler    found 'Ruth D. Postlethwaite', with a 165-character biography
+2026-08-28 14:56:56,879  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:56:56,879  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/changes-in-binge-eating-symptoms-following-an-online-community-ba/
+2026-08-28 14:56:56,879  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:57:02,250  INFO    crawler.crawler    found 'Changes in binge eating symptoms following an online community-based ultra-processed food addiction intervention: Liberate' by 7 author(s), published in Frontiers in Public Health (2026)
+2026-08-28 14:57:02,260  INFO    crawler.crawler    references 3 author profile link(s)
+2026-08-28 14:57:02,260  INFO    crawler.crawler    done: kept publication (14 so far) (14 kept so far)
+2026-08-28 14:57:02,260  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/deborah-lycett/ from an earlier publication, skipping
+2026-08-28 14:57:02,260  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/ellen-bennett/
+2026-08-28 14:57:02,261  INFO    crawler.politeness  waiting 3.6s (politeness delay)
+2026-08-28 14:57:06,591  INFO    crawler.crawler    found 'Ellen Bennett', with a 0-character biography
+2026-08-28 14:57:06,600  INFO    crawler.crawler    lists 2 publication link(s)
+2026-08-28 14:57:06,600  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/maxine-whelan/ from an earlier publication, skipping
+2026-08-28 14:57:06,600  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/childrens-experiences-of-increasing-competitiveness-in-football-a/
+2026-08-28 14:57:06,600  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:57:11,497  INFO    crawler.crawler    found 'Children’s experiences of increasing competitiveness in football: A Write-Draw-Show-Tell study across developmental stages' by 8 author(s), published in International Journal of Sports Science and Coaching (2026)
+2026-08-28 14:57:11,503  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 14:57:11,503  INFO    crawler.crawler    done: kept publication (15 so far) (15 kept so far)
+2026-08-28 14:57:11,503  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/jason-tallis/
+2026-08-28 14:57:11,503  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 14:57:17,382  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 14:57:17,382  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 14:57:17,383  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/soyoung-kim/
+2026-08-28 14:57:17,383  INFO    crawler.politeness  waiting 3.5s (politeness delay)
+2026-08-28 14:57:21,104  INFO    crawler.crawler    found 'Soyoung Kim', with a 0-character biography
+2026-08-28 14:57:21,112  INFO    crawler.crawler    lists 2 publication link(s)
+2026-08-28 14:57:21,112  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/william-pattison/
+2026-08-28 14:57:21,113  INFO    crawler.politeness  waiting 4.8s (politeness delay)
+2026-08-28 14:57:26,801  INFO    crawler.crawler    found 'William Pattison', with a 0-character biography
+2026-08-28 14:57:26,810  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:57:26,810  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/clinical-standards-guidelines-and-recommendations-for-physiothera/
+2026-08-28 14:57:26,810  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 14:57:31,552  INFO    crawler.crawler    found 'Clinical Standards, Guidelines and Recommendations for Physiotherapy Practice in Intensive Care Units: A Scoping Review' by 3 author(s), published in Advances in Rehabilitation (2026)
+2026-08-28 14:57:31,558  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:57:31,558  INFO    crawler.crawler    done: kept publication (16 so far) (16 kept so far)
+2026-08-28 14:57:31,558  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/agnieszka-lewko/
+2026-08-28 14:57:31,559  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:57:37,041  INFO    crawler.crawler    found 'Agnieszka Lewko', with a 358-character biography
+2026-08-28 14:57:37,053  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:57:37,053  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/comparative-performance-of-anthropometric-indices-in-predicting-c/
+2026-08-28 14:57:37,053  INFO    crawler.politeness  waiting 3.8s (politeness delay)
+2026-08-28 14:57:41,640  INFO    crawler.crawler    found 'Comparative performance of anthropometric indices in predicting cardiometabolic risk severity in black adults' by 8 author(s), published in an unknown venue (2026)
+2026-08-28 14:57:41,647  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 14:57:41,647  INFO    crawler.crawler    done: kept publication (17 so far) (17 kept so far)
+2026-08-28 14:57:41,647  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/damilola-akolawole-ibirogba/
+2026-08-28 14:57:41,647  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:57:47,105  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 14:57:47,105  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/djordje-jakovljevic/
+2026-08-28 14:57:47,105  INFO    crawler.politeness  waiting 3.8s (politeness delay)
+2026-08-28 14:57:51,918  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 14:57:51,918  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 14:57:51,918  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/nduka-okwose/
+2026-08-28 14:57:51,918  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:57:57,323  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 14:57:57,323  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/criteria-led-dischargepatient-safety-and-satisfaction-length-of-s/
+2026-08-28 14:57:57,323  INFO    crawler.politeness  waiting 3.6s (politeness delay)
+2026-08-28 14:58:01,864  INFO    crawler.crawler    found 'Criteria-Led Discharge—Patient Safety and Satisfaction, Length of Stay, and Facilitators for Implementation: A Systematic Review Update' by 5 author(s), published in Journal of Nursing Care Quality (2026)
+2026-08-28 14:58:01,871  INFO    crawler.crawler    references 3 author profile link(s)
+2026-08-28 14:58:01,871  INFO    crawler.crawler    done: kept publication (18 so far) (18 kept so far)
+2026-08-28 14:58:01,871  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/agnieszka-lewko/ from an earlier publication, skipping
+2026-08-28 14:58:01,871  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/emma-claire-brangwin/
+2026-08-28 14:58:01,871  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:58:06,900  INFO    crawler.crawler    found 'Emma Claire Brangwin', with a 0-character biography
+2026-08-28 14:58:06,910  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:58:06,910  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/liz-lees-deutsch/
+2026-08-28 14:58:06,910  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:58:13,262  INFO    crawler.crawler    found 'Professor for Nursing Practice Liz Deutsch', with a 5385-character biography
+2026-08-28 14:58:13,274  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:58:13,274  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/defining-a-diaphragm-focused-and-patient-acceptable-inspiratory-m/
+2026-08-28 14:58:13,274  INFO    crawler.politeness  waiting 2.7s (politeness delay)
+2026-08-28 14:58:16,627  INFO    crawler.crawler    found 'Defining a diaphragm-focused and patient-acceptable inspiratory muscle training (IMT) load in difficult to wean, mechanically ventilated patients: a protocol for a prospective, mixed methods study' by 5 author(s), published in BMJ Open Respiratory Research (2026)
+2026-08-28 14:58:16,633  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:58:16,633  INFO    crawler.crawler    done: kept publication (19 so far) (19 kept so far)
+2026-08-28 14:58:16,633  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/david-mcwilliams/ from an earlier publication, skipping
+2026-08-28 14:58:16,633  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/development-and-evaluation-of-a-digitally-based-functional-fitnes/
+2026-08-28 14:58:16,633  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:58:21,643  INFO    crawler.crawler    found 'Development and Evaluation of A Digitally Based Functional Fitness Self-Assessment and Monitoring Tool for Older Adults' by 6 author(s), published in Digital Health (2026)
+2026-08-28 14:58:21,650  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 14:58:21,650  INFO    crawler.crawler    done: kept publication (20 so far) (20 kept so far)
+2026-08-28 14:58:21,650  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/jason-tallis/ from an earlier publication, skipping
+2026-08-28 14:58:21,650  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 14:58:21,650  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/discovery-of-novel-magnetocardiography-parameters-predicting-futu/
+2026-08-28 14:58:21,650  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:58:27,055  INFO    crawler.crawler    found 'Discovery of Novel Magnetocardiography Parameters Predicting Future ICD Therapies: Insights From the Magneto-SCD Study' by 11 author(s), published in Circulation. Arrhythmia and electrophysiology (2026)
+2026-08-28 14:58:27,060  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:58:27,060  INFO    crawler.crawler    done: kept publication (21 so far) (21 kept so far)
+2026-08-28 14:58:27,060  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/nakul-chandan/
+2026-08-28 14:58:27,061  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 14:58:31,426  INFO    crawler.crawler    found 'Nakul Chandan', with a 0-character biography
+2026-08-28 14:58:31,435  INFO    crawler.crawler    lists 4 publication link(s)
+2026-08-28 14:58:31,435  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/effect-of-six-weeks-ubiquinol-supplementation-on-mitochondrial-re/
+2026-08-28 14:58:31,435  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 14:58:37,228  INFO    crawler.crawler    found 'Effect of six weeks ubiquinol supplementation on mitochondrial respiratory function and exercise capacity in healthy males' by 12 author(s), published in European Journal of Applied Physiology (2026)
+2026-08-28 14:58:37,236  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:58:37,236  INFO    crawler.crawler    done: kept publication (22 so far) (22 kept so far)
+2026-08-28 14:58:37,236  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/stuart-cocksedge/
+2026-08-28 14:58:37,236  INFO    crawler.politeness  waiting 3.7s (politeness delay)
+2026-08-28 14:58:41,865  INFO    crawler.crawler    found 'Stuart Cocksedge', with a 0-character biography
+2026-08-28 14:58:41,874  INFO    crawler.crawler    lists 3 publication link(s)
+2026-08-28 14:58:41,874  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/effects-of-a-peer-support-lifestyle-intervention-on-diabetes-inci/
+2026-08-28 14:58:41,874  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 14:58:46,717  INFO    crawler.crawler    found 'Effects of a peer-support lifestyle intervention on diabetes incidence in India (K-DPP): 9-year follow-up of a cluster-randomised, controlled trial' by 13 author(s), published in The Lancet Global Health (2026)
+2026-08-28 14:58:46,723  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:58:46,723  INFO    crawler.crawler    done: kept publication (23 so far) (23 kept so far)
+2026-08-28 14:58:46,723  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/robyn-tapp/ from an earlier publication, skipping
+2026-08-28 14:58:46,723  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/evaluating-national-training-provision-in-psychological-therapies/
+2026-08-28 14:58:46,723  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:58:52,305  INFO    crawler.crawler    found 'Evaluating national training provision in psychological therapies for severe mental health problems: understanding impact and attrition' by 5 author(s), published in The Journal of Mental Health Training, Education and Practice (2026)
+2026-08-28 14:58:52,314  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 14:58:52,314  INFO    crawler.crawler    done: kept publication (24 so far) (24 kept so far)
+2026-08-28 14:58:52,314  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/ksenija-maravic-da-silva/
+2026-08-28 14:58:52,314  INFO    crawler.politeness  waiting 3.7s (politeness delay)
+2026-08-28 14:58:57,013  INFO    crawler.crawler    found 'Ksenija Maravic Da Silva', with a 2079-character biography
+2026-08-28 14:58:57,027  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:58:57,027  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/rosie-kneafsey/
+2026-08-28 14:58:57,027  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 14:59:02,472  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 14:59:02,472  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sally-pezaro/
+2026-08-28 14:59:02,472  INFO    crawler.politeness  waiting 3.5s (politeness delay)
+2026-08-28 14:59:07,873  INFO    crawler.crawler    found 'Sally Pezaro', with a 4195-character biography
+2026-08-28 14:59:07,886  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:59:07,886  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/vickie-presley/
+2026-08-28 14:59:07,887  INFO    crawler.politeness  waiting 3.1s (politeness delay)
+2026-08-28 14:59:11,892  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 14:59:11,892  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/evaluating-schoolbased-obesity-prevention-interventions-in-6-to-1/
+2026-08-28 14:59:11,892  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 14:59:16,745  INFO    crawler.crawler    found 'Evaluating School‐Based Obesity Prevention Interventions in 6‐ to 12‐Year‐Old Children: A Scoping Review of All Reported Outcomes and Expert Consultation' by 15 author(s), published in Obesity Reviews (2026)
+2026-08-28 14:59:16,752  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:59:16,752  INFO    crawler.crawler    done: kept publication (25 so far) (25 kept so far)
+2026-08-28 14:59:16,752  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 14:59:16,752  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/evaluation-of-the-green-house-whole-family-support-model/
+2026-08-28 14:59:16,752  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:59:21,752  INFO    crawler.crawler    found 'Evaluation of The Green House  Whole Family Support Model' by 3 author(s), published in an unknown venue (2026)
+2026-08-28 14:59:21,756  INFO    crawler.crawler    references 3 author profile link(s)
+2026-08-28 14:59:21,756  INFO    crawler.crawler    done: kept publication (26 so far) (26 kept so far)
+2026-08-28 14:59:21,756  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/grace-carter/
+2026-08-28 14:59:21,756  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:59:27,140  INFO    crawler.crawler    found 'Grace Carter', with a 2553-character biography
+2026-08-28 14:59:27,151  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:59:27,151  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/lorna-odoherty/
+2026-08-28 14:59:27,151  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 14:59:32,028  INFO    crawler.crawler    found "Lorna O'Doherty", with a 2223-character biography
+2026-08-28 14:59:32,038  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:59:32,038  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sarah-west-2/
+2026-08-28 14:59:32,038  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:59:36,917  INFO    crawler.crawler    found 'Sarah West', with a 1129-character biography
+2026-08-28 14:59:36,929  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 14:59:36,929  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/evaluation-of-the-professional-nurse-advocates-role-in-quality-im/
+2026-08-28 14:59:36,929  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 14:59:41,765  INFO    crawler.crawler    found 'Evaluation of the Professional Nurse Advocate’s Role in Quality Improvement to Understand the Impact on Patient Outcomes and Experience: Mixed Methods' by 4 author(s), published in an unknown venue (2026)
+2026-08-28 14:59:41,775  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 14:59:41,775  INFO    crawler.crawler    done: kept publication (27 so far) (27 kept so far)
+2026-08-28 14:59:41,775  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/liz-lees-deutsch/ from an earlier publication, skipping
+2026-08-28 14:59:41,775  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/rosie-kneafsey/ from an earlier publication, skipping
+2026-08-28 14:59:41,775  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/examining-the-effect-of-an-orientation-tour-and-aromatherapy-on-s/
+2026-08-28 14:59:41,775  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 14:59:46,704  INFO    crawler.crawler    found 'Examining the Effect of an Orientation Tour and Aromatherapy on Stress and Depressed Mood in Birthing Parents with Preterm Infants: A Quasi-Experimental Study' by 6 author(s), published in Iranian Journal of Nursing and Midwifery Research (2026)
+2026-08-28 14:59:46,713  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:59:46,713  INFO    crawler.crawler    done: kept publication (28 so far) (28 kept so far)
+2026-08-28 14:59:46,713  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/sally-pezaro/ from an earlier publication, skipping
+2026-08-28 14:59:46,713  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/exploring-factors-that-impact-playground-design-decisions-and-the/
+2026-08-28 14:59:46,713  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 14:59:52,008  INFO    crawler.crawler    found 'Exploring factors that impact playground design decisions and the effect on children’s physical activity and health: a qualitative case study of stakeholder experiences in Rugby, UK' by 4 author(s), published in Planning Practice and Research (2026)
+2026-08-28 14:59:52,019  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:59:52,019  INFO    crawler.crawler    done: kept publication (29 so far) (29 kept so far)
+2026-08-28 14:59:52,019  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 14:59:52,019  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/exploring-the-perspectives-and-experiences-of-men-living-with-pro/
+2026-08-28 14:59:52,019  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 14:59:56,768  INFO    crawler.crawler    found 'Exploring the perspectives and experiences of men living with prostate cancer from minority ethnic backgrounds in undertaking physical activity: A qualitative analysis' by 6 author(s), published in an unknown venue (2026)
+2026-08-28 14:59:56,776  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 14:59:56,776  INFO    crawler.crawler    done: kept publication (30 so far) (30 kept so far)
+2026-08-28 14:59:56,776  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/jack-steven-carr/
+2026-08-28 14:59:56,777  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:00:02,020  INFO    crawler.crawler    found 'Jack Steven Carr', with a 0-character biography
+2026-08-28 15:00:02,028  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:00:02,028  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/from-conflicting-outcomes-to-mutual-losses-how-punitive-responses/
+2026-08-28 15:00:02,028  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:00:06,767  INFO    crawler.crawler    found 'From Conflicting Outcomes to Mutual Losses: How Punitive Responses to Problematic Substance Use Suppress Help‐Seeking and Cause Harm' by 5 author(s), published in Human Resource Management Journal (2026)
+2026-08-28 15:00:06,772  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:00:06,772  INFO    crawler.crawler    done: kept publication (31 so far) (31 kept so far)
+2026-08-28 15:00:06,772  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/sally-pezaro/ from an earlier publication, skipping
+2026-08-28 15:00:06,772  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/global-regional-and-national-burden-of-road-injuries-19902023-a-s/
+2026-08-28 15:00:06,772  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:00:11,900  INFO    crawler.crawler    found 'Global, regional, and national burden of road injuries 1990–2023: a systematic analysis for the Global Burden of Disease Study 2023' by 1 author(s), published in The Lancet Public Health (2026)
+2026-08-28 15:00:11,907  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 15:00:11,907  INFO    crawler.crawler    done: kept publication (32 so far) (32 kept so far)
+2026-08-28 15:00:11,907  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/grassroots-football-coaches-knowledge-and-perspectives-of-physica/
+2026-08-28 15:00:11,907  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:00:16,815  INFO    crawler.crawler    found 'Grassroots football coaches’ knowledge and perspectives of physical literacy to improve child wellbeing through community sport' by 5 author(s), published in International Journal of Sports Science and Coaching (2026)
+2026-08-28 15:00:16,822  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:00:16,822  INFO    crawler.crawler    done: kept publication (33 so far) (33 kept so far)
+2026-08-28 15:00:16,822  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/lara-vella/
+2026-08-28 15:00:16,823  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:00:21,800  INFO    crawler.crawler    found 'Lara Vella', with a 0-character biography
+2026-08-28 15:00:21,808  INFO    crawler.crawler    lists 3 publication link(s)
+2026-08-28 15:00:21,808  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:00:21,808  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/health-outcomes-in-migrant-survivors-of-sexual-violence-and-abuse/
+2026-08-28 15:00:21,808  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:00:27,843  INFO    crawler.crawler    found 'Health Outcomes in Migrant Survivors of Sexual Violence and Abuse' by 3 author(s), published in an unknown venue (2026)
+2026-08-28 15:00:27,851  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:00:27,851  INFO    crawler.crawler    done: kept publication (34 so far) (34 kept so far)
+2026-08-28 15:00:27,851  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/grace-carter/ from an earlier publication, skipping
+2026-08-28 15:00:27,851  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/lorna-odoherty/ from an earlier publication, skipping
+2026-08-28 15:00:27,851  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/heefo-a-lightweight-cryptographic-trinity-for-robust-uav-communic/
+2026-08-28 15:00:27,851  INFO    crawler.politeness  waiting 3.2s (politeness delay)
+2026-08-28 15:00:31,793  INFO    crawler.crawler    found 'HEEFO: A lightweight cryptographic trinity for robust UAV communication security' by 6 author(s), published in Vehicular Communications (2026)
+2026-08-28 15:00:31,800  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:00:31,800  INFO    crawler.crawler    done: kept publication (35 so far) (35 kept so far)
+2026-08-28 15:00:31,800  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/syed-aziz-shah/ from an earlier publication, skipping
+2026-08-28 15:00:31,800  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/impaired-peripheral-oxygen-delivery-during-submaximal-exercise-in/
+2026-08-28 15:00:31,800  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:00:36,892  INFO    crawler.crawler    found 'Impaired peripheral oxygen delivery during submaximal exercise in adults with long COVID' by 7 author(s), published in Physiological Reports (2026)
+2026-08-28 15:00:36,899  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:00:36,899  INFO    crawler.crawler    done: kept publication (36 so far) (36 kept so far)
+2026-08-28 15:00:36,899  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/jack-steven-carr/ from an earlier publication, skipping
+2026-08-28 15:00:36,899  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/inspiratory-muscle-training-imt-for-clinical-adult-populations-an/
+2026-08-28 15:00:36,899  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:00:41,811  INFO    crawler.crawler    found 'Inspiratory muscle training (IMT) for clinical adult populations:  an Association of Chartered Physiotherapists in Respiratory Care (ACPRC) Evidence and Guidance Group scoping review.' by 13 author(s), published in Physiotherapy in Respiratory Care (2026)
+2026-08-28 15:00:41,817  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:00:41,817  INFO    crawler.crawler    done: kept publication (37 so far) (37 kept so far)
+2026-08-28 15:00:41,817  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/agnieszka-lewko/ from an earlier publication, skipping
+2026-08-28 15:00:41,817  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/interviews-with-survivors/
+2026-08-28 15:00:41,817  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:00:46,824  INFO    crawler.crawler    found 'Interviews with survivors' by 3 author(s), published in an unknown venue (2026)
+2026-08-28 15:00:46,831  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:00:46,832  INFO    crawler.crawler    done: kept publication (38 so far) (38 kept so far)
+2026-08-28 15:00:46,832  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/grace-carter/ from an earlier publication, skipping
+2026-08-28 15:00:46,832  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/sarah-west-2/ from an earlier publication, skipping
+2026-08-28 15:00:46,832  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/its-time-to-rethink-real-world-evidence-a-call-for-terminological/
+2026-08-28 15:00:46,832  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:00:51,590  INFO    crawler.crawler    found 'It’s Time to Rethink ‘Real-World Evidence’: A Call for Terminological Clarity in Health Technology Assessment' by 2 author(s), published in Applied Health Economics and Health Policy (2026)
+2026-08-28 15:00:51,594  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:00:51,594  INFO    crawler.crawler    done: kept publication (39 so far) (39 kept so far)
+2026-08-28 15:00:51,594  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/hesam-ghiasvand/
+2026-08-28 15:00:51,594  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 15:00:56,610  INFO    crawler.crawler    found 'Hesam Ghiasvand', with a 273-character biography
+2026-08-28 15:00:56,632  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:00:56,632  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/key-principles-for-rehabilitation-of-critically-ill-patients-with/
+2026-08-28 15:00:56,633  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 15:01:01,771  INFO    crawler.crawler    found 'Key principles for rehabilitation of critically ill patients with obesity' by 13 author(s), published in Intensive Care Medicine (2026)
+2026-08-28 15:01:01,779  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:01,779  INFO    crawler.crawler    done: kept publication (40 so far) (40 kept so far)
+2026-08-28 15:01:01,779  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/david-mcwilliams/ from an earlier publication, skipping
+2026-08-28 15:01:01,779  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/learning-to-sip-tea-intelligently-a-phenomenographic-exploration-/
+2026-08-28 15:01:01,779  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:01:06,823  INFO    crawler.crawler    found '"Learning to sip tea intelligently”: A phenomenographic exploration of midwifery students’ perceptions of emotional intelligence and its relationship to midwifery' by 5 author(s), published in Women and Birth (2026)
+2026-08-28 15:01:06,829  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:06,829  INFO    crawler.crawler    done: kept publication (41 so far) (41 kept so far)
+2026-08-28 15:01:06,829  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/sally-pezaro/ from an earlier publication, skipping
+2026-08-28 15:01:06,829  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/learning-together-a-review-of-the-quality-of-care-provided-to-adu/
+2026-08-28 15:01:06,829  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:01:11,808  INFO    crawler.crawler    found 'Learning Together: A review of the quality of care provided to adults with a learning disability when admitted to hospital acutely unwell.' by 5 author(s), published in an unknown venue (2026)
+2026-08-28 15:01:11,811  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:11,811  INFO    crawler.crawler    done: kept publication (42 so far) (42 kept so far)
+2026-08-28 15:01:11,811  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/david-mcwilliams/ from an earlier publication, skipping
+2026-08-28 15:01:11,811  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/left-atrium-incisure-curvature-an-indicator-for-predicting-atrial/
+2026-08-28 15:01:11,811  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:01:16,583  INFO    crawler.crawler    found 'Left atrium incisure curvature: an indicator for predicting atrial fibrillation-related cardioembolism' by 11 author(s), published in BMC Cardiovascular Disorders (2026)
+2026-08-28 15:01:16,591  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:16,591  INFO    crawler.crawler    done: kept publication (43 so far) (43 kept so far)
+2026-08-28 15:01:16,591  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/dingchang-zheng-2/ from an earlier publication, skipping
+2026-08-28 15:01:16,591  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/longitudinal-assessment-of-chemotherapy-induced-peripheral-neurop/
+2026-08-28 15:01:16,591  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 15:01:22,194  INFO    crawler.crawler    found 'Longitudinal assessment of chemotherapy-induced peripheral neuropathy in women undergoing taxane-based treatment for breast cancer:  a prospective observational study' by 6 author(s), published in BMC Cancer (2026)
+2026-08-28 15:01:22,202  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:22,202  INFO    crawler.crawler    done: kept publication (44 so far) (44 kept so far)
+2026-08-28 15:01:22,202  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/jack-steven-carr/ from an earlier publication, skipping
+2026-08-28 15:01:22,202  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/magnetocardiography-parameters-to-predict-sudden-cardiac-death-ma/
+2026-08-28 15:01:22,202  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:01:26,872  INFO    crawler.crawler    found 'MAGNETOcardiography Parameters to Predict Sudden Cardiac Death (MAGNETO-SCD) or Ventricular Events From Implantable Cardioverter Defibrillators' by 11 author(s), published in JACC: Clinical Electrophysiology (2026)
+2026-08-28 15:01:26,881  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:26,881  INFO    crawler.crawler    done: kept publication (45 so far) (45 kept so far)
+2026-08-28 15:01:26,881  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/nakul-chandan/ from an earlier publication, skipping
+2026-08-28 15:01:26,881  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/mapping-the-situation-of-unaccompanied-and-separated-children-in-/
+2026-08-28 15:01:26,881  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:01:31,921  INFO    crawler.crawler    found 'Mapping the situation of unaccompanied and separated children in Greece: A scoping review' by 4 author(s), published in Children and Youth Services Review (2026)
+2026-08-28 15:01:31,928  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:31,928  INFO    crawler.crawler    done: kept publication (46 so far) (46 kept so far)
+2026-08-28 15:01:31,928  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/dana-sammut/
+2026-08-28 15:01:31,929  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:01:37,068  INFO    crawler.crawler    found 'Dana Sammut', with a 0-character biography
+2026-08-28 15:01:37,077  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:01:37,077  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/moving-minds-the-associations-between-movement-and-cognitive-deve/
+2026-08-28 15:01:37,077  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:01:42,217  INFO    crawler.crawler    found 'Moving Minds: The associations between movement and cognitive development in early years' by 5 author(s), published in Sport Sciences for Health (2026)
+2026-08-28 15:01:42,224  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:42,224  INFO    crawler.crawler    done: kept publication (47 so far) (47 kept so far)
+2026-08-28 15:01:42,224  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:01:42,224  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/new-irish-midwifery-registration-standards-and-the-missed-opportu/
+2026-08-28 15:01:42,224  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:01:46,920  INFO    crawler.crawler    found 'New Irish Midwifery Registration Standards and the Missed Opportunity for Gender-Inclusive Curricula and Reproductive Justice' by 9 author(s), published in Birth (2026)
+2026-08-28 15:01:46,928  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:01:46,928  INFO    crawler.crawler    done: kept publication (48 so far) (48 kept so far)
+2026-08-28 15:01:46,928  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/sally-pezaro/ from an earlier publication, skipping
+2026-08-28 15:01:46,928  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/objective-analysis-of-movement-behaviours-and-cardiometabolic-hea/
+2026-08-28 15:01:46,928  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:01:51,996  INFO    crawler.crawler    found 'Objective Analysis of Movement Behaviours and Cardiometabolic Health in Sub-Saharan Africans Living in the UK: A Cross Sectional Study' by 15 author(s), published in Health Science Reports (2026)
+2026-08-28 15:01:52,005  INFO    crawler.crawler    references 7 author profile link(s)
+2026-08-28 15:01:52,005  INFO    crawler.crawler    done: kept publication (49 so far) (49 kept so far)
+2026-08-28 15:01:52,005  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/amy-fuller/
+2026-08-28 15:01:52,006  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:01:57,155  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 15:01:57,155  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/damilola-akolawole-ibirogba/ from an earlier publication, skipping
+2026-08-28 15:01:57,155  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/djordje-jakovljevic/ from an earlier publication, skipping
+2026-08-28 15:01:57,155  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/luis-alfredo-sanchez-andalco/
+2026-08-28 15:01:57,155  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:02:02,561  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 15:02:02,562  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:02:02,562  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/nduka-okwose/ from an earlier publication, skipping
+2026-08-28 15:02:02,562  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/titilope-ajepe-2/
+2026-08-28 15:02:02,562  INFO    crawler.politeness  waiting 3.6s (politeness delay)
+2026-08-28 15:02:07,529  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 15:02:07,529  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/patient-and-clinician-acceptability-of-an-integrated-physiotherap/
+2026-08-28 15:02:07,530  INFO    crawler.politeness  waiting 3.6s (politeness delay)
+2026-08-28 15:02:12,242  INFO    crawler.crawler    found 'Patient and clinician acceptability of an integrated physiotherapy and nutrition intervention after ICU discharge: a qualitative exploration of a pre-specified co-primary feasibility outcome of the PHOENIX trial' by 10 author(s), published in eClinicalMedicine (2026)
+2026-08-28 15:02:12,248  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:02:12,248  INFO    crawler.crawler    done: kept publication (50 so far) (50 kept so far)
+2026-08-28 15:02:12,248  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/david-mcwilliams/ from an earlier publication, skipping
+2026-08-28 15:02:12,248  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/a-much-neglected-issue-gauging-the-acceptability-of-a-new-interpe/
+2026-08-28 15:02:12,248  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:02:16,874  INFO    crawler.crawler    found '“A much-neglected issue”: gauging the acceptability of a new interpersonal process model for CBT supervision' by 2 author(s), published in Journal of Mental Health Training, Education and Practice (2026)
+2026-08-28 15:02:16,887  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:02:16,887  INFO    crawler.crawler    done: kept publication (51 so far) (51 kept so far)
+2026-08-28 15:02:16,887  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/jason-roscoe/
+2026-08-28 15:02:16,887  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:02:22,526  INFO    crawler.crawler    found 'Jason Roscoe', with a 0-character biography
+2026-08-28 15:02:22,534  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:02:22,534  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/federated-learning-enabled-adversarial-attack-detection-framework/
+2026-08-28 15:02:22,534  INFO    crawler.politeness  waiting 3.6s (politeness delay)
+2026-08-28 15:02:27,306  INFO    crawler.crawler    found 'Federated Learning-Enabled Adversarial Attack Detection Framework for Healthcare Laboratory Data' by 7 author(s), published in an unknown venue (2025)
+2026-08-28 15:02:27,310  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:02:27,310  INFO    crawler.crawler    done: kept publication (52 so far) (52 kept so far)
+2026-08-28 15:02:27,310  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/syed-aziz-shah/ from an earlier publication, skipping
+2026-08-28 15:02:27,310  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/uri-arta-ramadhani/
+2026-08-28 15:02:27,311  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:02:31,945  INFO    crawler.crawler    found 'Uri Arta Ramadhani', with a 0-character biography
+2026-08-28 15:02:31,952  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:02:31,952  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/five-insights-from-the-global-burden-of-disease-study-2019/
+2026-08-28 15:02:31,952  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:02:37,919  INFO    crawler.crawler    found 'Five insights from the Global Burden of Disease Study 2019' by 1 author(s), published in The Lancet (2020)
+2026-08-28 15:02:37,928  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 15:02:37,928  INFO    crawler.crawler    done: kept publication (53 so far) (53 kept so far)
+2026-08-28 15:02:37,928  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/global-age-sex-specific-fertility-mortality-healthy-life-expectan/
+2026-08-28 15:02:37,928  INFO    crawler.politeness  waiting 3.3s (politeness delay)
+2026-08-28 15:02:42,021  INFO    crawler.crawler    found 'Global age-sex-specific fertility, mortality, healthy life expectancy (HALE), and population estimates in 204 countries and territories, 1950–2019: a comprehensive demographic analysis for the Global Burden of Disease Study 2019' by 1 author(s), published in The Lancet (2020)
+2026-08-28 15:02:42,029  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 15:02:42,029  INFO    crawler.crawler    done: kept publication (54 so far) (54 kept so far)
+2026-08-28 15:02:42,029  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/global-burden-of-369-diseases-and-injuries-in-204-countries-and-t/
+2026-08-28 15:02:42,029  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:02:46,971  INFO    crawler.crawler    found 'Global burden of 369 diseases and injuries in 204 countries and territories, 1990–2019: a systematic analysis for the Global Burden of Disease Study 2019' by 1 author(s), published in The Lancet (2020)
+2026-08-28 15:02:46,978  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 15:02:46,978  INFO    crawler.crawler    done: kept publication (55 so far) (55 kept so far)
+2026-08-28 15:02:46,978  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/global-burden-of-87-risk-factors-in-204-countries-and-territories/
+2026-08-28 15:02:46,978  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:02:51,925  INFO    crawler.crawler    found 'Global burden of 87 risk factors in 204 countries and territories, 1990–2019: a systematic analysis for the Global Burden of Disease Study 2019' by 1 author(s), published in The Lancet (2020)
+2026-08-28 15:02:51,932  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 15:02:51,932  INFO    crawler.crawler    done: kept publication (56 so far) (56 kept so far)
+2026-08-28 15:02:51,932  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/machine-learning-derived-retinal-pigment-score-from-ophthalmic-im/
+2026-08-28 15:02:51,933  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:02:56,902  INFO    crawler.crawler    found 'Machine learning derived retinal pigment score from ophthalmic imaging shows ethnicity is not biology' by 1 author(s), published in Nature Communications (2025)
+2026-08-28 15:02:56,909  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 15:02:56,909  INFO    crawler.crawler    done: kept publication (57 so far) (57 kept so far)
+2026-08-28 15:02:56,909  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/patient-and-public-involvement-and-engagement-in-long-covid-resea/
+2026-08-28 15:02:56,909  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:03:01,917  INFO    crawler.crawler    found 'Patient and public involvement and engagement in Long COVID research: embedding inclusion in research' by 6 author(s), published in Research Involvement and Engagement (2026)
+2026-08-28 15:03:01,923  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 15:03:01,923  INFO    crawler.crawler    done: kept publication (58 so far) (58 kept so far)
+2026-08-28 15:03:01,923  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/perceived-needs-of-parents-of-adolescents-with-a-history-of-suici/
+2026-08-28 15:03:01,924  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:03:07,280  INFO    crawler.crawler    found 'Perceived needs of parents of adolescents with a history of suicide attempts: a qualitative exploration' by 4 author(s), published in BMC psychology (2026)
+2026-08-28 15:03:07,288  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:03:07,288  INFO    crawler.crawler    done: kept publication (59 so far) (59 kept so far)
+2026-08-28 15:03:07,288  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/sally-pezaro/ from an earlier publication, skipping
+2026-08-28 15:03:07,288  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/perceptions-attitudes-and-experiences-of-glp-1-receptor-agonists-/
+2026-08-28 15:03:07,288  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:03:11,729  INFO    crawler.crawler    found 'Perceptions, Attitudes, and Experiences of GLP-1 Receptor Agonists for Weight Management in the United Kingdom: A Cross-Sectional Survey Study' by 9 author(s), published in BMC Public Health (2026)
+2026-08-28 15:03:11,739  INFO    crawler.crawler    references 3 author profile link(s)
+2026-08-28 15:03:11,740  INFO    crawler.crawler    done: kept publication (60 so far) (60 kept so far)
+2026-08-28 15:03:11,740  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/anna-higo/
+2026-08-28 15:03:11,740  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 15:03:17,163  INFO    crawler.crawler    found 'Anna Higo', with a 0-character biography
+2026-08-28 15:03:17,174  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:03:17,174  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/jason-tallis/ from an earlier publication, skipping
+2026-08-28 15:03:17,174  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:03:17,174  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/physical-activity-and-exercise-for-the-management-of-polycystic-o/
+2026-08-28 15:03:17,174  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:03:22,054  INFO    crawler.crawler    found 'Physical activity and exercise for the management of polycystic ovary syndrome (PCOS)' by 7 author(s), published in an unknown venue (2026)
+2026-08-28 15:03:22,063  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:03:22,063  INFO    crawler.crawler    done: kept publication (61 so far) (61 kept so far)
+2026-08-28 15:03:22,063  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/brent-robbins/
+2026-08-28 15:03:22,063  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:03:26,970  INFO    crawler.crawler    found 'Brent Robbins', with a 0-character biography
+2026-08-28 15:03:26,977  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:03:26,977  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/ioannis-kyrou/
+2026-08-28 15:03:26,977  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:03:32,299  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 15:03:32,299  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/physical-activity-bouts-and-sleep-duration-are-key-predictors-of-/
+2026-08-28 15:03:32,299  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:03:37,234  INFO    crawler.crawler    found 'Physical activity bouts and sleep duration are key predictors of cardiometabolic risk in Black adults' by 7 author(s), published in European Journal of Preventive Cardiology (2026)
+2026-08-28 15:03:37,242  INFO    crawler.crawler    references 6 author profile link(s)
+2026-08-28 15:03:37,242  INFO    crawler.crawler    done: kept publication (62 so far) (62 kept so far)
+2026-08-28 15:03:37,242  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/amy-fuller/ from an earlier publication, skipping
+2026-08-28 15:03:37,242  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/damilola-akolawole-ibirogba/ from an earlier publication, skipping
+2026-08-28 15:03:37,242  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/djordje-jakovljevic/ from an earlier publication, skipping
+2026-08-28 15:03:37,242  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/fatima-bano/
+2026-08-28 15:03:37,242  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:03:42,227  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 15:03:42,227  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:03:42,227  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/nduka-okwose/ from an earlier publication, skipping
+2026-08-28 15:03:42,227  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/physical-activity-trust-and-research-participation-among-men-from/
+2026-08-28 15:03:42,227  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:03:47,023  INFO    crawler.crawler    found 'Physical Activity, Trust, and Research Participation Among Men From Minority Ethnic Backgrounds Living With Prostate Cancer: A Qualitative Study' by 6 author(s), published in Psycho-Oncology (2026)
+2026-08-28 15:03:47,029  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:03:47,029  INFO    crawler.crawler    done: kept publication (63 so far) (63 kept so far)
+2026-08-28 15:03:47,029  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/jack-steven-carr/ from an earlier publication, skipping
+2026-08-28 15:03:47,029  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/physiotherapy-and-optimised-enteral-nutrition-in-the-post-acute-p-2/
+2026-08-28 15:03:47,030  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:03:52,080  INFO    crawler.crawler    found 'Physiotherapy and optimised enteral nutrition in the post-acute phase of critical illness (PHOENIX): a randomised controlled feasibility trial' by 15 author(s), published in eClinicalMedicine (2026)
+2026-08-28 15:03:52,088  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:03:52,088  INFO    crawler.crawler    done: kept publication (64 so far) (64 kept so far)
+2026-08-28 15:03:52,088  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/david-mcwilliams/ from an earlier publication, skipping
+2026-08-28 15:03:52,088  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/physiotherapy-provision-and-practice-a-european-intensive-care-un-3/
+2026-08-28 15:03:52,088  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:03:56,886  INFO    crawler.crawler    found 'Physiotherapy Provision and Practice: A EuropeAn Intensive CarE Unit (ICU) Survey (PEAiCE) – A profile of ICU physiotherapy in Europe.' by 27 author(s), published in Intensive and Critical Care Nursing (2026)
+2026-08-28 15:03:56,893  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:03:56,893  INFO    crawler.crawler    done: kept publication (65 so far) (65 kept so far)
+2026-08-28 15:03:56,893  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/agnieszka-lewko/ from an earlier publication, skipping
+2026-08-28 15:03:56,893  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/david-mcwilliams/ from an earlier publication, skipping
+2026-08-28 15:03:56,893  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/policies-procedures-and-guidelines-for-criteria-led-discharge-a-s-2/
+2026-08-28 15:03:56,893  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:04:01,956  INFO    crawler.crawler    found 'Policies, Procedures and Guidelines for Criteria-led Discharge: A Scoping Review' by 3 author(s), published in an unknown venue (2026)
+2026-08-28 15:04:01,961  INFO    crawler.crawler    references 3 author profile link(s)
+2026-08-28 15:04:01,962  INFO    crawler.crawler    done: kept publication (66 so far) (66 kept so far)
+2026-08-28 15:04:01,962  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/agnieszka-lewko/ from an earlier publication, skipping
+2026-08-28 15:04:01,962  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/emma-claire-brangwin/ from an earlier publication, skipping
+2026-08-28 15:04:01,962  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/liz-lees-deutsch/ from an earlier publication, skipping
+2026-08-28 15:04:01,962  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/prevalence-of-exercise-induced-bronchoconstriction-in-elite-chine/
+2026-08-28 15:04:01,962  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:04:06,970  INFO    crawler.crawler    found 'Prevalence of exercise-induced bronchoconstriction in elite Chinese summer sport athletes' by 7 author(s), published in Journal of Sport and Health Science (2026)
+2026-08-28 15:04:06,976  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:04:06,976  INFO    crawler.crawler    done: kept publication (67 so far) (67 kept so far)
+2026-08-28 15:04:06,976  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:04:06,976  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/privacy-enhancing-technologies-for-intelligent-healthcare-researc/
+2026-08-28 15:04:06,976  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:04:12,113  INFO    crawler.crawler    found 'Privacy Enhancing Technologies for Intelligent Healthcare: Research Challenges and Opportunities' by 8 author(s), published in ACM Computing Surveys (2026)
+2026-08-28 15:04:12,120  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:04:12,121  INFO    crawler.crawler    done: kept publication (68 so far) (68 kept so far)
+2026-08-28 15:04:12,121  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/syed-aziz-shah/ from an earlier publication, skipping
+2026-08-28 15:04:12,121  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/professional-identity-in-psychiatric-nursing-a-qualitative-study-/
+2026-08-28 15:04:12,121  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:04:16,985  INFO    crawler.crawler    found 'Professional identity in psychiatric nursing: a qualitative study of nurses’ perceptions and influencing factors' by 4 author(s), published in BMC Nursing (2026)
+2026-08-28 15:04:16,991  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:04:16,991  INFO    crawler.crawler    done: kept publication (69 so far) (69 kept so far)
+2026-08-28 15:04:16,991  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/sally-pezaro/ from an earlier publication, skipping
+2026-08-28 15:04:16,991  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/psychosis-and-bipolar-disorder-a-multisite-evaluation-of-the-unit/
+2026-08-28 15:04:16,991  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:04:21,881  INFO    crawler.crawler    found 'Psychosis and Bipolar Disorder:: A Multisite Evaluation of the United Kingdom’s (UK’s) Section 136 of the Mental Health Act (1983) Detentions over a 4 Year Period' by 7 author(s), published in Open Journal of Psychiatry (2026)
+2026-08-28 15:04:21,888  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:04:21,888  INFO    crawler.crawler    done: kept publication (70 so far) (70 kept so far)
+2026-08-28 15:04:21,888  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/ksenija-maravic-da-silva/ from an earlier publication, skipping
+2026-08-28 15:04:21,888  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/qualitative-analysis-framework-and-interpretation-of-large-qualit/
+2026-08-28 15:04:21,888  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:04:26,955  INFO    crawler.crawler    found 'Qualitative Analysis, Framework and Interpretation of  Large Qualitative Datasets (QUALI-FIND): A New and Novel Learning Opportunity' by 2 author(s), published in an unknown venue (2026)
+2026-08-28 15:04:26,960  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:04:26,960  INFO    crawler.crawler    done: kept publication (71 so far) (71 kept so far)
+2026-08-28 15:04:26,960  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/eleanor-lutman-white/
+2026-08-28 15:04:26,961  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:04:32,328  INFO    crawler.crawler    found 'Eleanor Lutman-White', with a 774-character biography
+2026-08-28 15:04:32,343  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:04:32,343  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/liz-lees-deutsch/ from an earlier publication, skipping
+2026-08-28 15:04:32,343  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/reframing-nices-cost-effectiveness-threshold-technical-benchmark-/
+2026-08-28 15:04:32,343  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:04:37,090  INFO    crawler.crawler    found 'Reframing NICE’s Cost-Effectiveness Threshold: Technical Benchmark or Policy Signal? A Documentary Content Analysis: Reframing NICE’s Cost-Effectiveness Threshold' by 2 author(s), published in Value in Health (2026)
+2026-08-28 15:04:37,098  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:04:37,098  INFO    crawler.crawler    done: kept publication (72 so far) (72 kept so far)
+2026-08-28 15:04:37,098  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/hesam-ghiasvand/ from an earlier publication, skipping
+2026-08-28 15:04:37,098  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/response-engagement-and-support-after-violence-at-work-reset/
+2026-08-28 15:04:37,098  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:04:42,143  INFO    crawler.crawler    found 'Response, Engagement and Support aftEr violence aT work (RESET)' by 4 author(s), published in an unknown venue (2026)
+2026-08-28 15:04:42,149  INFO    crawler.crawler    references 3 author profile link(s)
+2026-08-28 15:04:42,149  INFO    crawler.crawler    done: kept publication (73 so far) (73 kept so far)
+2026-08-28 15:04:42,150  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/dana-sammut/ from an earlier publication, skipping
+2026-08-28 15:04:42,150  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/liz-lees-deutsch/ from an earlier publication, skipping
+2026-08-28 15:04:42,150  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/lorna-odoherty/ from an earlier publication, skipping
+2026-08-28 15:04:42,150  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/rethinking-digital-healthcare-education-for-frailty/
+2026-08-28 15:04:42,150  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:04:46,820  INFO    crawler.crawler    found 'Rethinking Digital Healthcare Education for Frailty' by 2 author(s), published in Agility: Chartered Physiotherapists working with older people (2025)
+2026-08-28 15:04:46,825  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:04:46,825  INFO    crawler.crawler    done: kept publication (74 so far) (74 kept so far)
+2026-08-28 15:04:46,825  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/jo-jennings/
+2026-08-28 15:04:46,825  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 15:04:52,036  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 15:04:52,037  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/juliana-samson-samson/
+2026-08-28 15:04:52,037  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:04:57,824  INFO    crawler.crawler    found 'Juliana Samson', with a 0-character biography
+2026-08-28 15:04:57,832  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:04:57,832  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/school-nurse-reflections-on-visibility-safety-and-relevance-in-mo/
+2026-08-28 15:04:57,832  INFO    crawler.politeness  waiting 3.5s (politeness delay)
+2026-08-28 15:05:02,034  INFO    crawler.crawler    found 'School Nurse Reflections on Visibility, Safety, and Relevance in Modern School Nurse Practice: A Qualitative Study' by 5 author(s), published in Journal of School Nursing (2025)
+2026-08-28 15:05:02,041  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:05:02,041  INFO    crawler.crawler    done: kept publication (75 so far) (75 kept so far)
+2026-08-28 15:05:02,041  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/dana-sammut/ from an earlier publication, skipping
+2026-08-28 15:05:02,041  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/stakeholder-experiences-of-rehabilitation-for-adults-with-complex/
+2026-08-28 15:05:02,041  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:05:07,058  INFO    crawler.crawler    found 'Stakeholder experiences of rehabilitation for adults with complex fractures following traumatic injury: a qualitative interview study' by 6 author(s), published in Disability and Rehabilitation (2026)
+2026-08-28 15:05:07,065  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 15:05:07,065  INFO    crawler.crawler    done: kept publication (76 so far) (76 kept so far)
+2026-08-28 15:05:07,065  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/anna-higo/ from an earlier publication, skipping
+2026-08-28 15:05:07,065  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/david-mcwilliams/ from an earlier publication, skipping
+2026-08-28 15:05:07,065  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/gemma-pearce/
+2026-08-28 15:05:07,065  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:05:12,478  INFO    crawler.crawler    found 'Gemma Pearce', with a 1880-character biography
+2026-08-28 15:05:12,490  INFO    crawler.crawler    lists 6 publication link(s)
+2026-08-28 15:05:12,490  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/lucy-silvester/
+2026-08-28 15:05:12,490  INFO    crawler.politeness  waiting 3.8s (politeness delay)
+2026-08-28 15:05:17,207  INFO    crawler.crawler    found 'Lucy Silvester', with a 0-character biography
+2026-08-28 15:05:17,216  INFO    crawler.crawler    lists 3 publication link(s)
+2026-08-28 15:05:17,216  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/strengthening-legal-literacy-and-democratic-citizenship-through-a/
+2026-08-28 15:05:17,216  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:05:22,380  INFO    crawler.crawler    found 'Strengthening Legal Literacy and Democratic Citizenship through an Advocacy-Based Approach in Civic Education' by 6 author(s), published in Indonesian Journal of Advocacy and Legal Services (2026)
+2026-08-28 15:05:22,387  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:05:22,387  INFO    crawler.crawler    done: kept publication (77 so far) (77 kept so far)
+2026-08-28 15:05:22,387  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/eem-munawaroh/
+2026-08-28 15:05:22,387  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:05:27,071  INFO    crawler.crawler    found 'Eem Munawaroh', with a 0-character biography
+2026-08-28 15:05:27,077  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:05:27,077  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/strengthening-research-capacity-in-local-government-comparative-a/
+2026-08-28 15:05:27,077  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:05:31,995  INFO    crawler.crawler    found 'Strengthening research capacity in local government: Comparative analyses of Health Determinants Research Collaboration models' by 1 author(s), published in an unknown venue (2026)
+2026-08-28 15:05:32,004  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:05:32,004  INFO    crawler.crawler    done: kept publication (78 so far) (78 kept so far)
+2026-08-28 15:05:32,004  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/lauren-bell-2/
+2026-08-28 15:05:32,004  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:05:37,205  INFO    crawler.crawler    found 'Lauren Bell', with a 1141-character biography
+2026-08-28 15:05:37,217  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:05:37,217  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/the-colour-of-taste-investigating-flavour-perception-and-preferen/
+2026-08-28 15:05:37,217  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:05:42,108  INFO    crawler.crawler    found 'The colour of taste: Investigating flavour perception and preference in children aged 9-11' by 3 author(s), published in an unknown venue (2026)
+2026-08-28 15:05:42,117  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:05:42,117  INFO    crawler.crawler    done: kept publication (79 so far) (79 kept so far)
+2026-08-28 15:05:42,117  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:05:42,117  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/the-current-uses-of-haptic-enabled-extended-reality-technologies-/
+2026-08-28 15:05:42,118  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:05:47,474  INFO    crawler.crawler    found 'The Current Uses of Haptic-Enabled Extended Reality Technologies for Developing Professional Touch Within Healthcare Education: A Scoping Review' by 7 author(s), published in Physical Therapy Reviews (2026)
+2026-08-28 15:05:47,483  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 15:05:47,484  INFO    crawler.crawler    done: kept publication (80 so far) (80 kept so far)
+2026-08-28 15:05:47,484  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/juliana-samson-samson/ from an earlier publication, skipping
+2026-08-28 15:05:47,484  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/ksenija-maravic-da-silva/ from an earlier publication, skipping
+2026-08-28 15:05:47,484  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/louise-moody/
+2026-08-28 15:05:47,484  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:05:52,858  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 15:05:52,858  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/marc-gilbey-2/
+2026-08-28 15:05:52,858  INFO    crawler.politeness  waiting 3.5s (politeness delay)
+2026-08-28 15:05:57,595  INFO    crawler.crawler    found 'Marc Gilbey', with a 0-character biography
+2026-08-28 15:05:57,601  INFO    crawler.crawler    lists 3 publication link(s)
+2026-08-28 15:05:57,601  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/the-effectiveness-of-community-sports-interventions-on-childrens-/
+2026-08-28 15:05:57,601  INFO    crawler.politeness  waiting 3.8s (politeness delay)
+2026-08-28 15:06:02,168  INFO    crawler.crawler    found 'The effectiveness of community sports interventions on children’s wellbeing: a systematic review and meta-analysis' by 6 author(s), published in International Review of Sport and Exercise Psychology (2026)
+2026-08-28 15:06:02,174  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:06:02,174  INFO    crawler.crawler    done: kept publication (81 so far) (81 kept so far)
+2026-08-28 15:06:02,174  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/lara-vella/ from an earlier publication, skipping
+2026-08-28 15:06:02,174  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:06:02,174  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/the-effects-of-4-weeks-oral-tangeretin-supplementation-on-serum-t/
+2026-08-28 15:06:02,174  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:06:07,495  INFO    crawler.crawler    found 'The effects of 4-weeks oral tangeretin supplementation on serum testosterone and cortisol levels in sprinters during the winter training season' by 9 author(s), published in Science and Sports (2026)
+2026-08-28 15:06:07,502  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:06:07,502  INFO    crawler.crawler    done: kept publication (82 so far) (82 kept so far)
+2026-08-28 15:06:07,502  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:06:07,502  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/the-potential-utility-of-abbreviated-breast-mri-fast-mri-as-a-too/
+2026-08-28 15:06:07,502  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:06:12,252  INFO    crawler.crawler    found 'The potential utility of abbreviated breast MRI (FAST MRI) as a tool for breast cancer screening: a systematic review and meta-analysis' by 1 author(s), published in Clinical Radiology (2021)
+2026-08-28 15:06:12,260  INFO    crawler.crawler    references 0 author profile link(s)
+2026-08-28 15:06:12,260  INFO    crawler.crawler    done: kept publication (83 so far) (83 kept so far)
+2026-08-28 15:06:12,260  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/the-relationship-between-physical-technical-and-tactical-skills-p/
+2026-08-28 15:06:12,260  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:06:17,147  INFO    crawler.crawler    found 'The relationship between physical, technical, and tactical skills, perceived competence and decision-making and execution during small-sided games in youth grassroots footballers' by 4 author(s), published in Physical Education and Sport Pedagogy (2026)
+2026-08-28 15:06:17,152  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:06:17,152  INFO    crawler.crawler    done: kept publication (84 so far) (84 kept so far)
+2026-08-28 15:06:17,152  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:06:17,152  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/william-pattison/ from an earlier publication, skipping
+2026-08-28 15:06:17,152  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/transition-time-between-long-term-conditions-among-childbearing-w/
+2026-08-28 15:06:17,152  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:06:22,564  INFO    crawler.crawler    found 'Transition time between long-term conditions among childbearing women in England: a nationwide observational analysis' by 4 author(s), published in Family Medicine and Community Health (2026)
+2026-08-28 15:06:22,572  INFO    crawler.crawler    references 2 author profile link(s)
+2026-08-28 15:06:22,572  INFO    crawler.crawler    done: kept publication (85 so far) (85 kept so far)
+2026-08-28 15:06:22,572  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/adeniyi-fagbamigbe/
+2026-08-28 15:06:22,572  INFO    crawler.politeness  waiting 3.8s (politeness delay)
+2026-08-28 15:06:27,411  INFO    crawler.crawler    found 'Adeniyi Fagbamigbe', with a 140-character biography
+2026-08-28 15:06:27,422  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:06:27,422  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sobia-ambreen/
+2026-08-28 15:06:27,422  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:06:32,187  INFO    crawler.crawler    found 'Sobia Ambreen', with a 0-character biography
+2026-08-28 15:06:32,196  INFO    crawler.crawler    lists 2 publication link(s)
+2026-08-28 15:06:32,196  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/understanding-the-implementation-of-kidney-supportive-care-interv/
+2026-08-28 15:06:32,196  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:06:37,278  INFO    crawler.crawler    found 'Understanding the implementation of kidney supportive care interventions to improve palliative care outcomes for adults receiving haemodialysis: protocol for a rapid realist review' by 6 author(s), published in BMJ Open (2026)
+2026-08-28 15:06:37,290  INFO    crawler.crawler    references 3 author profile link(s)
+2026-08-28 15:06:37,290  INFO    crawler.crawler    done: kept publication (86 so far) (86 kept so far)
+2026-08-28 15:06:37,290  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/chalani-lasanthika-thalaowita-lekamlage/
+2026-08-28 15:06:37,290  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:06:42,232  INFO    crawler.crawler    found 'Chalani Lasanthika Thalaowita Lekamlage', with a 440-character biography
+2026-08-28 15:06:42,241  INFO    crawler.crawler    lists 2 publication link(s)
+2026-08-28 15:06:42,241  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/emma-murphy/
+2026-08-28 15:06:42,241  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:06:47,327  INFO    crawler.crawler    not a member of the organisation, skipping their publications
+2026-08-28 15:06:47,327  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/szczepura-szczepura/
+2026-08-28 15:06:47,327  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:06:52,580  INFO    crawler.crawler    found 'Ala Szczepura', with a 5025-character biography
+2026-08-28 15:06:52,601  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:06:52,601  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/what-drives-enjoyment-in-grassroots-football-for-children-a-write/
+2026-08-28 15:06:52,601  INFO    crawler.politeness  waiting 3.8s (politeness delay)
+2026-08-28 15:06:57,205  INFO    crawler.crawler    found 'What drives enjoyment in grassroots football for children?: A Write–Draw–Show–Tell approach' by 7 author(s), published in an unknown venue (2026)
+2026-08-28 15:06:57,212  INFO    crawler.crawler    references 4 author profile link(s)
+2026-08-28 15:06:57,212  INFO    crawler.crawler    done: kept publication (87 so far) (87 kept so far)
+2026-08-28 15:06:57,212  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/jason-tallis/ from an earlier publication, skipping
+2026-08-28 15:06:57,212  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/michael-duncan/ from an earlier publication, skipping
+2026-08-28 15:06:57,212  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/soyoung-kim/ from an earlier publication, skipping
+2026-08-28 15:06:57,213  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/william-pattison/ from an earlier publication, skipping
+2026-08-28 15:06:57,213  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/what-happens-after-violence-and-abuse-from-patients/
+2026-08-28 15:06:57,213  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:07:02,075  INFO    crawler.crawler    found 'What happens after violence and abuse from patients?' by 1 author(s), published in an unknown venue (2026)
+2026-08-28 15:07:02,080  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:07:02,080  INFO    crawler.crawler    done: kept publication (88 so far) (88 kept so far)
+2026-08-28 15:07:02,080  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/dana-sammut/ from an earlier publication, skipping
+2026-08-28 15:07:02,080  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/why-they-do-not-move-an-explainable-machine-learning-analysis-of-/
+2026-08-28 15:07:02,080  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:07:07,231  INFO    crawler.crawler    found 'Why they do not move: An explainable machine learning analysis of physical activity barriers in obese adolescents and tool translation' by 15 author(s), published in BMC Public Health (2026)
+2026-08-28 15:07:07,237  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:07:07,237  INFO    crawler.crawler    done: kept publication (89 so far) (89 kept so far)
+2026-08-28 15:07:07,237  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/xiaofei-zhang/
+2026-08-28 15:07:07,237  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:07:12,194  INFO    crawler.crawler    found 'Xiaofei Zhang', with a 0-character biography
+2026-08-28 15:07:12,201  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:07:12,201  INFO    crawler.crawler  Visiting publication page: https://pureportal.coventry.ac.uk/en/publications/why-uk-midwives-intend-to-stay-in-or-leave-the-midwifery-professi/
+2026-08-28 15:07:12,201  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:07:17,178  INFO    crawler.crawler    found 'Why UK midwives intend to stay in or leave the midwifery profession: A conceptual model of push, pull and mooring factors' by 2 author(s), published in Midwifery (2026)
+2026-08-28 15:07:17,184  INFO    crawler.crawler    references 1 author profile link(s)
+2026-08-28 15:07:17,184  INFO    crawler.crawler    done: kept publication (90 so far) (90 kept so far)
+2026-08-28 15:07:17,184  INFO    crawler.crawler    already have https://pureportal.coventry.ac.uk/en/persons/sally-pezaro/ from an earlier publication, skipping
+2026-08-28 15:07:17,185  INFO    crawler.crawler  Phase 2: crawling 71 member profile(s) from the listing not already fetched in phase 1 (46 of 117 already have one)
+2026-08-28 15:07:17,185  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/abidemi-funmi-adegaye/
+2026-08-28 15:07:17,185  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:07:22,156  INFO    crawler.crawler    found 'Abidemi Funmi Adegaye', with a 0-character biography
+2026-08-28 15:07:22,159  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:07:22,159  INFO    crawler.crawler    done: confirmed member (47 members found so far)
+2026-08-28 15:07:22,159  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/adel-ghorbani/
+2026-08-28 15:07:22,160  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:07:27,070  INFO    crawler.crawler    found 'Adel Ghorbani', with a 0-character biography
+2026-08-28 15:07:27,074  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:07:27,074  INFO    crawler.crawler    done: confirmed member (48 members found so far)
+2026-08-28 15:07:27,074  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/albert-amagyei/
+2026-08-28 15:07:27,074  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:07:31,970  INFO    crawler.crawler    found 'Albert Amagyei', with a 0-character biography
+2026-08-28 15:07:31,976  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:07:31,977  INFO    crawler.crawler    done: confirmed member (49 members found so far)
+2026-08-28 15:07:31,977  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/alex-dorgan/
+2026-08-28 15:07:31,977  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 15:07:37,509  INFO    crawler.crawler    found 'Alex Dorgan', with a 1063-character biography
+2026-08-28 15:07:37,515  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:07:37,515  INFO    crawler.crawler    done: confirmed member (50 members found so far)
+2026-08-28 15:07:37,515  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/bethany-alice-hall/
+2026-08-28 15:07:37,515  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:07:42,611  INFO    crawler.crawler    found 'Bethany Alice Hall', with a 0-character biography
+2026-08-28 15:07:42,618  INFO    crawler.crawler    lists 2 publication link(s)
+2026-08-28 15:07:42,618  INFO    crawler.crawler    done: confirmed member (51 members found so far)
+2026-08-28 15:07:42,618  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/chloe-elizabeth-harvey-ward/
+2026-08-28 15:07:42,618  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:07:47,160  INFO    crawler.crawler    found 'Chloe Elizabeth Harvey-Ward', with a 0-character biography
+2026-08-28 15:07:47,164  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:07:47,164  INFO    crawler.crawler    done: confirmed member (52 members found so far)
+2026-08-28 15:07:47,164  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/elena-bini/
+2026-08-28 15:07:47,164  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:07:52,129  INFO    crawler.crawler    found 'Elena Bini', with a 0-character biography
+2026-08-28 15:07:52,134  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:07:52,134  INFO    crawler.crawler    done: confirmed member (53 members found so far)
+2026-08-28 15:07:52,134  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/elizabeth-gerdes/
+2026-08-28 15:07:52,134  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:07:57,459  INFO    crawler.crawler    found 'Elizabeth Gerdes', with a 0-character biography
+2026-08-28 15:07:57,463  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:07:57,463  INFO    crawler.crawler    done: confirmed member (54 members found so far)
+2026-08-28 15:07:57,463  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/elizabeth-jane-ewing/
+2026-08-28 15:07:57,463  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:08:02,167  INFO    crawler.crawler    found 'Elizabeth Jane Ewing', with a 0-character biography
+2026-08-28 15:08:02,172  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:02,172  INFO    crawler.crawler    done: confirmed member (55 members found so far)
+2026-08-28 15:08:02,172  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/fatimah-oluwayemisi-amusa-yusuf/
+2026-08-28 15:08:02,172  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:08:07,127  INFO    crawler.crawler    found 'Fatimah Oluwayemisi Amusa-Yusuf', with a 0-character biography
+2026-08-28 15:08:07,134  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:07,134  INFO    crawler.crawler    done: confirmed member (56 members found so far)
+2026-08-28 15:08:07,134  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/gabrielle-edwards-clark/
+2026-08-28 15:08:07,134  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:08:12,563  INFO    crawler.crawler    found 'Gabrielle Edwards-Clark', with a 0-character biography
+2026-08-28 15:08:12,567  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:12,568  INFO    crawler.crawler    done: confirmed member (57 members found so far)
+2026-08-28 15:08:12,568  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/irine-anna-benny/
+2026-08-28 15:08:12,568  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:08:17,177  INFO    crawler.crawler    found 'Irine Anna Benny', with a 0-character biography
+2026-08-28 15:08:17,183  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:17,183  INFO    crawler.crawler    done: confirmed member (58 members found so far)
+2026-08-28 15:08:17,183  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/jennifer-godber/
+2026-08-28 15:08:17,183  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:08:22,870  INFO    crawler.crawler    found 'Jennifer Godber', with a 0-character biography
+2026-08-28 15:08:22,880  INFO    crawler.crawler    lists 2 publication link(s)
+2026-08-28 15:08:22,880  INFO    crawler.crawler    done: confirmed member (59 members found so far)
+2026-08-28 15:08:22,880  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/jihane-fatr/
+2026-08-28 15:08:22,880  INFO    crawler.politeness  waiting 3.6s (politeness delay)
+2026-08-28 15:08:27,135  INFO    crawler.crawler    found 'Jihane Fatr', with a 0-character biography
+2026-08-28 15:08:27,144  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:27,144  INFO    crawler.crawler    done: confirmed member (60 members found so far)
+2026-08-28 15:08:27,144  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/khamis-al-alawy/
+2026-08-28 15:08:27,144  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:08:32,475  INFO    crawler.crawler    found 'Khamis Al-alawy', with a 76-character biography
+2026-08-28 15:08:32,485  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:08:32,485  INFO    crawler.crawler    done: confirmed member (61 members found so far)
+2026-08-28 15:08:32,485  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/leisa-katherine-anderton/
+2026-08-28 15:08:32,486  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:08:37,586  INFO    crawler.crawler    found 'Leisa Katherine Anderton', with a 0-character biography
+2026-08-28 15:08:37,590  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:37,590  INFO    crawler.crawler    done: confirmed member (62 members found so far)
+2026-08-28 15:08:37,590  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/lucy-cairns-2/
+2026-08-28 15:08:37,590  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:08:42,185  INFO    crawler.crawler    found 'Lucy Cairns', with a 0-character biography
+2026-08-28 15:08:42,189  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:42,189  INFO    crawler.crawler    done: confirmed member (63 members found so far)
+2026-08-28 15:08:42,189  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/lynsey-guy/
+2026-08-28 15:08:42,189  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:08:47,229  INFO    crawler.crawler    found 'Lynsey Guy', with a 0-character biography
+2026-08-28 15:08:47,233  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:47,233  INFO    crawler.crawler    done: confirmed member (64 members found so far)
+2026-08-28 15:08:47,233  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/md-johirul-islam/
+2026-08-28 15:08:47,233  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:08:52,214  INFO    crawler.crawler    found 'Md. Johirul Islam', with a 0-character biography
+2026-08-28 15:08:52,217  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:52,217  INFO    crawler.crawler    done: confirmed member (65 members found so far)
+2026-08-28 15:08:52,217  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/muhammad-sharjeel-farzad/
+2026-08-28 15:08:52,217  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:08:57,564  INFO    crawler.crawler    found 'Muhammad Sharjeel Farzad', with a 0-character biography
+2026-08-28 15:08:57,569  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:08:57,570  INFO    crawler.crawler    done: confirmed member (66 members found so far)
+2026-08-28 15:08:57,570  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/nazia-afreen/
+2026-08-28 15:08:57,570  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:09:02,515  INFO    crawler.crawler    found 'Nazia Afreen', with a 0-character biography
+2026-08-28 15:09:02,520  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:02,520  INFO    crawler.crawler    done: confirmed member (67 members found so far)
+2026-08-28 15:09:02,520  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/prerita-joshi-pandeya/
+2026-08-28 15:09:02,521  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:09:07,183  INFO    crawler.crawler    found 'Prerita Joshi Pandeya', with a 0-character biography
+2026-08-28 15:09:07,187  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:07,187  INFO    crawler.crawler    done: confirmed member (68 members found so far)
+2026-08-28 15:09:07,187  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/prince-amoh/
+2026-08-28 15:09:07,187  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:09:12,435  INFO    crawler.crawler    found 'Prince Amoh', with a 0-character biography
+2026-08-28 15:09:12,442  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:09:12,442  INFO    crawler.crawler    done: confirmed member (69 members found so far)
+2026-08-28 15:09:12,442  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/rachael-cleveland-doxford/
+2026-08-28 15:09:12,442  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:09:17,227  INFO    crawler.crawler    found 'Rachael Cleveland-Doxford', with a 0-character biography
+2026-08-28 15:09:17,232  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:17,232  INFO    crawler.crawler    done: confirmed member (70 members found so far)
+2026-08-28 15:09:17,232  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sadia-hassan/
+2026-08-28 15:09:17,232  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:09:21,952  INFO    crawler.crawler    found 'Sadia Hassan', with a 0-character biography
+2026-08-28 15:09:21,956  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:21,956  INFO    crawler.crawler    done: confirmed member (71 members found so far)
+2026-08-28 15:09:21,956  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sally-abbott/
+2026-08-28 15:09:21,956  INFO    crawler.politeness  waiting 4.6s (politeness delay)
+2026-08-28 15:09:26,835  INFO    crawler.crawler    found 'Sally Abbott', with a 0-character biography
+2026-08-28 15:09:26,846  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:09:26,846  INFO    crawler.crawler    done: confirmed member (72 members found so far)
+2026-08-28 15:09:26,846  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/samantha-heslop/
+2026-08-28 15:09:26,847  INFO    crawler.politeness  waiting 4.7s (politeness delay)
+2026-08-28 15:09:32,413  INFO    crawler.crawler    found 'Samantha Heslop', with a 0-character biography
+2026-08-28 15:09:32,418  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:32,418  INFO    crawler.crawler    done: confirmed member (73 members found so far)
+2026-08-28 15:09:32,419  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sara-arouch/
+2026-08-28 15:09:32,419  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:09:37,289  INFO    crawler.crawler    found 'Sara Arouch', with a 0-character biography
+2026-08-28 15:09:37,292  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:37,292  INFO    crawler.crawler    done: confirmed member (74 members found so far)
+2026-08-28 15:09:37,292  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/satveer-kaur-bhella/
+2026-08-28 15:09:37,293  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:09:42,316  INFO    crawler.crawler    found 'Satveer Kaur Bhella', with a 113-character biography
+2026-08-28 15:09:42,323  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:09:42,323  INFO    crawler.crawler    done: confirmed member (75 members found so far)
+2026-08-28 15:09:42,323  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sharnay-botha/
+2026-08-28 15:09:42,323  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:09:47,611  INFO    crawler.crawler    found 'Sharnay Botha', with a 0-character biography
+2026-08-28 15:09:47,613  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:47,614  INFO    crawler.crawler    done: confirmed member (76 members found so far)
+2026-08-28 15:09:47,614  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/shujana-keraudren/
+2026-08-28 15:09:47,614  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:09:52,651  INFO    crawler.crawler    found 'Shujana Keraudren', with a 0-character biography
+2026-08-28 15:09:52,657  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:52,657  INFO    crawler.crawler    done: confirmed member (77 members found so far)
+2026-08-28 15:09:52,657  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/thomasina-amy-charlish/
+2026-08-28 15:09:52,657  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:09:57,290  INFO    crawler.crawler    found 'Thomasina Amy Charlish', with a 0-character biography
+2026-08-28 15:09:57,294  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:09:57,295  INFO    crawler.crawler    done: confirmed member (78 members found so far)
+2026-08-28 15:09:57,295  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/alexandra-kirby/
+2026-08-28 15:09:57,295  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:10:02,168  INFO    crawler.crawler    found 'Alexandra Kirby', with a 0-character biography
+2026-08-28 15:10:02,177  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:10:02,177  INFO    crawler.crawler    done: confirmed member (79 members found so far)
+2026-08-28 15:10:02,177  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/amy-louise-morton/
+2026-08-28 15:10:02,177  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:10:07,758  INFO    crawler.crawler    found 'Amy Louise Morton', with a 0-character biography
+2026-08-28 15:10:07,766  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:10:07,766  INFO    crawler.crawler    done: confirmed member (80 members found so far)
+2026-08-28 15:10:07,766  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/angel-magar-2/
+2026-08-28 15:10:07,766  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:10:12,670  INFO    crawler.crawler    found 'Angel Magar', with a 0-character biography
+2026-08-28 15:10:12,674  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:10:12,674  INFO    crawler.crawler    done: confirmed member (81 members found so far)
+2026-08-28 15:10:12,674  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/behzad-ali-shah/
+2026-08-28 15:10:12,674  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:10:17,125  INFO    crawler.crawler    found 'Behzad Ali Shah', with a 0-character biography
+2026-08-28 15:10:17,134  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:10:17,134  INFO    crawler.crawler    done: confirmed member (82 members found so far)
+2026-08-28 15:10:17,134  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/bethany-louise-probert/
+2026-08-28 15:10:17,134  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 15:10:22,397  INFO    crawler.crawler    found 'Bethany Louise Probert', with a 0-character biography
+2026-08-28 15:10:22,406  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:10:22,406  INFO    crawler.crawler    done: confirmed member (83 members found so far)
+2026-08-28 15:10:22,406  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/deepa-muthu-krishnan/
+2026-08-28 15:10:22,406  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:10:27,663  INFO    crawler.crawler    found 'Deepa Muthu Krishnan', with a 0-character biography
+2026-08-28 15:10:27,676  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:10:27,676  INFO    crawler.crawler    done: confirmed member (84 members found so far)
+2026-08-28 15:10:27,676  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/gamze-nedzhipoglu/
+2026-08-28 15:10:27,677  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:10:32,270  INFO    crawler.crawler    found 'Gamze Nedzhipoglu', with a 0-character biography
+2026-08-28 15:10:32,274  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:10:32,274  INFO    crawler.crawler    done: confirmed member (85 members found so far)
+2026-08-28 15:10:32,274  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/hafsah-qaiser/
+2026-08-28 15:10:32,274  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:10:37,514  INFO    crawler.crawler    found 'Hafsah Qaiser', with a 723-character biography
+2026-08-28 15:10:37,518  INFO    crawler.crawler    lists 2 publication link(s)
+2026-08-28 15:10:37,518  INFO    crawler.crawler    done: confirmed member (86 members found so far)
+2026-08-28 15:10:37,518  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/hira-shahid/
+2026-08-28 15:10:37,518  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:10:42,702  INFO    crawler.crawler    found 'Hira Shahid', with a 0-character biography
+2026-08-28 15:10:42,711  INFO    crawler.crawler    lists 4 publication link(s)
+2026-08-28 15:10:42,711  INFO    crawler.crawler    done: confirmed member (87 members found so far)
+2026-08-28 15:10:42,711  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/jinu-mathew/
+2026-08-28 15:10:42,711  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:10:47,860  INFO    crawler.crawler    found 'Jinu Mathew', with a 0-character biography
+2026-08-28 15:10:47,866  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:10:47,866  INFO    crawler.crawler    done: confirmed member (88 members found so far)
+2026-08-28 15:10:47,866  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/lissi-scholer/
+2026-08-28 15:10:47,866  INFO    crawler.politeness  waiting 3.8s (politeness delay)
+2026-08-28 15:10:52,651  INFO    crawler.crawler    found 'Lissi Scholer', with a 0-character biography
+2026-08-28 15:10:52,655  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:10:52,655  INFO    crawler.crawler    done: confirmed member (89 members found so far)
+2026-08-28 15:10:52,655  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/maria-tariq-2/
+2026-08-28 15:10:52,656  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:10:57,610  INFO    crawler.crawler    found 'Maria Tariq', with a 689-character biography
+2026-08-28 15:10:57,619  INFO    crawler.crawler    lists 4 publication link(s)
+2026-08-28 15:10:57,619  INFO    crawler.crawler    done: confirmed member (90 members found so far)
+2026-08-28 15:10:57,619  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/mehmoona-tariq/
+2026-08-28 15:10:57,619  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:11:02,654  INFO    crawler.crawler    found 'Mehmoona Tariq', with a 0-character biography
+2026-08-28 15:11:02,658  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:02,658  INFO    crawler.crawler    done: confirmed member (91 members found so far)
+2026-08-28 15:11:02,659  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/michael-taggart/
+2026-08-28 15:11:02,659  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:11:07,303  INFO    crawler.crawler    found 'Michael Taggart', with a 0-character biography
+2026-08-28 15:11:07,306  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:07,306  INFO    crawler.crawler    done: confirmed member (92 members found so far)
+2026-08-28 15:11:07,306  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/milja-leiviska/
+2026-08-28 15:11:07,306  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:11:12,643  INFO    crawler.crawler    found 'Milja Leiviska', with a 0-character biography
+2026-08-28 15:11:12,652  INFO    crawler.crawler    lists 3 publication link(s)
+2026-08-28 15:11:12,652  INFO    crawler.crawler    done: confirmed member (93 members found so far)
+2026-08-28 15:11:12,652  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/monica-shrestha/
+2026-08-28 15:11:12,652  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:11:17,703  INFO    crawler.crawler    found 'Monica Shrestha', with a 0-character biography
+2026-08-28 15:11:17,706  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:17,706  INFO    crawler.crawler    done: confirmed member (94 members found so far)
+2026-08-28 15:11:17,706  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/niamh-oloughlin/
+2026-08-28 15:11:17,706  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:11:22,506  INFO    crawler.crawler    found "Niamh O'Loughlin", with a 0-character biography
+2026-08-28 15:11:22,514  INFO    crawler.crawler    lists 2 publication link(s)
+2026-08-28 15:11:22,514  INFO    crawler.crawler    done: confirmed member (95 members found so far)
+2026-08-28 15:11:22,514  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/ogechi-ohadomere-2/
+2026-08-28 15:11:22,514  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:11:28,023  INFO    crawler.crawler    found 'Ogechi Ohadomere', with a 0-character biography
+2026-08-28 15:11:28,036  INFO    crawler.crawler    lists 4 publication link(s)
+2026-08-28 15:11:28,036  INFO    crawler.crawler    done: confirmed member (96 members found so far)
+2026-08-28 15:11:28,036  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/puja-lama/
+2026-08-28 15:11:28,036  INFO    crawler.politeness  waiting 3.7s (politeness delay)
+2026-08-28 15:11:32,466  INFO    crawler.crawler    found 'Puja Lama', with a 0-character biography
+2026-08-28 15:11:32,476  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:32,476  INFO    crawler.crawler    done: confirmed member (97 members found so far)
+2026-08-28 15:11:32,477  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/riann-sherratt-3/
+2026-08-28 15:11:32,477  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:11:37,081  INFO    crawler.crawler    found 'Riann Sherratt', with a 0-character biography
+2026-08-28 15:11:37,085  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:37,086  INFO    crawler.crawler    done: confirmed member (98 members found so far)
+2026-08-28 15:11:37,086  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sama-nemati/
+2026-08-28 15:11:37,086  INFO    crawler.politeness  waiting 4.6s (politeness delay)
+2026-08-28 15:11:42,723  INFO    crawler.crawler    found 'Sama Nemati', with a 0-character biography
+2026-08-28 15:11:42,725  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:42,725  INFO    crawler.crawler    done: confirmed member (99 members found so far)
+2026-08-28 15:11:42,725  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/samuel-ato-gyasi-otabir/
+2026-08-28 15:11:42,725  INFO    crawler.politeness  waiting 4.0s (politeness delay)
+2026-08-28 15:11:47,377  INFO    crawler.crawler    found 'Samuel Ato Gyasi Otabir', with a 0-character biography
+2026-08-28 15:11:47,384  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:47,384  INFO    crawler.crawler    done: confirmed member (100 members found so far)
+2026-08-28 15:11:47,384  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sana-nasir/
+2026-08-28 15:11:47,384  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:11:52,237  INFO    crawler.crawler    found 'Sana Nasir', with a 0-character biography
+2026-08-28 15:11:52,243  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:52,243  INFO    crawler.crawler    done: confirmed member (101 members found so far)
+2026-08-28 15:11:52,243  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/shan-ouyang/
+2026-08-28 15:11:52,243  INFO    crawler.politeness  waiting 4.5s (politeness delay)
+2026-08-28 15:11:57,350  INFO    crawler.crawler    found 'Shan Ouyang', with a 0-character biography
+2026-08-28 15:11:57,355  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:11:57,355  INFO    crawler.crawler    done: confirmed member (102 members found so far)
+2026-08-28 15:11:57,355  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/shriya-marahatta/
+2026-08-28 15:11:57,355  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:12:02,557  INFO    crawler.crawler    found 'Shriya Marahatta', with a 0-character biography
+2026-08-28 15:12:02,564  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:12:02,564  INFO    crawler.crawler    done: confirmed member (103 members found so far)
+2026-08-28 15:12:02,564  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/sima-rezai/
+2026-08-28 15:12:02,564  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:12:07,372  INFO    crawler.crawler    found 'Sima Rezai', with a 0-character biography
+2026-08-28 15:12:07,374  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:12:07,374  INFO    crawler.crawler    done: confirmed member (104 members found so far)
+2026-08-28 15:12:07,374  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/suman-sharma-paudel/
+2026-08-28 15:12:07,375  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:12:12,396  INFO    crawler.crawler    found 'Suman Sharma Paudel', with a 0-character biography
+2026-08-28 15:12:12,401  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:12:12,401  INFO    crawler.crawler    done: confirmed member (105 members found so far)
+2026-08-28 15:12:12,401  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/szabolcs-tibor-pallagi/
+2026-08-28 15:12:12,401  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:12:17,578  INFO    crawler.crawler    found 'Szabolcs Tibor Pallagi', with a 0-character biography
+2026-08-28 15:12:17,583  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:12:17,583  INFO    crawler.crawler    done: confirmed member (106 members found so far)
+2026-08-28 15:12:17,583  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/timilehin-oyefeso/
+2026-08-28 15:12:17,583  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:12:22,370  INFO    crawler.crawler    found 'Timilehin Oyefeso', with a 0-character biography
+2026-08-28 15:12:22,374  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:12:22,374  INFO    crawler.crawler    done: confirmed member (107 members found so far)
+2026-08-28 15:12:22,374  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/yang-sun/
+2026-08-28 15:12:22,374  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:12:27,820  INFO    crawler.crawler    found 'Yang Sun', with a 0-character biography
+2026-08-28 15:12:27,824  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:12:27,824  INFO    crawler.crawler    done: confirmed member (108 members found so far)
+2026-08-28 15:12:27,824  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/aiesha-wright/
+2026-08-28 15:12:27,824  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:12:32,619  INFO    crawler.crawler    found 'Aiesha Wright', with a 0-character biography
+2026-08-28 15:12:32,624  INFO    crawler.crawler    lists 1 publication link(s)
+2026-08-28 15:12:32,625  INFO    crawler.crawler    done: confirmed member (109 members found so far)
+2026-08-28 15:12:32,625  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/andy-winter/
+2026-08-28 15:12:32,625  INFO    crawler.politeness  waiting 4.1s (politeness delay)
+2026-08-28 15:12:37,884  INFO    crawler.crawler    found 'Andy Winter', with a 0-character biography
+2026-08-28 15:12:37,891  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:12:37,891  INFO    crawler.crawler    done: confirmed member (110 members found so far)
+2026-08-28 15:12:37,891  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/bushra-zaidi-2/
+2026-08-28 15:12:37,891  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:12:42,571  INFO    crawler.crawler    found 'Bushra Zaidi', with a 0-character biography
+2026-08-28 15:12:42,580  INFO    crawler.crawler    lists 3 publication link(s)
+2026-08-28 15:12:42,580  INFO    crawler.crawler    done: confirmed member (111 members found so far)
+2026-08-28 15:12:42,580  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/lingya-yu/
+2026-08-28 15:12:42,580  INFO    crawler.politeness  waiting 4.2s (politeness delay)
+2026-08-28 15:12:47,411  INFO    crawler.crawler    found 'Lingya Yu', with a 1194-character biography
+2026-08-28 15:12:47,417  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:12:47,417  INFO    crawler.crawler    done: confirmed member (112 members found so far)
+2026-08-28 15:12:47,417  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/petra-wark/
+2026-08-28 15:12:47,417  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:12:53,258  INFO    crawler.crawler    found 'Petra Wark', with a 2076-character biography
+2026-08-28 15:12:53,269  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:12:53,270  INFO    crawler.crawler    done: confirmed member (113 members found so far)
+2026-08-28 15:12:53,270  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/rinkee-verma/
+2026-08-28 15:12:53,270  INFO    crawler.politeness  waiting 3.5s (politeness delay)
+2026-08-28 15:12:57,504  INFO    crawler.crawler    found 'Rinkee Verma', with a 0-character biography
+2026-08-28 15:12:57,508  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:12:57,508  INFO    crawler.crawler    done: confirmed member (114 members found so far)
+2026-08-28 15:12:57,508  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/tsz-sing-wong/
+2026-08-28 15:12:57,508  INFO    crawler.politeness  waiting 4.3s (politeness delay)
+2026-08-28 15:13:02,908  INFO    crawler.crawler    found 'Tsz Sing Wong', with a 0-character biography
+2026-08-28 15:13:02,913  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:13:02,913  INFO    crawler.crawler    done: confirmed member (115 members found so far)
+2026-08-28 15:13:02,913  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/winnie-tong/
+2026-08-28 15:13:02,913  INFO    crawler.politeness  waiting 3.9s (politeness delay)
+2026-08-28 15:13:07,423  INFO    crawler.crawler    found 'Winnie Tong', with a 0-character biography
+2026-08-28 15:13:07,427  INFO    crawler.crawler    lists 0 publication link(s)
+2026-08-28 15:13:07,428  INFO    crawler.crawler    done: confirmed member (116 members found so far)
+2026-08-28 15:13:07,428  INFO    crawler.crawler  Visiting profile page: https://pureportal.coventry.ac.uk/en/persons/yuhang-xu/
+2026-08-28 15:13:07,428  INFO    crawler.politeness  waiting 4.4s (politeness delay)
+2026-08-28 15:13:13,339  INFO    crawler.crawler    found 'Yuhang Xu', with a 2455-character biography
+2026-08-28 15:13:13,355  INFO    crawler.crawler    lists 5 publication link(s)
+2026-08-28 15:13:13,355  INFO    crawler.crawler    done: confirmed member (117 members found so far)
+2026-08-28 15:13:13,355  INFO    crawler.crawler  Phase 3: 147 publication link(s) referenced by a profile but not on the listing; not crawling them
+2026-08-28 15:13:13,358  INFO    crawl  wrote 90 publications and 117 profiles to /Users/bhimrajyadav/Developer/Personal/softwarica/sem-1/information-retrieval/coursework/st7071cem-ir-assignment/data/crawls/2026-08-28-14-54-00-NPT
+2026-08-28 15:13:13,358  INFO    crawl  index it with: uv run ir-index
