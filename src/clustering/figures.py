@@ -9,14 +9,19 @@ import matplotlib.pyplot as plt
 from clustering.paths import FIGURES_DIR
 from clustering.pipeline import Report
 
-# Greyscale, because the report prints in black and white. Clusters are told
-# apart by marker shape as well as fill, so the scatter survives being printed
-# and stays readable to anyone who cannot distinguish the shades.
 INK = "#111111"
+
+# The scatter is the one chart here where colour carries information rather
+# than decorating: three categories overlap, and three greys separate far less
+# readily than three hues. The line charts stay black, having one series each.
+#
+# Colours are from the Okabe-Ito palette, which stays distinguishable under the
+# common forms of colour blindness. Each cluster also keeps its own marker
+# shape, so the chart still works printed in black and white.
 CATEGORY_STYLES = {
-    "Economics": ("o", "#111111"),
-    "Entertainment": ("s", "#888888"),
-    "Politics": ("^", "#ffffff"),
+    "Economics": ("o", "#0072B2"),  # blue
+    "Entertainment": ("s", "#D55E00"),  # vermillion
+    "Politics": ("^", "#009E73"),  # bluish green
 }
 
 
