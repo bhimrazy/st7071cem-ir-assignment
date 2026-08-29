@@ -19,6 +19,13 @@ dependencies = [
     "schedule>=1.2.2",
 ]
 
+# The app is at src/api/main.py, which is none of the paths `fastapi run`
+# looks for by default (main.py, app.py, api.py, app/main.py, ...). Without
+# this a deployment builds cleanly and then crash-loops on "Could not find a
+# default file to run".
+[tool.fastapi]
+entrypoint = "api.main:app"
+
 [project.scripts]
 ir-crawl = "crawler.cli:main"
 ir-index = "publications.cli:main"
