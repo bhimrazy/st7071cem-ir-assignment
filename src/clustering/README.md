@@ -14,7 +14,7 @@ term.
 flowchart TD
     A[bbc-fulltext.zip from mlg.ucd.ie<br/>2225 articles, 5 folders] --> B[Keep 3 folders<br/>business, entertainment, politics]
     B --> C[Balanced sample<br/>200 per category = 600 docs]
-    C --> D[Analyzer<br/>lowercase, tokenize, stopwords, stem]
+    C --> D[Analyzer<br/>lowercase, tokenise, stopwords, stem]
     D --> E[TF-IDF vectors<br/>5000 terms, sublinear tf]
     E --> F[K-means, k=3]
     F --> G[Name each cluster by<br/>majority vote on true labels]

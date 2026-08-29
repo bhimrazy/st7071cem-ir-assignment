@@ -86,7 +86,7 @@ dictionary lookups instead of reading every document.
 
 | File | What it holds |
 |---|---|
-| `analyzer.py` | Text to terms: lowercase, tokenize, drop stopwords, stem |
+| `analyzer.py` | Text to terms: lowercase, tokenise, drop stopwords, stem |
 | `schema.py` | Which fields exist, which are indexed, what each is worth |
 | `index.py` | The inverted index, and the lengths and norms ranking needs |
 | `store.py` | Documents by id, and the external id to internal id mapping |
