@@ -1,5 +1,5 @@
 [project]
-name = "st7071cem-ir-assignment"
+name = "chct-publication-search"
 version = "0.1.0"
 description = "Vertical search engine and document clustering system"
 readme = "README.md"
